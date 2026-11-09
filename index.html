@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>PhysFlow · Rebuttal progress</title>
+  <style>
+    :root {
+      --paper: #f6f7f4;
+      --surface: #ffffff;
+      --ink: #21332d;
+      --muted: #65716a;
+      --line: #dfe5df;
+      --green: #235d46;
+      --green-soft: #edf4ee;
+      --amber: #79521d;
+      --amber-soft: #faf1df;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 28px; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input, summary { font: inherit; }
+    a { color: var(--green); text-underline-offset: 4px; }
+    :focus-visible { outline: 3px solid #b57524; outline-offset: 5px; }
+    .page { max-width: 1180px; margin: auto; padding: 50px 34px 72px; }
+    .page-header { margin-bottom: 35px; }
+    h1 { margin: 0 0 10px; font-size: clamp(28px, 4vw, 38px); font-weight: 650; letter-spacing: -1.1px; line-height: 1.2; }
+    .intro { margin: 0; color: var(--muted); max-width: 700px; }
+    .layout { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: 34px; align-items: start; }
+    .sidebar { position: sticky; top: 28px; }
+    .overall { padding: 22px; background: var(--green); color: white; border-radius: 12px; }
+    .overall-label { margin: 0 0 10px; color: #e0ece4; font-size: 13px; }
+    .overall-count { margin: 0 0 14px; display: flex; align-items: baseline; gap: 9px; }
+    #total-done { font-size: 40px; font-weight: 600; line-height: 1; letter-spacing: -1px; }
+    .overall-total { color: #e0ece4; font-size: 14px; }
+    progress { display: block; width: 100%; height: 5px; border: 0; border-radius: 8px; overflow: hidden; appearance: none; }
+    progress::-webkit-progress-bar { background: #527b64; }
+    progress::-webkit-progress-value { background: #dbebbc; border-radius: 8px; }
+    progress::-moz-progress-bar { background: #dbebbc; border-radius: 8px; }
+    .save-status { margin: 13px 0 0; color: #e0ece4; font-size: 12px; }
+    .save-status.error { color: #ffe3a6; }
+    nav { display: grid; gap: 5px; margin: 22px 0; }
+    .nav-link { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 11px 12px; text-decoration: none; color: var(--ink); border-radius: 7px; }
+    .nav-link:hover { background: #e9eee8; }
+    .nav-label { display: flex; gap: 8px; align-items: baseline; }
+    .reviewer-id { font-size: 12px; color: var(--muted); }
+    .nav-count { color: var(--green); font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .sidebar-note { margin: 0 12px 12px; color: var(--muted); font-size: 12px; }
+    .reviewer { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 26px; overflow: hidden; }
+    .section-head { padding: 25px 28px 22px; border-bottom: 1px solid var(--line); }
+    .section-title-line { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+    h2 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -.4px; }
+    .section-id { margin-left: 8px; color: var(--muted); font-size: 14px; font-weight: 400; letter-spacing: 0; }
+    .review-meta { color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .section-description { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
+    .section-progress { margin: 12px 0 0; color: var(--green); font-size: 12px; font-variant-numeric: tabular-nums; }
+    .task { padding: 22px 28px; border-bottom: 1px solid var(--line); }
+    .task:last-child { border-bottom: 0; }
+    .task-main { display: grid; grid-template-columns: 21px minmax(0, 1fr); column-gap: 13px; align-items: start; }
+    .task-checkbox { width: 19px; height: 19px; margin: 4px 0 0; accent-color: var(--green); cursor: pointer; }
+    .task-label { cursor: pointer; display: block; min-height: 44px; }
+    .task-title { display: block; font-size: 16px; font-weight: 600; line-height: 1.6; }
+    .task-summary { display: block; margin-top: 6px; font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+    .task.done .task-title { text-decoration: line-through; text-decoration-thickness: 1px; color: var(--muted); }
+    .task.done { background: #fafcf9; }
+    .task-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 7px 10px; margin: 11px 0 0 34px; font-size: 11px; color: var(--muted); }
+    .tag { padding: 2px 7px; border-radius: 4px; background: #f0f2ef; color: #526158; white-space: nowrap; }
+    .tag.priority { color: var(--green); background: var(--green-soft); }
+    .tag.optional { color: var(--amber); background: var(--amber-soft); }
+    details { margin: 11px 0 0 34px; font-size: 13px; }
+    summary { width: fit-content; color: var(--green); cursor: pointer; font-size: 12px; padding: 3px 0; }
+    .details-content { margin-top: 12px; padding-left: 14px; border-left: 2px solid var(--line); }
+    .details-content p { margin: 0 0 10px; overflow-wrap: anywhere; }
+    .details-content p:last-child { margin-bottom: 0; }
+    .detail-label { display: block; margin-bottom: 3px; color: var(--muted); font-size: 11px; }
+    .footer { color: var(--muted); font-size: 12px; margin: 8px 0 0; }
+    .footer a { color: inherit; }
+    .coordination { padding: 24px 28px; }
+    .coordination p, .coordination li { font-size: 13px; }
+    .coordination ol { padding-left: 22px; }
+    .coordination li + li { margin-top: 8px; }
+    .coordination details { margin-left: 0; }
+    .task-status { margin: 12px 0 0 34px; padding: 9px 12px; border-left: 2px solid var(--line); background: #f6f8f5; font-size: 12px; overflow-wrap: anywhere; }
+    .task-status strong { display: block; color: var(--green); margin-bottom: 3px; }
+    .task-status a { display: inline-block; margin-top: 4px; }
+    .reply-block { padding: 24px 28px; border-top: 1px solid var(--line); }
+    .reply-block h3 { margin: 0 0 18px; font-size: 18px; }
+    .reply-prose { line-height: 1.75; overflow-wrap: anywhere; }
+    .reply-prose p { margin: 0 0 18px; }
+    .reply-prose p:last-child { margin-bottom: 0; }
+    .reply-table { overflow-x: auto; margin: 18px 0; }
+    .reply-table table { width: 100%; min-width: 480px; border-collapse: collapse; font-size: 13px; }
+    .reply-table th, .reply-table td { padding: 9px 10px; text-align: left; border-bottom: 1px solid var(--line); }
+    .reply-table th { background: var(--green-soft); }
+    noscript { display: block; padding: 20px; background: var(--amber-soft); }
+    @media (max-width: 760px) {
+      .page { padding: 28px 18px 40px; }
+      .page-header { margin-bottom: 24px; }
+      .layout { grid-template-columns: 1fr; gap: 24px; }
+      .sidebar { position: static; }
+      .overall { padding: 18px 20px; }
+      .overall-count { margin-bottom: 10px; }
+      #total-done { font-size: 32px; }
+      nav { display: flex; flex-wrap: wrap; gap: 5px; margin: 14px 0 8px; }
+      .nav-link { flex: 1 1 140px; padding: 9px 10px; background: #e9eee8; }
+      .sidebar-note { margin: 6px 0 0; }
+      .section-head { padding: 22px 20px 18px; }
+      .task { padding: 20px; }
+      h2 { font-size: 20px; }
+      .section-description { font-size: 13px; }
+    }
+    @media (max-width: 380px) {
+      .page { padding-left: 12px; padding-right: 12px; }
+      .task, .section-head { padding-left: 16px; padding-right: 16px; }
+      .section-id { display: inline-block; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    @media print {
+      body { background: white; }
+      .page { padding: 0; max-width: none; }
+      .layout { display: block; }
+      .sidebar { position: static; margin-bottom: 20px; }
+      .overall { color: black; background: white; padding: 0; }
+      .overall-label, .overall-total { color: black; }
+      nav, .save-status, progress, .sidebar-note { display: none; }
+      .reviewer { break-inside: auto; border-radius: 0; }
+      .task { break-inside: avoid; }
+    }
+      .task-checkbox:disabled { opacity: 1; cursor: default; }
+    .task-label { cursor: default; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="page-header">
+      <h1>PhysFlow · Rebuttal progress</h1>
+      <p class="intro">持续汇总实验与 reviewer 回复。同数据 SFT 已接入：55.12；完整方法为 56.32。下一重点为同结构终态监督和直接压缩对照。</p>
+    <p><a href="rebuttal-response.md">持续更新回复 · Markdown</a> · <a href="#reply-r1">8uwk 完整回复</a> · <a href="#reply-data-split">数据来源回复</a> · <a href="#reply-method-contribution">EndoCoT / Monet 回复</a> · <a href="#reply-sft-dataset">SFT 与数据集比较</a> · <a href="#reply-sft-baseline">SFT 基线回复</a> · <a href="#reply-cost">Cost 回复</a></p>
+    </header>
+    <div class="layout">
+      <aside class="sidebar" aria-label="完成进度与审稿人导航">
+        <div class="overall">
+          <p class="overall-label">已完成并接入回复 · 共用任务计一次</p>
+          <p class="overall-count"><span id="total-done">7</span><span class="overall-total">/ <span id="total-count">16</span> 项</span></p>
+          <progress id="total-progress" value="7" max="16" aria-label="全部任务完成进度"></progress>
+          <p id="save-status" class="save-status" role="status" aria-live="polite">共享进度 · 作者统一更新</p>
+        </div>
+        <nav id="reviewer-nav" aria-label="审稿人"></nav>
+        <p class="sidebar-note">所有访客查看同一份进度。展开“设置与完成标准”查看实验细节。</p>
+        <p class="sidebar-note">最近发布：2026-11-08 18:50 PST。刷新页面查看最新发布的进度与回复。</p>
+      </aside>
+      <main>
+        <noscript>请启用 JavaScript，以显示进度清单；英文回复正文仍可直接阅读。</noscript>
+        <section class="reviewer coordination" aria-labelledby="coordination-heading">
+          <h2 id="coordination-heading">进度总表 · 2026-11-08</h2>
+          <p>按审稿人汇总实验进度、待办事项与英文回复草稿。<a href="rebuttal-response.md">查看 Markdown 主稿</a>。</p>
+          <p><strong>本次完成：</strong>1 号同数据 SFT 的 PICABench 结果 55.12 已核验并接入，与完整方法 56.32 相差 1.20 pp。生成器 LoRA 与 537 更新一致，总训练量与容量不同；数据集比较已补齐训练策略与预算说明。2 号训练完成、评测中，11 号直接压缩结果待接入。PhysicEdit 方法级比较及 cost 回复继续保留。</p>
+          <p><strong>数据来源回复已完成并打钩：</strong>依据 PICABench 原论文，说明 PICA-100K 合成训练数据与单独构建的 900 例评测 benchmark 的来源区别。<a href="#reply-data-split">查看英文回复</a>；各版训练清单与重叠检查的对应关系保留为合稿核验备注。</p>
+          <p><strong>EndoCoT / Monet discussion 已成稿：</strong><a href="#reply-method-contribution">查看英文回复</a>。1 号同数据 SFT 已接入；2 号终态监督评测中，11 号直接压缩结果待接入，相关条目暂未整体勾选。</p>
+          <p><strong>勾选含义：</strong>该项工作已完成并接入回复草稿；论文修订、最终核对和 OpenReview 提交另行完成。本页展示作者确认并发布的完成状态，供老师查看。其余实验保留各自注明日期的状态快照。</p>
+          <details open>
+            <summary>需要优先处理的证据与进度问题</summary>
+            <ol>
+              <li><strong>数据与 checkpoint 对应关系：</strong>作者确认的原稿最终无重叠版本，与本轮指定的 +899 D3 恢复权重需要分别标识。本轮 14 号检出 1,094 条近重复候选；编号文档记录至少一例经视觉复核的同源图。候选总数不是已确认重叠数，这批检查也不能推断另一服务器的最终版本。合稿前需对应到实际训练清单、权重和结果。</li>
+              <li><strong>latent 物理类别分析已补完：</strong>原始数据为六领域、26 细类。六领域平衡准确率 86.91%，源图加指令 76.28%，同布局预训练对照 85.94%。亮度变化读出 R²=0.370，预训练对照 0.402。已交付三组图件与完整对照，支持类别与视觉变化信息可读出；此前状态检索的阴性结论保持不变。</li>
+              <li><strong>Cost 与长任务：</strong>Cost 已使用作者本轮确认表格写入回复，其中 PhysicEdit 为另一次测量的 52.19 秒；不使用历史日志覆盖。原稿测量设置描述在论文合稿时同步核对。4 号 7,560 张生成原估计约 8.4 个单卡日，之后仍需 72B 评分。作者已确认原视频补齐；7/9/10 号的其余输入与中断续跑验收继续按执行记录跟进。</li>
+            </ol>
+          </details>
+          <details>
+            <summary>建议里程碑与验收条件</summary>
+            <ol>
+              <li><strong>11 月 8–10 日：</strong>核对 1/2 号实际训练日志及同名队列；3 号质量表和 5 号 cost 已接入回复，继续完善首轮回应及对应论文修改。7–10 号以数据完整及中断恢复验证通过作为正式排卡条件。</li>
+              <li><strong>11 月 11–13 日：</strong>准备三位 reviewer 的首轮完整回复。先纳入已验收证据，未完成实验明确状态；每项回复都对应问题编号和论文修改位置。首轮不等待全部 inference seeds。</li>
+              <li><strong>11 月 14–16 日：</strong>纳入已完成的核心对照、配对置信区间和消融；1/2 号的 RISE 结果由 15 号补齐。检查训练预算、骨干差异、数据版本和参数统计口径。</li>
+              <li><strong>11 月 17 日：</strong>内部冻结可提交版本，核对数字、引用、字符限制、修订 PDF 与回复对应关系；11 月 18 日留作讨论和最终校对。以上为内部目标，实验完成时间仍取决于排队和实测。</li>
+            </ol>
+            <p><a href="https://iclr.cc/Conferences/2027/CallForPapers">官方讨论期截止 2026-11-18 AoE</a>，按日终换算为洛杉矶 11 月 19 日 04:00 前、北京时间 11 月 19 日 20:00 前。内部日期均按洛杉矶时间。当前未确认本论文作者回复框的实际字符上限。</p>
+          </details>
+          <p class="footer">各项实验保留记录中的更新时间；发布页面不代表重新检查了远端任务。</p>
+        </section>
+        <div id="reviewer-sections"></div>
+        <!-- completed-replies:start -->
+        <section class="reviewer" id="completed-replies" aria-labelledby="completed-replies-heading">
+          <header class="section-head">
+            <h2 id="completed-replies-heading">已写好的英文回复</h2>
+            <p class="section-description">可在本页直接阅读、选中复制。正文与 Markdown 主稿一致；仍为待作者最终审阅的草稿，尚未提交。</p>
+          </header>
+<article class="reply-block" id="reply-r1"><h3>8uwk · 完整首轮回复</h3><div class="reply-prose" lang="en"><p>Thank you for highlighting PhysicEdit. We appreciate its use of video-derived transition priors to guide physical image editing without rendering intermediate videos at inference. We agree that our original discussion should have made this connection explicit, and we will expand the related-work discussion accordingly.</p>
+<p><strong>Our contribution is the progressive internalization of textual and visual process supervision into a continuous latent plan.</strong> PhysicEdit combines an explicit textual reasoning trace at inference with video-supervised transition queries. PhysFlow progressively compresses high-level physical rationales, low-level transition descriptions, and ordered intermediate visual blocks into six latent tokens. These tokens condition the image generator together with a separate 16-token final visual block. This design internalizes the textual reasoning as well as the visual process, so inference uses the compact latent plan without decoding a textual reasoning trace. We will clarify this distinction in Sections 2 and 3. <a href="https://arxiv.org/html/2602.21778v2#S3.SS3">PhysicEdit, Section 3.3</a>.</p>
+<p><strong>The added method-level comparison reports 56.32 for PhysFlow and 52.35 for PhysicEdit.</strong> We evaluate PICABench-Superficial with Qwen2.5-VL-72B-Instruct and report both backbones below. We report scores on a 0 to 100 scale and gains in percentage points.</p>
+<div class="reply-table"><table><thead><tr><th scope="col">Method</th><th scope="col">Backbone</th><th scope="col">Overall</th><th scope="col">Gain over own backbone</th></tr></thead><tbody><tr><td>Qwen-Image-Edit-2509</td><td>Qwen-Image-Edit-2509</td><td>49.71</td><td>N/A</td></tr><tr><td>PhysicEdit</td><td>Qwen-Image-Edit-2509</td><td>52.35</td><td>+2.64</td></tr><tr><td>Qwen-Image-Edit-2511</td><td>Qwen-Image-Edit-2511</td><td>54.26</td><td>N/A</td></tr><tr><td><strong>PhysFlow (Ours)</strong></td><td>Qwen-Image-Edit-2511</td><td><strong>56.32</strong></td><td><strong>+2.06</strong></td></tr></tbody></table></div>
+<p>PhysFlow achieves a 3.97-point higher overall score and higher scores in all eight categories. Both methods improve on their respective backbones. The different backbones make this a comparison of complete systems; isolating the contribution of each method requires a matched-backbone control. We also clarify that the existing 53.82 entry in Tables 4 and 9 refers to PhysFlow trained on PhysicTran38K; the new 52.35 entry evaluates PhysicEdit itself.</p>
+<p><strong>PhysFlow also has lower latency in the reported cost comparison.</strong></p>
+<div class="reply-table"><table><thead><tr><th scope="col">Method</th><th scope="col">Params (B)</th><th scope="col">Memory (GiB)</th><th scope="col">Latency (s)</th></tr></thead><tbody><tr><td>PhysicEdit</td><td>29.00</td><td>56.25</td><td>52.19</td></tr><tr><td><strong>PhysFlow (Ours)</strong></td><td><strong>28.87</strong></td><td><strong>58.11</strong></td><td><strong>49.39</strong></td></tr></tbody></table></div>
+<p>The resource and timing measurements come from separate runs. In these reported results, PhysFlow takes 2.80 fewer seconds per edit, a 5.4% latency reduction, while using 1.86 GiB more peak memory. These measurements show a latency advantage with a memory trade-off. We will include the method-level results and cost comparison in the revised manuscript.</p></div></article>
+<article class="reply-block" id="reply-data-split"><h3>62MG · Data separation 回复</h3><p>回复已完成并接入，本项已勾选。合稿核验备注：原稿最终版本与 +899 补实验版本的实际训练清单、checkpoint 和重叠检查仍需分别对应；勾选表示回复完成。</p><div class="reply-prose" lang="en"><p>PICA-100K provides training data, while PICABench provides a separately curated evaluation set of 900 editing examples (Pu et al., <a href="https://arxiv.org/html/2510.17681v3#S3.SS2">Sections 3.1 and 3.2</a>, and <a href="https://arxiv.org/html/2510.17681v3#S3.SS4">Section 3.4</a>). The authors collect PICABench evaluation images from licensed and public sources and construct PICA-100K from generated source images and synthetic videos. We start constructing our PhysTrace training dataset with PICA-100K image-instruction pairs (Section 3.2 of our manuscript). We will clarify these distinct data sources and their training and evaluation roles in Section 3.2 and Appendix A.</p></div></article>
+<article class="reply-block" id="reply-method-contribution"><h3>62MG / xuAm · 相对 EndoCoT、Monet 的贡献</h3><div class="reply-prose" lang="en"><p><strong>PhysFlow learns a compact plan from supervision of both the physical transformation and its outcome.</strong> A target image specifies the desired result; physical rationales and intermediate visual states provide additional supervision about the transformation. Our contribution is a training curriculum that compresses these complementary signals into six latent tokens while retaining a separate 16-token final visual block. This allocates different representation budgets to the transformation and its endpoint, and gives the image generator access to both (Sections 3.3 and 3.4).</p>
+<p><strong>Relative to EndoCoT, we change the representation and its supervision during compression.</strong> EndoCoT establishes a closely related approach with recurrent thought states, intermediate image-generation supervision, and terminal textual grounding. Its terminal-consolidation stage retains recurrent thought updates while stopping gradient propagation through intermediate steps. It also avoids decoding intermediate images at inference, a property we share. <a href="https://arxiv.org/html/2603.12252v1#S4.SS2">EndoCoT, Section 4.2</a>. PhysFlow replaces high-level physical rationales, low-level transition descriptions, and then successive intermediate visual blocks with individual latent tokens. Each visual replacement removes that block&#x27;s direct alignment loss; later uncompressed blocks, final-block alignment, and the flow-matching loss continue to train the compressed tokens. The curriculum therefore changes how the planner represents the process and receives supervision as it approaches the inference representation. At inference, the generator receives all six plan tokens together with the separate final visual block (Sections 3.3 and 3.4).</p>
+<p><strong>Relative to Monet, we jointly internalize textual and visual process supervision for image generation.</strong> Monet distills auxiliary visual information into latent embeddings within text-latent interleaved reasoning and further trains them with visual-latent policy optimization. Its latent embeddings support a model that produces textual answers. <a href="https://arxiv.org/html/2511.21395v2#S3">Monet, Section 3</a>. PhysFlow compresses both the textual rationales and the intermediate visual representations into a continuous plan before generating the edited image. During planner training, the flow-matching loss propagates through a frozen image generator to train the conditioning representations. We then freeze the planner and adapt the generator to these representations. This couples learning the plan to its use in image generation (Section 3.4).</p>
+<p><strong>The same-data control now measures the gain beyond adaptation to the training pairs.</strong> PhysFlow scores 56.32 on PICABench-Superficial, compared with 55.12 for image-pair SFT on the same PhysTrace pairs. Both use the same generator LoRA configuration and 537 generator updates; PhysFlow additionally trains its planner, for 1,790 total updates. Isolating the contribution of process supervision requires the same-architecture terminal-only control, whose evaluation is underway. The direct-compression control will test the progressive curriculum. We will clarify these design differences in Sections 2 and 3 and report each control alongside the claim it tests.</p></div></article>
+<article class="reply-block" id="reply-sft-dataset"><h3>62MG · 同数据 SFT 与训练数据、策略比较</h3><div class="reply-prose" lang="en"><p><strong>PhysFlow exceeds image-pair fine-tuning on the same PhysTrace pairs by 1.20 percentage points.</strong> We added an image-pair SFT baseline using Qwen-Image-Edit-2511, the same PhysTrace source-target pairs, and the same rank-512 generator LoRA configuration. Both settings use 537 generator updates. On PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct, image-pair SFT scores 55.12 and PhysFlow scores 56.32. PhysFlow additionally trains a planner, bringing its total to 1,790 updates. This comparison measures the gain of the complete training configuration beyond generator adaptation to the image pairs. Isolating process supervision at matched architecture requires the terminal-only control, whose evaluation is underway.</p>
+<p><strong>We also distinguish the training data, strategy, and update budget in the dataset comparison.</strong> The revised table includes the new PhysTrace image-pair SFT row:</p>
+<div class="reply-table table-wrap"><table><thead><tr><th scope="col">Training data</th><th scope="col">Training strategy</th><th scope="col">Total optimizer updates</th><th scope="col">Overall (%)</th></tr></thead><tbody><tr><td>PICA100K</td><td>Image-pair SFT</td><td>4,926</td><td>53.38</td></tr><tr><td>PhysTrace</td><td>Image-pair SFT</td><td>537</td><td>55.12</td></tr><tr><td>PhysicTran38K</td><td>PhysFlow</td><td>4,632</td><td>53.82</td></tr><tr><td>PhysTrace</td><td>PhysFlow</td><td>1,790</td><td>56.32</td></tr></tbody></table></div>
+<p>PhysTrace image-pair SFT exceeds PICA100K image-pair SFT by 1.74 points under these settings. Their different update budgets limit this result to a comparison of the reported configurations. A data-quality attribution requires matched training budgets and control of the other construction choices. The 53.82 row denotes PhysFlow trained on PhysicTran38K. We will label these training strategies explicitly and scope the discussion of Tables 4 and 9 accordingly.</p></div></article>
+<article class="reply-block" id="reply-sft-baseline"><h3>xuAm · 原始骨干与同数据 SFT 对照</h3><div class="reply-prose" lang="en"><p>The 54.26 row in Table 3 reports the original Qwen-Image-Edit-2511 backbone. We will label it explicitly as “Original backbone” and state its training status in the caption. We have now added a baseline fine-tuned on the same PhysTrace source-target pairs:</p>
+<div class="reply-table table-wrap"><table><thead><tr><th scope="col">Configuration</th><th scope="col">PICABench-Superficial (%)</th></tr></thead><tbody><tr><td>Original Qwen-Image-Edit-2511</td><td>54.26</td></tr><tr><td>PhysTrace image-pair SFT</td><td>55.12</td></tr><tr><td>Full PhysFlow</td><td>56.32</td></tr></tbody></table></div>
+<p>Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow exceeds this adapted baseline by 1.20 points. Both use the same rank-512 generator LoRA configuration and 537 generator updates. PhysFlow also trains a planner, for 1,790 total updates, so this comparison includes additional capacity and training. The same-architecture terminal-only control addresses the contribution of process supervision; its evaluation is underway.</p></div></article>
+<article class="reply-block" id="reply-terminal-status"><h3>xuAm · Terminal-only 进度</h3><p>2026-11-08 18:42 PST：训练完成，PICABench 已开始生成（至少 8/900），随后进行 Qwen72B 与 consistency 评分；最终分数待接入。</p></article>
+<article class="reply-block" id="reply-cost"><h3>62MG · Computation cost 回复</h3><div class="reply-prose" lang="en"><p>Thank you for this suggestion. We now report parameter counts and peak GPU memory alongside inference latency. We count the parameters resident during inference, including reasoning modules, and report peak allocated GPU memory. Parameter counts and peak allocated memory describe the current implementations; the latency column reports separate timing measurements.</p>
+<div class="reply-table"><table><thead><tr><th scope="col">Method</th><th scope="col">Params (B)</th><th scope="col">Memory (GiB)</th><th scope="col">Latency (s)</th></tr></thead><tbody><tr><td>Qwen-Image-Edit</td><td>28.85</td><td>58.06</td><td>44.34</td></tr><tr><td>PhysicEdit</td><td>29.00</td><td>56.25</td><td>52.19</td></tr><tr><td>Step1X-Edit</td><td>20.82</td><td>41.34</td><td>59.18</td></tr><tr><td>Qwen-Image-Edit + explicit reasoning</td><td>28.85</td><td>58.06</td><td>60.12</td></tr><tr><td>ChronoEdit</td><td>22.83</td><td>54.81</td><td>228.68</td></tr><tr><td><strong>PhysFlow (Ours)</strong></td><td><strong>28.87</strong></td><td><strong>58.11</strong></td><td><strong>49.39</strong></td></tr></tbody></table></div>
+<p>PhysFlow uses 28.87 billion parameters and 58.11 GiB peak memory, compared with 28.85 billion parameters and 58.06 GiB for Qwen-Image-Edit. Its latency increases from 44.34 to 49.39 seconds per edit, an 11.4% overhead. We will include this comparison in the revised efficiency table.</p></div></article>
+        </section>
+        <!-- completed-replies:end -->
+
+        <p class="footer">共 16 项独立任务；同一任务在不同审稿人下同步勾选。已完成项包括同数据 SFT（PICABench；RISE 由 15 号追加）、数据集比较回复、PhysicEdit 结果与讨论、cost、数据来源回复及 6 号 latent 分析；分析完成不表示逐状态对齐主张成立。更新于 2026-11-08。</p>
+      </main>
+    </div>
+  </div>
+  <script>
+    const tasks = {
+      'physicedit-score': {
+        title: '补 PhysicEdit 的 PICABench 方法级结果',
+        summary: '在统一评测协议下比较 PhysicEdit、PhysFlow 和相应骨干模型。',
+        kind: '评测', priority: '先做',
+        setup: '统一 PICABench 测试样本、任务设置、评审模型和分数聚合口径。表中明确各方法的骨干，并给出相对于各自骨干的提升。',
+        deliverable: '一张包含 PhysicEdit 本身成绩的比较表，附评测配置、骨干差异及逐样本结果来源。'
+      },
+      'physicedit-discussion': {
+        title: '写清与 PhysicEdit 的联系和区别',
+        summary: '讨论共同动机，以及监督信息、潜在表示、训练方式和推理过程的具体差异。',
+        kind: '文字回应', priority: '先做',
+        setup: '逐项核对原论文和实现，以方法级比较结果支持相关表述。明确现有 53.82 对应 PhysFlow 在 PhysicTran38K 上训练的结果。',
+        deliverable: '一段可用于 rebuttal 的讨论，并对应到相关工作或实验部分的修订位置。'
+      },
+      'same-data-sft': {
+        title: '同一 PhysTrace 数据的 source–target SFT',
+        summary: '使用相同图像对直接微调 Qwen-Image-Edit-2511，量化数据与生成器适配带来的收益。',
+        kind: '需要训练', priority: '先做',
+        setup: '采用相同数据划分和 rank-512 生成器 LoRA，控制优化设置及生成器更新数，记录样本曝光量、可训练参数量和总 GPU 时。预算允许时增加与完整方法等总算力的 SFT 设置。',
+        deliverable: '先在 PICABench 给出骨干、同数据 SFT、完整 PhysFlow 的比较及训练预算说明；RISEBench 由 15 号追加。模型容量控制由同结构终态监督实验补充。'
+      },
+      'frame-sampling': {
+        title: 'time-uniform 与 change-uniform 抽帧对照',
+        summary: '复用相同原始视频，重新抽取中间帧并训练对应版本。',
+        kind: '需要训练',
+        setup: '固定训练样本、起终帧、中间帧数量、模型结构和训练预算，只改变时间均匀或变化量均匀的抽帧策略。',
+        deliverable: '两种抽帧方式的评测结果与配置，说明 change-uniform 对最终编辑效果的贡献。'
+      },
+      'state-count': {
+        title: '中间视觉状态数量消融',
+        summary: '建议比较 2、4、8 个中间视觉状态，4 个作为现有基线。',
+        kind: '需要训练',
+        setup: '固定文本 latent 数量、训练数据和其余设置，训练不同中间状态数量的版本。记录状态数量与对应 latent token 数，并交代预算控制方式。',
+        deliverable: '一张状态数量与性能的对照表，配套报告推理延迟或计算开销。'
+      },
+      'direct-compression': {
+        title: '渐进压缩与直接压缩对照',
+        summary: '在相同最终结构和训练预算下，检验渐进压缩课程的贡献。',
+        kind: '需要训练',
+        setup: '从相同 Stage I checkpoint 出发，一组按现有课程逐步压缩，一组直接采用最终 latent 长度。对齐后续更新数、最终 token 数和生成器适配设置，写清监督信号处理方式。',
+        deliverable: '两种压缩策略的配置和评测结果，单独讨论渐进课程带来的变化。'
+      },
+      'latent-alignment': {
+        title: '验证 latent 与中间物理状态的对应关系',
+        summary: '检查不同位置的 latent 是否能对应到正确的中间视觉状态。',
+        kind: '表征分析',
+        setup: '在留出的轨迹上做状态检索、特征对齐或轻量 probe。优先使用同一视频内的候选帧，并加入位置先验、打乱标签等对照，区分场景识别与状态识别。',
+        deliverable: '定量对齐结果与代表性可视化，并明确这些分析能够支持的物理表征结论。'
+      },
+      'physics-evaluation': {
+        title: '补可测物理约束与失败案例',
+        summary: '选定适合客观测量的物理类别，并分析困难样本和失败类型。',
+        kind: '补充评测',
+        setup: '预先确定样本范围和测量规则，例如适用场景中的镜面反射几何关系。对骨干和完整方法采用相同标注、测量及抽样流程。',
+        deliverable: '一组可核查的物理指标或人工标注结果，以及覆盖常见失败类型的案例分析。'
+      },
+      'inference-statistics': {
+        title: '多推理 seed 与配对置信区间',
+        summary: '为主模型和基线报告生成结果的均值、标准差及性能差异的置信区间。',
+        kind: '推理与统计', priority: '先做',
+        setup: '使用相同测试集和一组预先确定的生成 seeds。固定评审协议，按样本配对计算 bootstrap 95% 置信区间。生成随机性与评审模型随机性分别记录。',
+        deliverable: 'PICABench、RISEBench 的均值 ± 标准差、配对差值及 95% CI，并明确本项评估生成阶段的稳定性。'
+      },
+      'training-seeds': {
+        title: '重复训练 seed，检验训练稳定性',
+        summary: '审稿人明确关心训练随机性。建议对完整方法和同数据 SFT 各做 3 个训练 seeds。',
+        kind: '需要训练', priority: '预算允许',
+        setup: '保持数据、模型设置和训练预算一致，改变训练 seed，并对所有 checkpoint 使用同一评测协议。',
+        deliverable: '训练种子间的均值与标准差。若预算限制执行，回复中明确当前统计覆盖的范围及训练稳定性证据的局限。'
+      },
+      'parameters-memory': {
+        title: '补参数量与峰值显存比较',
+        summary: '将模型规模和显存需求补入现有延迟比较。',
+        kind: '统计与 profiling',
+        setup: '统计总参数量和可训练参数量。在相同硬件、精度、分辨率、batch size 和生成设置下测量推理峰值显存，注明统计口径。',
+        deliverable: '一张参数量、峰值显存与延迟的对应表，附测量条件。'
+      },
+      'data-split': {
+        title: '说明最终版本的数据划分与重叠检查依据',
+        summary: '分别对应原稿最终版本与本轮 +899 补实验版本，整理训练来源、划分流程及实际检查记录。',
+        kind: '文字与记录核对',
+        setup: '说明 PhysTrace 与 PICABench 的划分关系，列明已执行的源图像、样本 ID 或近重复检查及其范围。仅报告实际完成的检查。',
+        deliverable: '一段数据独立性说明及对应记录，准确回应 reviewer 关于源图像和近重复样本的问题。'
+      },
+      'dataset-comparison': {
+        title: '厘清数据集比较中的训练条件',
+        summary: '核对表 4、表 9 的监督方式和优化步数差异，限定数据质量结论。',
+        kind: '文字与配置核对',
+        setup: '列出 PICA100K-SFT、PhysicTran38K、PhysTrace 各设置的架构、监督和训练预算。若进一步主张数据质量的独立贡献，增加控制这些因素的比较。',
+        deliverable: '清晰的实验条件说明，以及与现有控制程度相符的数据集比较结论。'
+      },
+      'terminal-only': {
+        title: '同结构，仅终态视觉监督与生成损失',
+        summary: '保留全部 recurrent latent tokens、final visual block 和可训练模块，移除文本 CoT 与中间视觉监督。',
+        kind: '需要训练', priority: '先做',
+        setup: '训练条件提供初始图像与编辑指令，仅使用 target visual loss + generation loss。中间 latent 继续参与计算。对齐最终结构、数据、训练预算和推理设置，并记录各阶段的冻结策略。',
+        deliverable: '终态监督与完整方法的评测结果，说明过程监督的贡献。报告实际训练输入与损失，避免中间轨迹通过 teacher forcing 进入该对照。'
+      },
+      'related-methods': {
+        title: '说明相对于 EndoCoT、Monet 的贡献',
+        summary: '逐项比较监督信号、latent 更新、训练课程和条件注入方式。',
+        kind: '文字回应', priority: '先做',
+        setup: '核对相关论文与实现，明确共享机制和本文的具体贡献。用同数据 SFT、终态监督及压缩对照支撑对应主张。',
+        deliverable: '一段相关工作讨论或对照表，并将核心贡献与实际实验支持逐项对应。'
+      },
+      'general-editing': {
+        title: '讨论一般编辑能力的分类别权衡',
+        summary: '解释 Hybrid 与 Extract 的下降，并调整通用编辑能力的相关表述。',
+        kind: '分析与文字回应',
+        setup: '结合 ImgEdit-Bench 总分 4.41 → 4.39、Hybrid 3.76 → 3.26、Extract 4.16 → 3.91，分析类别变化及代表性失败案例。',
+        deliverable: '准确描述总体表现和类别差异的回复，并对应修改论文中过强的能力保留表述。'
+      }
+    };
+
+    const reviewers = [
+      {
+        id: 'reviewer-1', name: '审稿人 1', code: '8uwk', rating: '2 分 · 弱拒稿',
+        concern: '主要关注与 PhysicEdit 的关系及方法级比较。',
+        url: 'https://openreview.net/revisions?id=BRyx8ILvaP',
+        tasks: ['physicedit-score', 'physicedit-discussion']
+      },
+      {
+        id: 'reviewer-2', name: '审稿人 2', code: '62MG', rating: '3 分 · 弱接收',
+        concern: '主要关注贡献解耦、物理表征证据和提升的统计稳定性。',
+        url: 'https://openreview.net/revisions?id=knee2i7IIY',
+        tasks: ['same-data-sft', 'frame-sampling', 'state-count', 'direct-compression', 'latent-alignment', 'physics-evaluation', 'inference-statistics', 'training-seeds', 'parameters-memory', 'data-split', 'dataset-comparison', 'related-methods']
+      },
+      {
+        id: 'reviewer-3', name: '审稿人 3', code: 'xuAm', rating: '2 分 · 弱拒稿',
+        concern: '主要关注终态监督对照、方法原创性和一般编辑能力的权衡。',
+        url: 'https://openreview.net/revisions?id=XpuVjp7OCM',
+        tasks: ['same-data-sft', 'terminal-only', 'physicedit-score', 'physicedit-discussion', 'related-methods', 'general-editing']
+      }
+    ];
+
+    const progressNotes = {
+      'physicedit-score': ['3 号 · 已完成并接入回复', '作者主表给出 PhysicEdit 52.35、PhysFlow 56.32，均采用 PICABench-Superficial / Qwen2.5-VL-72B-Instruct。R1 回复已列各自骨干、+2.64/+2.06 pp 的增益及 3.97 pp 系统差距，并保留骨干差异说明。', '#reply-r1'],
+      'physicedit-discussion': ['已完成 · 8uwk 首轮回复已形成', '先认可 PhysicEdit 的视频转移先验与共同动机，再解释 PhysFlow 将层次化文本和有序视觉监督逐步内化为六个 latent tokens 的设计；质量结果、cost 和 53.82 的行身份均已衔接。待作者最终审阅及论文合稿。', '#reply-r1'],
+      'same-data-sft': ['1 号 · PICABench 已完成并接入回复', '11 月 8 日 18:42 PST 核验：537 更新、900 张生成和 4,112 QA 评分完成，准确率 55.12；完整方法 56.32，高 1.20 pp。双方生成器预算一致，完整方法总计 1,790 更新。wrapper 因 15 个官方空 mask 的合理 PSNR 不适用项退出 1，独立核验确认评分产物完整；保留原始诊断。RISE 由 15 号追加。', '#reply-sft-dataset'],
+      'frame-sampling': ['7 / 8 号 · 原视频已补齐', '作者已确认原视频补齐。8 号 K4 change-uniform 已完成单步课程 smoke，正式训练结果待接入；中断恢复验收与正式排卡状态继续跟进执行记录。', ''],
+      'state-count': ['8 / 9 / 10 号 · 原视频已补齐，后续验收待确认', 'K=2/4/8 的训练及评测已有编号入口，作者已确认原视频补齐。其余输入、多帧数串行运行、训练恢复与 inference 续跑的验收状态继续按执行记录核对。', ''],
+      'direct-compression': ['11 号 · 已有入口，正式结果待做', '两条路线需共用 Stage I 起点，匹配后续更新和最终结构。现有记录未显示完整训练及评测完成；终态监督对照不能单独隔离渐进压缩的贡献。', ''],
+      'latent-alignment': ['6 号 · 物理类别与亮度读出已完成；逐状态对齐仍未证实', '六领域平衡准确率 86.91% vs 源图加指令 76.28%，配对增益名义 95% CI +4.10 至 +17.90 pp；同布局预训练为 85.94%，与 PhysFlow 的差异 CI 跨 0。82 个照明测试视频的亮度变化读出 R²=0.370，预训练为 0.402。支持压缩 latent 中物理类别与视觉变化信息可读出，不能归因为训练获得物理机制。此前状态检索 29.83% vs 位置 29.25% 的阴性结论保持不变。图件、全部控制与历史结果已保留，GPU 已释放。', ''],
+      'physics-evaluation': ['13 号 · 待人工几何标注与失败分析', '镜面测量已有方案，仍需预先确定样本及配对标注。验收要求相同规则比较骨干与完整方法，并保留失败案例；现有 MLLM 评分不能代替这一证据。', ''],
+      'inference-statistics': ['4 号 · 生成中，评分与统计待做', '11 月 8 日 06:24 PST 快照：84/7,560 张，处于 base seed42 PICA。总范围为 base/full × 3 seeds × PICA900/RISE360；预计约 8.4 个单卡日，72B 评分仍需多卡。生成与评分完成后才能计算均值、标准差和配对 CI。', ''],
+      'training-seeds': ['12 号 · 待训练预算安排', '完整方法和 SFT 各补训练 seeds43/44，再与 seed42 汇总。当前 4 号仅改变生成 seed，不能作为训练稳定性的证据。', ''],
+      'parameters-memory': ['5 号 · 已完成并接入回复', '六模型表逐项采用作者确认数据，PhysicEdit latency 保留 52.19 秒。62MG 的 cost 回复已写入 Markdown；8uwk 回复引用 PhysFlow/PhysicEdit 两行，准确描述约 5.4% 的延迟降低及 1.86 GiB 的显存增加。', '#reply-cost'],
+      'data-split': ['14 号 · 回复已完成并接入', '已按 PICABench 原论文补入 PICA-100K 合成训练数据与 900 例评测 benchmark 的来源区别，按作者要求标记回复完成。合稿核验备注：11,448 条源图检查得到 1,094 条 dHash 候选，另有一例同源图视觉复核；候选数不是确认重叠数。原稿最终权重与本轮 +899 权重仍需各自对应训练清单；来源说明不代替跨集查重。', '#reply-data-split'],
+      'dataset-comparison': ['已完成 · 四行配置与预算说明已接入', '表格区分 PICA100K+SFT 53.38（4,926 更新）、PhysTrace+SFT 55.12（537）、PhysicTran38K+PhysFlow 53.82（4,632）、PhysTrace+PhysFlow 56.32（1,790）。55.12 对 53.38 的 +1.74 pp 是不同预算下的配置比较；53.82 始终为 PhysFlow 在 PhysicTran38K 上训练的结果。作者自行更新 Overleaf。', '#reply-sft-dataset'],
+      'terminal-only': ['2 号 · 训练完成，PICABench 评测中', '11 月 8 日 18:42 PST：planner 7×179 步及生成器 537 步全部完成，阶段 checkpoint 交接已核验；八个 rank 至少生成 8/900 张，之后自动接 Qwen72B 与 consistency 评分。尚无最终分数，保持未完成。任务继续由执行对话监控。', '#reply-terminal-status'],
+      'related-methods': ['Discussion 与 1 号结果已接入 · 待 2/11 结果', '已按原论文与实现核对设计差异。同数据 SFT 55.12 对完整方法 56.32 的比较已接入，并说明额外 planner 容量及训练。2 号终态监督评测中，11 号直接压缩结果待接入；尚未把系统增益归因于某个具体设计。', '#reply-method-contribution'],
+      'general-editing': ['已有文字与替换段落 · 待合稿', '已整理总体 4.41→4.39，以及 Hybrid、Extract、Add 的类别下降。需要将“总体接近、类别存在权衡”的表述落实到论文；原因归因仍需对应分析。', '']
+    };
+
+    const completedInFile = {
+      'same-data-sft': '2026-11-08-sft-pica-verified',
+      'dataset-comparison': '2026-11-08-sft-dataset-reply',
+      'latent-alignment': '2026-11-08-h100-state-probes',
+      'physicedit-score': '2026-11-08-author-pica',
+      'physicedit-discussion': '2026-11-08-r1-response',
+      'parameters-memory': '2026-11-08-author-cost',
+      'data-split': '2026-11-08-author-data-reply'
+    };
+    const taskIds = Object.keys(tasks);
+    const completed = Object.fromEntries(Object.keys(completedInFile).map(id => [id, true]));
+
+    function createElement(tag, className, text) {
+      const element = document.createElement(tag);
+      if (className) element.className = className;
+      if (text !== undefined) element.textContent = text;
+      return element;
+    }
+
+    function renderTask(taskId, reviewerId) {
+      const task = tasks[taskId];
+      const article = createElement('article', 'task');
+      article.dataset.taskId = taskId;
+      const row = createElement('div', 'task-main');
+      const checkbox = createElement('input', 'task-checkbox');
+      checkbox.type = 'checkbox';
+      checkbox.disabled = true;
+      checkbox.id = reviewerId + '-' + taskId;
+      checkbox.dataset.taskId = taskId;
+      const label = createElement('label', 'task-label');
+      label.htmlFor = checkbox.id;
+      label.append(createElement('span', 'task-title', task.title));
+      label.append(createElement('span', 'task-summary', task.summary));
+      row.append(checkbox, label);
+      article.append(row);
+
+      const meta = createElement('div', 'task-meta');
+      meta.append(createElement('span', 'tag', task.kind));
+      if (task.priority) {
+        const priorityClass = task.priority === '先做' ? 'tag priority' : 'tag optional';
+        meta.append(createElement('span', priorityClass, task.priority));
+      }
+      const sharedWith = reviewers.filter(reviewer => reviewer.tasks.includes(taskId));
+      if (sharedWith.length > 1) {
+        const names = sharedWith.map(reviewer => reviewer.name.replace('审稿人 ', '')).join(' / ');
+        meta.append(createElement('span', '', '共用 · 审稿人 ' + names));
+      }
+      article.append(meta);
+
+      const [status, note, source] = progressNotes[taskId];
+      const statusNote = createElement('div', 'task-status');
+      statusNote.append(createElement('strong', '', status), document.createTextNode(note));
+      if (source) {
+        const evidenceLink = createElement('a', '', '查看依据');
+        evidenceLink.href = source;
+        statusNote.append(document.createElement('br'), evidenceLink);
+      }
+      article.append(statusNote);
+
+      const details = createElement('details');
+      details.append(createElement('summary', '', '设置与完成标准'));
+      const content = createElement('div', 'details-content');
+      for (const [heading, description] of [['执行设置', task.setup], ['完成标准', task.deliverable]]) {
+        const paragraph = createElement('p');
+        paragraph.append(createElement('span', 'detail-label', heading));
+        paragraph.append(document.createTextNode(description));
+        content.append(paragraph);
+      }
+      details.append(content);
+      article.append(details);
+      return article;
+    }
+
+    function renderReviewers() {
+      const navigation = document.getElementById('reviewer-nav');
+      const sections = document.getElementById('reviewer-sections');
+      for (const reviewer of reviewers) {
+        const navLink = createElement('a', 'nav-link');
+        navLink.href = '#' + reviewer.id;
+        const navLabel = createElement('span', 'nav-label', reviewer.name);
+        navLabel.append(createElement('span', 'reviewer-id', reviewer.code));
+        const navCount = createElement('span', 'nav-count');
+        navCount.dataset.reviewerCount = reviewer.id;
+        navLink.append(navLabel, navCount);
+        navigation.append(navLink);
+
+        const section = createElement('section', 'reviewer');
+        section.id = reviewer.id;
+        section.setAttribute('aria-labelledby', reviewer.id + '-heading');
+        const header = createElement('header', 'section-head');
+        const titleLine = createElement('div', 'section-title-line');
+        const heading = createElement('h2', '', reviewer.name);
+        heading.id = reviewer.id + '-heading';
+        heading.append(createElement('span', 'section-id', reviewer.code));
+        const reviewLink = createElement('a', 'review-meta', reviewer.rating + ' · 原始评审');
+        reviewLink.href = reviewer.url;
+        reviewLink.target = '_blank';
+        reviewLink.rel = 'noopener noreferrer';
+        titleLine.append(heading, reviewLink);
+        header.append(titleLine, createElement('p', 'section-description', reviewer.concern));
+        const count = createElement('p', 'section-progress');
+        count.dataset.sectionCount = reviewer.id;
+        header.append(count);
+        section.append(header);
+        for (const taskId of reviewer.tasks) section.append(renderTask(taskId, reviewer.id));
+        sections.append(section);
+      }
+    }
+
+    function updateProgress() {
+      let done = 0;
+      for (const taskId of taskIds) if (completed[taskId]) done += 1;
+      document.getElementById('total-done').textContent = done;
+      document.getElementById('total-count').textContent = taskIds.length;
+      const progress = document.getElementById('total-progress');
+      progress.max = taskIds.length;
+      progress.value = done;
+      progress.setAttribute('aria-valuetext', done + ' / ' + taskIds.length + ' 项已完成');
+      for (const checkbox of document.querySelectorAll('.task-checkbox')) {
+        const isDone = completed[checkbox.dataset.taskId] === true;
+        checkbox.checked = isDone;
+        checkbox.closest('.task').classList.toggle('done', isDone);
+      }
+      for (const reviewer of reviewers) {
+        const count = reviewer.tasks.filter(taskId => completed[taskId]).length;
+        document.querySelector('[data-reviewer-count="' + reviewer.id + '"]').textContent = count + '/' + reviewer.tasks.length;
+        document.querySelector('[data-section-count="' + reviewer.id + '"]').textContent = '已完成 ' + count + ' / ' + reviewer.tasks.length + ' 项';
+      }
+    }
+
+    renderReviewers();
+    updateProgress();
+  </script>
+</body>
+</html>
