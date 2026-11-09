@@ -144,7 +144,7 @@
     <header class="page-header">
       <h1>PhysFlow · Rebuttal progress</h1>
       <p class="intro">持续汇总实验与 reviewer 回复。同数据 SFT 已接入：55.12；完整方法为 56.32。下一重点为同结构终态监督和直接压缩对照。</p>
-    <p><a href="rebuttal-response.md">持续更新回复 · Markdown</a> · <a href="#reply-r1">8uwk 完整回复</a> · <a href="#reply-data-split">数据来源回复</a> · <a href="#reply-method-contribution">EndoCoT / Monet 回复</a> · <a href="#reply-sft-dataset">SFT 与数据集比较</a> · <a href="#reply-sft-baseline">SFT 基线回复</a> · <a href="#reply-cost">Cost 回复</a></p>
+    <p><a href="rebuttal-response.md">持续更新回复 · Markdown</a> · <a href="#reply-r1">8uwk 完整回复</a> · <a href="#reply-data-split">数据来源回复</a> · <a href="#reply-method-contribution">EndoCoT / Monet 回复</a> · <a href="#reply-sft-dataset">SFT 与数据集比较</a> · <a href="#reply-sft-baseline">SFT 基线回复</a> · <a href="#reply-general-editing">一般编辑权衡回复</a> · <a href="#reply-cost">Cost 回复</a></p>
     </header>
     <div class="layout">
       <aside class="sidebar" aria-label="完成进度与审稿人导航">
@@ -156,7 +156,7 @@
         </div>
         <nav id="reviewer-nav" aria-label="审稿人"></nav>
         <p class="sidebar-note">所有访客查看同一份进度。展开“设置与完成标准”查看实验细节。</p>
-        <p class="sidebar-note">最近发布：2026-11-08 19:04 PST。刷新页面查看最新发布的进度与回复。</p>
+        <p class="sidebar-note">最近发布：2026-11-08 19:30 PST。刷新页面查看最新发布的进度与回复。</p>
       </aside>
       <main>
         <noscript>请启用 JavaScript，以显示进度清单；英文回复正文仍可直接阅读。</noscript>
@@ -217,6 +217,8 @@
 <div class="reply-table table-wrap"><table><thead><tr><th scope="col">Configuration</th><th scope="col">PICABench-Superficial (%)</th></tr></thead><tbody><tr><td>Original Qwen-Image-Edit-2511</td><td>54.26</td></tr><tr><td>PhysTrace image-pair SFT</td><td>55.12</td></tr><tr><td>Full PhysFlow</td><td>56.32</td></tr></tbody></table></div>
 <p>Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow exceeds this adapted baseline by 1.20 points. Both use the same rank-512 generator LoRA configuration and 537 generator updates. PhysFlow also trains a planner, for 1,790 total updates, so this comparison includes additional capacity and training. The same-architecture terminal-only control addresses the contribution of process supervision; its evaluation is underway.</p></div></article>
 <article class="reply-block" id="reply-terminal-status"><h3>xuAm · Terminal-only 进度</h3><p>2026-11-08 18:42 PST：训练完成，PICABench 已开始生成（至少 8/900），随后进行 Qwen72B 与 consistency 评分；最终分数待接入。</p></article>
+<article class="reply-block" id="reply-general-editing"><h3>xuAm · 一般编辑能力的类别权衡</h3><p>基础回复已完成；论文修订待同步。失败案例与 Table 6 版本对应关系继续核查，未将原因假设写入回复。</p><div class="reply-prose" lang="en"><p>Thank you for pointing out the category-level declines. Table 6 reports an overall ImgEdit-Bench score of 4.39 for PhysFlow and 4.41 for Qwen-Image-Edit-2511. PhysFlow scores higher in six of nine categories, but Hybrid decreases from 3.76 to 3.26, Extract from 4.16 to 3.91, and Add from 4.45 to 4.26. The similar aggregate scores therefore coexist with larger declines in specific editing categories.</p>
+<p>Our original statement that PhysFlow preserves general editing capabilities without compromise was too broad. We will revise Appendix C.1 to describe similar aggregate performance with category-dependent trade-offs and explicitly report the declines alongside the improvements. Table 6 establishes these performance differences; identifying their cause requires further analysis.</p></div></article>
 <article class="reply-block" id="reply-cost"><h3>62MG · Computation cost 回复</h3><div class="reply-prose" lang="en"><p>Thank you for this suggestion. We now report parameter counts and peak GPU memory alongside inference latency. We count the parameters resident during inference, including reasoning modules, and report peak allocated GPU memory. Parameter counts and peak allocated memory describe the current implementations; the latency column reports separate timing measurements.</p>
 <div class="reply-table"><table><thead><tr><th scope="col">Method</th><th scope="col">Params (B)</th><th scope="col">Memory (GiB)</th><th scope="col">Latency (s)</th></tr></thead><tbody><tr><td>Qwen-Image-Edit</td><td>28.85</td><td>58.06</td><td>44.34</td></tr><tr><td>PhysicEdit</td><td>29.00</td><td>56.25</td><td>52.19</td></tr><tr><td>Step1X-Edit</td><td>20.82</td><td>41.34</td><td>59.18</td></tr><tr><td>Qwen-Image-Edit + explicit reasoning</td><td>28.85</td><td>58.06</td><td>60.12</td></tr><tr><td>ChronoEdit</td><td>22.83</td><td>54.81</td><td>228.68</td></tr><tr><td><strong>PhysFlow (Ours)</strong></td><td><strong>28.87</strong></td><td><strong>58.11</strong></td><td><strong>49.39</strong></td></tr></tbody></table></div>
 <p>PhysFlow uses 28.87 billion parameters and 58.11 GiB peak memory, compared with 28.85 billion parameters and 58.06 GiB for Qwen-Image-Edit. Its latency increases from 44.34 to 49.39 seconds per edit, an 11.4% overhead. We will include this comparison in the revised efficiency table.</p></div></article>
@@ -380,7 +382,7 @@
       'dataset-comparison': ['已完成 · 三组比较已接入回复', '同为 SFT：PhysTrace 对 PICA100K +1.74 pp；同为 PhysFlow：PhysTrace 对 PhysicTran38K +2.50 pp；同一 PhysTrace：完整框架对 SFT +1.20 pp。前两组支持较小数据集的有效性，第三组支持完整框架收益。三列表聚焦数据、策略、成绩；预算差异及额外 planner 训练在表后交代。作者自行更新 Overleaf。', '#reply-sft-dataset'],
       'terminal-only': ['2 号 · 训练完成，PICABench 评测中', '11 月 8 日 18:42 PST：planner 7×179 步及生成器 537 步全部完成，阶段 checkpoint 交接已核验；八个 rank 至少生成 8/900 张，之后自动接 Qwen72B 与 consistency 评分。尚无最终分数，保持未完成。任务继续由执行对话监控。', '#reply-terminal-status'],
       'related-methods': ['Discussion 与 1 号结果已接入 · 待 2/11 结果', '已按原论文与实现核对设计差异。同数据 SFT 55.12 对完整方法 56.32 的比较已接入，并说明额外 planner 容量及训练。2 号终态监督评测中，11 号直接压缩结果待接入；尚未把系统增益归因于某个具体设计。', '#reply-method-contribution'],
-      'general-editing': ['已有文字与替换段落 · 待合稿', '已整理总体 4.41→4.39，以及 Hybrid、Extract、Add 的类别下降。需要将“总体接近、类别存在权衡”的表述落实到论文；原因归因仍需对应分析。', '']
+      'general-editing': ['基础回复已完成并接入 · 案例核查中', '已核对 Table 6 并完成英文基础回复，明确总体 4.41→4.39 与 Hybrid、Extract、Add 的下降。独立审查通过；论文表述待作者同步。已有输出的 D3 / RL 版本与 Table 6 评分对应关系尚未确认，案例不用于解释下降原因。', '#reply-general-editing']
     };
 
     const completedInFile = {

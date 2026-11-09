@@ -164,9 +164,11 @@ Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow ex
 
 ### R3: General-editing trade-offs
 
-> 已有文字草稿，待同步论文修订。
+> 状态：基础回复已完成并接入 HTML，独立核对通过；论文修订尚未同步。已有失败案例正在核查，Table 6 对应的 D3 / RL 版本及逐样本评分尚未确认。基础回复仅使用原表数值，不加入原因归因。
 
-We agree that the category-level results require a more precise conclusion. Table 6 reports an overall ImgEdit-Bench score of 4.39 for PhysFlow and 4.41 for the backbone. PhysFlow improves six of nine categories, while Hybrid decreases from 3.76 to 3.26, Extract from 4.16 to 3.91, and Add from 4.45 to 4.26. The aggregate score therefore conceals larger changes in individual editing categories.
+<!-- reply:general-editing:start -->
+Thank you for pointing out the category-level declines. Table 6 reports an overall ImgEdit-Bench score of 4.39 for PhysFlow and 4.41 for Qwen-Image-Edit-2511. PhysFlow scores higher in six of nine categories, but Hybrid decreases from 3.76 to 3.26, Extract from 4.16 to 3.91, and Add from 4.45 to 4.26. The similar aggregate scores therefore coexist with larger declines in specific editing categories.
 
-We will revise Appendix C.1 to state that PhysFlow achieves a similar aggregate general-editing score with category-dependent trade-offs. We will explicitly report these declines alongside the improvements. The table establishes the observed trade-off after adaptation, while identifying its cause would require targeted analysis of the affected categories.
+Our original statement that PhysFlow preserves general editing capabilities without compromise was too broad. We will revise Appendix C.1 to describe similar aggregate performance with category-dependent trade-offs and explicitly report the declines alongside the improvements. Table 6 establishes these performance differences; identifying their cause requires further analysis.
+<!-- reply:general-editing:end -->
 
