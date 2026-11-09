@@ -1,6 +1,6 @@
 # PhysFlow rebuttal：持续更新主稿
 
-更新日期：2026-11-08。与 [HTML checklist](index.html) 配套维护；后续结果继续补入本文件。
+更新日期：2026-11-09。与 [HTML checklist](index.html) 配套维护；后续结果继续补入本文件。
 
 - 已接入：作者确认的六模型 cost 表；PhysicEdit 的 PICABench 方法级结果；8uwk 的完整首轮回复草稿；基于 PICABench 原论文的训练与评测数据来源说明。
 - 中文引用块为内部状态，提交时只复制英文回复及对应表格。论文修订和 OpenReview 提交另行完成。
@@ -219,11 +219,13 @@ Full PhysFlow achieves 0.75 percentage points higher overall accuracy. Terminal-
 
 ### R3: General-editing trade-offs
 
-> 状态：基础回复已完成并接入 HTML，独立核对通过；论文修订尚未同步。39 例候选初查完成，6 例已核对三种训练后输出；Table 6 对应的 D3 / RL 版本及逐样本评分尚未确认。基础回复仅使用原表数值，不加入原因归因。
+> 状态：回复及论文对应表述已完成并同步，checklist 已勾选。新增 Hybrid／Extract 任务要求与物理过程监督的区别，使用 “We interpret” 表明作者解释；Add 仅报告数值。候选案例与 Table 6 权重／逐样本评分尚未对应，不作为下降原因的证据。
 
 <!-- reply:general-editing:start -->
-Thank you for pointing out the category-level declines. Table 6 reports an overall ImgEdit-Bench score of 4.39 for PhysFlow and 4.41 for Qwen-Image-Edit-2511. PhysFlow scores higher in six of nine categories, but Hybrid decreases from 3.76 to 3.26, Extract from 4.16 to 3.91, and Add from 4.45 to 4.26. The similar aggregate scores therefore coexist with larger declines in specific editing categories.
+Thank you for pointing out the category-level declines. Table 6 reports an overall ImgEdit-Bench score of 4.39 for PhysFlow and 4.41 for Qwen-Image-Edit-2511. PhysFlow scores higher in six of nine categories, while the largest declines occur in Hybrid (3.76 to 3.26) and Extract (4.16 to 3.91), with a smaller decrease in Add (4.45 to 4.26).
 
-Our original statement that PhysFlow preserves general editing capabilities without compromise was too broad. We will revise Appendix C.1 to describe similar aggregate performance with category-dependent trade-offs and explicitly report the declines alongside the improvements. Table 6 establishes these performance differences; identifying their cause requires further analysis.
+We interpret the declines in Hybrid and Extract as task-dependent transfer from physical-process supervision. PhysTrace emphasizes causally connected state evolution within a physical process through textual rationales and intermediate visual states (Sections 3.2 to 3.4). Hybrid combines separately specified editing operations within one instruction, whereas Extract requires isolating a subject while preserving its identity and visual details. [ImgEdit, Sections 3.1 and 4.2](https://arxiv.org/html/2505.20275v1#S3.SS1).
+
+We have revised Appendix C.1 to report these category-level declines alongside the improvements. The revised text describes similar aggregate performance with category-dependent trade-offs, replacing the original claim of general editing without compromise.
 <!-- reply:general-editing:end -->
 

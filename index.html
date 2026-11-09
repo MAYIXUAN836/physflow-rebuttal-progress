@@ -150,22 +150,23 @@
       <aside class="sidebar" aria-label="完成进度与审稿人导航">
         <div class="overall">
           <p class="overall-label">已完成并接入回复 · 共用任务计一次</p>
-          <p class="overall-count"><span id="total-done">8</span><span class="overall-total">/ <span id="total-count">16</span> 项</span></p>
-          <progress id="total-progress" value="8" max="16" aria-label="全部任务完成进度"></progress>
+          <p class="overall-count"><span id="total-done">9</span><span class="overall-total">/ <span id="total-count">16</span> 项</span></p>
+          <progress id="total-progress" value="9" max="16" aria-label="全部任务完成进度"></progress>
           <p id="save-status" class="save-status" role="status" aria-live="polite">共享进度 · 作者统一更新</p>
         </div>
         <nav id="reviewer-nav" aria-label="审稿人"></nav>
         <p class="sidebar-note">所有访客查看同一份进度。展开“设置与完成标准”查看实验细节。</p>
-        <p class="sidebar-note">最近发布：2026-11-09 04:43 PST。刷新页面查看最新发布的进度与回复。</p>
+        <p class="sidebar-note">最近发布：2026-11-09 05:49 PST。刷新页面查看最新发布的进度与回复。</p>
       </aside>
       <main>
         <noscript>请启用 JavaScript，以显示进度清单；英文回复正文仍可直接阅读。</noscript>
         <section class="reviewer coordination" aria-labelledby="coordination-heading">
-          <h2 id="coordination-heading">进度总表 · 2026-11-08</h2>
+          <h2 id="coordination-heading">进度总表 · 2026-11-09</h2>
           <p>按审稿人汇总实验进度、待办事项与英文回复草稿。<a href="rebuttal-response.md">查看 Markdown 主稿</a>。</p>
           <p><strong>本次完成：</strong>1 号同数据 SFT 的 PICABench 结果 55.12 已核验并接入，与完整方法 56.32 相差 1.20 pp。生成器 LoRA 与 537 更新一致，总训练量与容量不同；三组比较分别报告数据集与框架收益：+1.74、+2.50、+1.20 pp；训练条件列在表后。2 号终态监督已核验：55.57；完整分项表已接入，与论文完整模型报告值 56.32 相差 0.75 pp，RFR 为终态监督更高。11 号直接压缩结果待接入。PhysicEdit 方法级比较及 cost 回复继续保留。</p>
           <p><strong>数据来源回复已完成并打钩：</strong>依据 PICABench 原论文，说明 PICA-100K 合成训练数据与单独构建的 900 例评测 benchmark 的来源区别。<a href="#reply-data-split">查看英文回复</a>；各版训练清单与重叠检查的对应关系保留为合稿核验备注。</p>
           <p><strong>EndoCoT / Monet discussion 已成稿：</strong><a href="#reply-method-contribution">查看英文回复</a>。1 号同数据 SFT 和 2 号终态监督结果已接入；11 号直接压缩结果待接入，相关方法条目暂未整体勾选。</p>
+          <p><strong>一般编辑权衡回复已完成：</strong>已补入 Hybrid／Extract 的任务差异解释，并与论文的类别权衡表述同步；对应项已勾选。<a href="#reply-general-editing">查看英文回复</a>。</p>
           <p><strong>勾选含义：</strong>该项工作已完成并接入回复草稿；论文修订、最终核对和 OpenReview 提交另行完成。本页展示作者确认并发布的完成状态，供老师查看。其余实验保留各自注明日期的状态快照。</p>
           <details open>
             <summary>需要优先处理的证据与进度问题</summary>
@@ -230,8 +231,9 @@
 <p>Editing accuracy (%) on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct; higher is better.</p>
 <div class="reply-table table-wrap"><table><thead><tr><th scope="col">Training strategy</th><th scope="col">LP</th><th scope="col">LSE</th><th scope="col">RFL</th><th scope="col">RFR</th><th scope="col">DFM</th><th scope="col">CSL</th><th scope="col">GST</th><th scope="col">LST</th><th scope="col">Overall</th></tr></thead><tbody><tr><td>Terminal-only supervision</td><td>53.84</td><td>64.48</td><td>57.73</td><td><strong>59.18</strong></td><td>42.57</td><td>46.68</td><td>63.59</td><td>55.71</td><td>55.57</td></tr><tr><td>Full PhysFlow</td><td><strong>54.45</strong></td><td><strong>65.19</strong></td><td><strong>58.52</strong></td><td>57.99</td><td><strong>44.91</strong></td><td><strong>47.31</strong></td><td><strong>64.32</strong></td><td><strong>56.43</strong></td><td><strong>56.32</strong></td></tr></tbody></table></div>
 <p>Full PhysFlow achieves 0.75 percentage points higher overall accuracy. Terminal-only scores higher on refraction (59.18 versus 57.99). These single-run scores compare training configurations as a whole; isolating contributions from individual supervision terms and the compression curriculum requires further controls.</p></div></article>
-<article class="reply-block" id="reply-general-editing"><h3>xuAm · 一般编辑能力的类别权衡</h3><p>基础回复已完成；论文修订待同步。候选案例初查已完成，Table 6 版本对应关系待核验；未将原因假设写入回复。</p><div class="reply-prose" lang="en"><p>Thank you for pointing out the category-level declines. Table 6 reports an overall ImgEdit-Bench score of 4.39 for PhysFlow and 4.41 for Qwen-Image-Edit-2511. PhysFlow scores higher in six of nine categories, but Hybrid decreases from 3.76 to 3.26, Extract from 4.16 to 3.91, and Add from 4.45 to 4.26. The similar aggregate scores therefore coexist with larger declines in specific editing categories.</p>
-<p>Our original statement that PhysFlow preserves general editing capabilities without compromise was too broad. We will revise Appendix C.1 to describe similar aggregate performance with category-dependent trade-offs and explicitly report the declines alongside the improvements. Table 6 establishes these performance differences; identifying their cause requires further analysis.</p></div></article>
+<article class="reply-block" id="reply-general-editing"><h3>xuAm · 一般编辑能力的类别权衡</h3><p>回复与论文对应表述已完成并同步，已勾选。新增 Hybrid／Extract 的任务差异解释，使用 “We interpret”；案例版本对应关系仍待核验，不作为下降原因的证据。</p><div class="reply-prose" lang="en"><p>Thank you for pointing out the category-level declines. Table 6 reports an overall ImgEdit-Bench score of 4.39 for PhysFlow and 4.41 for Qwen-Image-Edit-2511. PhysFlow scores higher in six of nine categories, while the largest declines occur in Hybrid (3.76 to 3.26) and Extract (4.16 to 3.91), with a smaller decrease in Add (4.45 to 4.26).</p>
+<p>We interpret the declines in Hybrid and Extract as task-dependent transfer from physical-process supervision. PhysTrace emphasizes causally connected state evolution within a physical process through textual rationales and intermediate visual states (Sections 3.2 to 3.4). Hybrid combines separately specified editing operations within one instruction, whereas Extract requires isolating a subject while preserving its identity and visual details. <a href="https://arxiv.org/html/2505.20275v1#S3.SS1">ImgEdit, Sections 3.1 and 4.2</a>.</p>
+<p>We have revised Appendix C.1 to report these category-level declines alongside the improvements. The revised text describes similar aggregate performance with category-dependent trade-offs, replacing the original claim of general editing without compromise.</p></div></article>
 <article class="reply-block" id="reply-physical-evaluation"><h3>62MG · 物理评测范围与人工证据</h3><p>Discussion 已完成。说明 GPT 评测目的，补充现有 user study 与物理案例，区分人工/VLM 判断和客观物理验证；13 号测量未标完成。</p><div class="reply-prose" lang="en"><p>We thank the reviewer for this thoughtful observation and agree that vision-language model judgments alone do not establish objective physical correctness. The GPT-based evaluations in Tables 7 and 8 address potential evaluator-family bias, and we follow the <a href="https://arxiv.org/html/2510.17681v3#S4.SS1">PICABench</a> and <a href="https://arxiv.org/html/2504.02826v3#S2.SS2">RISEBench</a> scoring frameworks for comparable evaluation.</p>
 <p>Our user study provides complementary human evidence: 17 participants evaluate 100 randomly sampled image-instruction pairs and favor PhysFlow over five competing methods in physical plausibility. Our case studies also examine visible physical consequences, such as updating reflections after object replacement and deforming a pillow under a dog&#x27;s weight.</p>
 <p>Together, these results support improved physical plausibility under model and human assessment. We will clarify this scope and discuss physically grounded metrics as a valuable direction for future benchmarks.</p></div></article>
@@ -398,7 +400,7 @@
       'dataset-comparison': ['已完成 · 三组比较已接入回复', '同为 SFT：PhysTrace 对 PICA100K +1.74 pp；同为 PhysFlow：PhysTrace 对 PhysicTran38K +2.50 pp；同一 PhysTrace：完整框架对 SFT +1.20 pp。前两组支持较小数据集的有效性，第三组支持完整框架收益。三列表聚焦数据、策略、成绩；预算差异及额外 planner 训练在表后交代。作者自行更新 Overleaf。', '#reply-sft-dataset'],
       'terminal-only': ['2 号 · 完整分项表已接入回复', '新跑结果：900 张、4,112 QA，Overall 55.57。表中完整 PhysFlow 为论文报告值 56.32；整体相差 0.75 pp，RFR 是 terminal-only 59.18 高于 57.99。对照保留 2+4 recurrent tokens、16-token final block 和可训练模块，仅用终态视觉监督及生成损失；planner 1,253、generator 537 更新。与论文完整模型原始产物的同口径核对仍为合稿待办；未将差异归因于单一监督或课程。885 有效 PSNR、15 合理不适用项及原 wrapper 退出 1 的过严检查诊断保留。', '#reply-terminal-status'],
       'related-methods': ['Discussion 与 1/2 号结果已接入 · 待 11 号结果', '已核对设计差异并接入 SFT 55.12、同结构终态监督 55.57 与完整方法 56.32。终态对照完整分项表已接入，并区分新跑与论文报告值；论文完整模型原始产物及同口径核对、11 号直接压缩仍待完成，尚不单独归因于某项监督或课程。', '#reply-method-contribution'],
-      'general-editing': ['基础回复完成 · 案例初查完成，版本待核验', '已核对 Table 6 并完成英文基础回复，明确总体 4.41→4.39 与 Hybrid、Extract、Add 的下降。独立审查通过；论文表述待作者同步。已初查 39 例，复核 6 例不同版本输出；D3 / RL 与 Table 6 评分对应关系未确认，案例不用于解释下降原因。', '#reply-general-editing']
+      'general-editing': ['已完成 · 回复与论文表述已同步', '明确总体 4.41→4.39 及 Hybrid、Extract、Add 的下降。新增 Hybrid 多编辑操作组合、Extract 主体提取与物理过程状态演化监督的任务区别；We interpret 表明作者解释，Add 仅报告数值。已核对论文对应修订。候选案例与 Table 6 版本及逐样本评分仍待对应，不作为原因证据。', '#reply-general-editing']
     };
 
     const completedInFile = {
@@ -409,7 +411,8 @@
       'physicedit-score': '2026-11-08-author-pica',
       'physicedit-discussion': '2026-11-08-r1-response',
       'parameters-memory': '2026-11-08-author-cost',
-      'data-split': '2026-11-08-author-data-reply'
+      'data-split': '2026-11-08-author-data-reply',
+      'general-editing': '2026-11-09-task-transfer-reply'
     };
     const taskIds = Object.keys(tasks);
     const completed = Object.fromEntries(Object.keys(completedInFile).map(id => [id, true]));
