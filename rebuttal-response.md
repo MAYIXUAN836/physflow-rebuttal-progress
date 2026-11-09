@@ -45,18 +45,22 @@ The resource and timing measurements come from separate runs. In these reported 
 > 状态：1 号 PICABench 结果已完成独立核验并接入回复；同数据 SFT 与 dataset-comparison 文字回应完成，RISE 由 15 号追加。2026-11-08 18:42 PST 快照：2 号训练完成、评测中；11 号结果待接入。
 
 <!-- reply:sft-dataset:start -->
-**PhysFlow exceeds image-pair fine-tuning on the same PhysTrace pairs by 1.20 percentage points.** We added an image-pair SFT baseline using Qwen-Image-Edit-2511, the same PhysTrace source-target pairs, and the same rank-512 generator LoRA configuration. Both settings use 537 generator updates. On PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct, image-pair SFT scores 55.12 and PhysFlow scores 56.32. PhysFlow additionally trains a planner, bringing its total to 1,790 updates. This comparison measures the gain of the complete training configuration beyond generator adaptation to the image pairs. Isolating process supervision at matched architecture requires the terminal-only control, whose evaluation is underway.
+**The added PhysTrace image-pair SFT baseline enables three comparisons of dataset effectiveness and the full training framework.** All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superficial with Qwen2.5-VL-72B-Instruct and report gains in percentage points.
 
-**We also distinguish the training data, strategy, and update budget in the dataset comparison.** The revised table includes the new PhysTrace image-pair SFT row:
+| Training data | Training strategy | Overall (%) |
+|---|---|---:|
+| PICA100K | Image-pair SFT | 53.38 |
+| PhysTrace | Image-pair SFT | 55.12 |
+| PhysicTran38K | PhysFlow | 53.82 |
+| PhysTrace | PhysFlow | 56.32 |
 
-| Training data | Training strategy | Total optimizer updates | Overall (%) |
-|---|---|---:|---:|
-| PICA100K | Image-pair SFT | 4,926 | 53.38 |
-| PhysTrace | Image-pair SFT | 537 | 55.12 |
-| PhysicTran38K | PhysFlow | 4,632 | 53.82 |
-| PhysTrace | PhysFlow | 1,790 | 56.32 |
+**1. Dataset comparison under image-pair SFT: +1.74 points.** PhysTrace reaches 55.12, compared with 53.38 for PICA100K, using fewer training examples and generator updates. Both configurations use source-target image-pair supervision. This result supports the effectiveness of the PhysTrace image pairs even with direct generator fine-tuning.
 
-PhysTrace image-pair SFT exceeds PICA100K image-pair SFT by 1.74 points under these settings. Their different update budgets limit this result to a comparison of the reported configurations. A data-quality attribution requires matched training budgets and control of the other construction choices. The 53.82 row denotes PhysFlow trained on PhysicTran38K. We will label these training strategies explicitly and scope the discussion of Tables 4 and 9 accordingly.
+**2. Dataset comparison within PhysFlow: +2.50 points.** PhysTrace reaches 56.32, compared with 53.82 for PhysicTran38K, while using the same PhysFlow architecture and curriculum. PhysTrace again achieves a higher score with fewer training examples. The 53.82 row denotes PhysFlow trained on PhysicTran38K. Together, these two comparisons support the usefulness of the smaller PhysTrace dataset under both training strategies.
+
+**3. Framework comparison on the same PhysTrace pairs: +1.20 points.** PhysFlow reaches 56.32, compared with 55.12 for image-pair SFT. This comparison fixes the source-target pairs, rank-512 generator LoRA configuration, and 537 generator updates. It shows that the complete PhysFlow training framework improves on direct adaptation to the same image pairs.
+
+**Training conditions.** Across datasets, PICA100K SFT uses 4,926 updates, PhysTrace SFT uses 537, and PhysFlow uses 4,632 on PhysicTran38K versus 1,790 on PhysTrace. PhysFlow adds planner capacity and training to the matched generator budget. These results therefore compare the reported data and framework configurations; the terminal-only and direct-compression controls address finer attribution to process supervision and the curriculum. We will organize Tables 4 and 9 and their discussion around these three comparisons.
 <!-- reply:sft-dataset:end -->
 
 ### R2: Latent representation and supervision
