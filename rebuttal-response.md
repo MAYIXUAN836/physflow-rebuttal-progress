@@ -105,7 +105,7 @@ The seven displayed tasks form an illustrative subset of eleven exploratory task
 Together, these results support physical-semantic and conditional-consequence readout alongside order-sensitive editing. The diagnostic scenes are synthetic. Token-to-frame temporal alignment, internal physical-law computation, and physical causal mediation through the generator require separate evidence.
 <!-- reply:latent-representation:end -->
 
-附件：[最终四联图 PDF](attachments/latent-analysis-four.pdf) · [单页附录预览 PDF](attachments/latent-appendix-preview.pdf)。
+附件（v15）：[Overleaf 替换包 ZIP](attachments/physflow-latent-appendix.zip) · [LaTeX 片段](attachments/latent-representation-analysis.tex) · [四联图 PDF](attachments/latent-analysis-four.pdf) · [单页附录预览 PDF](attachments/latent-appendix-preview.pdf)。
 
 ### R2: Sampling and compression
 
