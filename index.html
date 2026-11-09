@@ -144,7 +144,7 @@
     <header class="page-header">
       <h1>PhysFlow · Rebuttal progress</h1>
       <p class="intro">持续汇总实验与 reviewer 回复。同数据 SFT 已接入：55.12；完整方法为 56.32。同结构终态监督 55.57 已接入；下一重点为直接压缩对照。</p>
-    <p><a href="rebuttal-response.md">持续更新回复 · Markdown</a> · <a href="#reply-r1">8uwk 完整回复</a> · <a href="#reply-data-split">数据来源回复</a> · <a href="#reply-method-contribution">EndoCoT / Monet 回复</a> · <a href="#reply-sft-dataset">SFT 与数据集比较</a> · <a href="#reply-sft-baseline">SFT 基线回复</a> · <a href="#reply-terminal-status">终态监督对照</a> · <a href="#reply-general-editing">一般编辑权衡回复</a> · <a href="#reply-cost">Cost 回复</a></p>
+    <p><a href="rebuttal-response.md">持续更新回复 · Markdown</a> · <a href="#reply-r1">8uwk 完整回复</a> · <a href="#reply-data-split">数据来源回复</a> · <a href="#reply-latent-representation">物理表征回复</a> · <a href="#reply-method-contribution">EndoCoT / Monet 回复</a> · <a href="#reply-sft-dataset">SFT 与数据集比较</a> · <a href="#reply-sft-baseline">SFT 基线回复</a> · <a href="#reply-terminal-status">终态监督对照</a> · <a href="#reply-general-editing">一般编辑权衡回复</a> · <a href="#reply-cost">Cost 回复</a></p>
     </header>
     <div class="layout">
       <aside class="sidebar" aria-label="完成进度与审稿人导航">
@@ -156,7 +156,7 @@
         </div>
         <nav id="reviewer-nav" aria-label="审稿人"></nav>
         <p class="sidebar-note">所有访客查看同一份进度。展开“设置与完成标准”查看实验细节。</p>
-        <p class="sidebar-note">最近发布：2026-11-08 22:46 PST。刷新页面查看最新发布的进度与回复。</p>
+        <p class="sidebar-note">最近发布：2026-11-08 23:20 PST。刷新页面查看最新发布的进度与回复。</p>
       </aside>
       <main>
         <noscript>请启用 JavaScript，以显示进度清单；英文回复正文仍可直接阅读。</noscript>
@@ -171,7 +171,7 @@
             <summary>需要优先处理的证据与进度问题</summary>
             <ol>
               <li><strong>数据与 checkpoint 对应关系：</strong>作者确认的原稿最终无重叠版本，与本轮指定的 +899 D3 恢复权重需要分别标识。本轮 14 号检出 1,094 条近重复候选；编号文档记录至少一例经视觉复核的同源图。候选总数不是已确认重叠数，这批检查也不能推断另一服务器的最终版本。合稿前需对应到实际训练清单、权重和结果。</li>
-              <li><strong>latent 物理类别分析已补完：</strong>原始数据为六领域、26 细类。六领域平衡准确率 86.91%，源图加指令 76.28%，同布局预训练对照 85.94%。亮度变化读出 R²=0.370，预训练对照 0.402。已交付三组图件与完整对照，支持类别与视觉变化信息可读出；此前状态检索的阴性结论保持不变。</li>
+              <li><strong>物理表征回复已完成：</strong>六领域平衡准确率 86.91%；受控支撑移除中，中间视觉 token 的状态／配对准确率为 99.61%／99.22%；原有顺序干预补充生成端证据。<a href="#reply-latent-representation">查看三组证据的英文回复</a>。保留预训练和输入侧强对照，以及此前状态检索与其他探索的阴性结果；支持物理信息可读出，逐 token 的真实中间状态对应仍未确立。</li>
               <li><strong>Cost 与长任务：</strong>Cost 已使用作者本轮确认表格写入回复，其中 PhysicEdit 为另一次测量的 52.19 秒；不使用历史日志覆盖。原稿测量设置描述在论文合稿时同步核对。4 号 7,560 张生成原估计约 8.4 个单卡日，之后仍需 72B 评分。作者已确认原视频补齐；7/9/10 号的其余输入与中断续跑验收继续按执行记录跟进。</li>
             </ol>
           </details>
@@ -203,6 +203,12 @@
 <div class="reply-table"><table><thead><tr><th scope="col">Method</th><th scope="col">Params (B)</th><th scope="col">Memory (GiB)</th><th scope="col">Latency (s)</th></tr></thead><tbody><tr><td>PhysicEdit</td><td>29.00</td><td>56.25</td><td>52.19</td></tr><tr><td><strong>PhysFlow (Ours)</strong></td><td><strong>28.87</strong></td><td><strong>58.11</strong></td><td><strong>49.39</strong></td></tr></tbody></table></div>
 <p>The resource and timing measurements come from separate runs. In these reported results, PhysFlow takes 2.80 fewer seconds per edit, a 5.4% latency reduction, while using 1.86 GiB more peak memory. These measurements show a latency advantage with a memory trade-off. We will include the method-level results and cost comparison in the revised manuscript.</p></div></article>
 <article class="reply-block" id="reply-data-split"><h3>62MG · Data separation 回复</h3><p>回复已完成并接入，本项已勾选。合稿核验备注：原稿最终版本与 +899 补实验版本的实际训练清单、checkpoint 和重叠检查仍需分别对应；勾选表示回复完成。</p><div class="reply-prose" lang="en"><p>PICA-100K provides training data, while PICABench provides a separately curated evaluation set of 900 editing examples (Pu et al., <a href="https://arxiv.org/html/2510.17681v3#S3.SS2">Sections 3.1 and 3.2</a>, and <a href="https://arxiv.org/html/2510.17681v3#S3.SS4">Section 3.4</a>). The authors collect PICABench evaluation images from licensed and public sources and construct PICA-100K from generated source images and synthetic videos. We start constructing our PhysTrace training dataset with PICA-100K image-instruction pairs (Section 3.2 of our manuscript). We will clarify these distinct data sources and their training and evaluation roles in Section 3.2 and Appendix A.</p></div></article>
+<article class="reply-block" id="reply-latent-representation"><h3>62MG · 物理表征：类别、受控后果与顺序干预</h3><p>三组证据已接入英文回复，本项已勾选。99.61% / 99.22% 为冻结 token 的探针读出；关键对照和解释范围见正文。</p><div class="reply-prose" lang="en"><p><strong>The latent plan contains linearly decodable physical-domain information and intervention-dependent state consequences.</strong> We now add two representation analyses to complement the token-order intervention in Appendix C.6.</p>
+<p><strong>1. Physical-domain information.</strong> A linear probe on the six-token plan achieves 86.91% balanced accuracy across six physical domains on 212 held-out videos, compared with 16.67% chance. A probe on the mean of the four intermediate visual tokens reaches 76.90%. The source-image-plus-instruction control reaches 76.28%, and the pretrained model with the same token layout reaches 85.94%. These results establish domain information in the plan; attributing that information to PhysFlow training requires further evidence.</p>
+<p><strong>2. Physical consequences of controlled support removal.</strong> Each synthetic scene contains a ball resting on one of two colored blocks. We fix the initial image and change which block the instruction removes. The analytic reference predicts falling after removing the supporting block and continued support after removing the other block. Instructions specify the removal color without naming the outcome. We freeze PhysFlow and fit a linear ridge probe using only the mean of its four intermediate visual tokens, with separate scene families for probe training, validation, and testing.</p>
+<p>On 64 held-out test families, the probe achieves 99.61% state accuracy (255/256) and 99.22% paired accuracy (127/128). Paired accuracy requires both intervention outcomes for the same image to be correct. The 95% family-bootstrap intervals are 98.83% to 100% and 97.66% to 100%, respectively. Source-image-only and removal-color-only probes each score 50% state accuracy; the source-image-and-instruction prefix probe before latent planning scores 92.58%. Both textual latent probes and a source-image probe with separate weights for each removal condition reach 100%. The result establishes linear access to support-dependent consequences in intermediate visual tokens; these scores measure supervised readout accuracy.</p>
+<p><strong>3. Token order affects generation.</strong> The original experiment on 64 PICABench-Superficial inputs reports a 3.42-percentage-point accuracy decrease after reversing or shuffling intermediate-token contents. This supplies functional evidence that generation uses order-sensitive information.</p>
+<p>Together, these analyses support physical-semantic readout and sensitivity to token order. Alignment of individual tokens with successive physical states, training-specific acquisition of physical laws, and causal mediation of physical behavior through the generator remain separate questions. We will add these analyses and their controls to the appendix and clarify that causal attention specifies the direction of information flow.</p></div></article>
 <article class="reply-block" id="reply-method-contribution"><h3>62MG / xuAm · 相对 EndoCoT、Monet 的贡献</h3><div class="reply-prose" lang="en"><p><strong>PhysFlow learns a compact plan from supervision of both the physical transformation and its outcome.</strong> A target image specifies the desired result; physical rationales and intermediate visual states provide additional supervision about the transformation. Our contribution is a training curriculum that compresses these complementary signals into six latent tokens while retaining a separate 16-token final visual block. This allocates different representation budgets to the transformation and its endpoint, and gives the image generator access to both (Sections 3.3 and 3.4).</p>
 <p><strong>Relative to EndoCoT, we change the representation and its supervision during compression.</strong> EndoCoT establishes a closely related approach with recurrent thought states, intermediate image-generation supervision, and terminal textual grounding. Its terminal-consolidation stage retains recurrent thought updates while stopping gradient propagation through intermediate steps. It also avoids decoding intermediate images at inference, a property we share. <a href="https://arxiv.org/html/2603.12252v1#S4.SS2">EndoCoT, Section 4.2</a>. PhysFlow replaces high-level physical rationales, low-level transition descriptions, and then successive intermediate visual blocks with individual latent tokens. Each visual replacement removes that block&#x27;s direct alignment loss; later uncompressed blocks, final-block alignment, and the flow-matching loss continue to train the compressed tokens. The curriculum therefore changes how the planner represents the process and receives supervision as it approaches the inference representation. At inference, the generator receives all six plan tokens together with the separate final visual block (Sections 3.3 and 3.4).</p>
 <p><strong>Relative to Monet, we jointly internalize textual and visual process supervision for image generation.</strong> Monet distills auxiliary visual information into latent embeddings within text-latent interleaved reasoning and further trains them with visual-latent policy optimization. Its latent embeddings support a model that produces textual answers. <a href="https://arxiv.org/html/2511.21395v2#S3">Monet, Section 3</a>. PhysFlow compresses both the textual rationales and the intermediate visual representations into a continuous plan before generating the edited image. During planner training, the flow-matching loss propagates through a frozen image generator to train the conditioning representations. We then freeze the planner and adapt the generator to these representations. This couples learning the plan to its use in image generation (Section 3.4).</p>
@@ -227,7 +233,7 @@
         </section>
         <!-- completed-replies:end -->
 
-        <p class="footer">共 16 项独立任务；同一任务在不同审稿人下同步勾选。已完成项包括同结构终态监督、同数据 SFT（PICABench；RISE 由 15 号追加）、数据集比较回复、PhysicEdit 结果与讨论、cost、数据来源回复及 6 号 latent 分析；分析完成不表示逐状态对齐主张成立。更新于 2026-11-08。</p>
+        <p class="footer">共 16 项独立任务；同一任务在不同审稿人下同步勾选。已完成项包括同结构终态监督、同数据 SFT（PICABench；RISE 由 15 号追加）、数据集比较回复、PhysicEdit 结果与讨论、cost、数据来源回复及 6 号物理表征回复；可读出证据不表示逐状态对齐主张成立。更新于 2026-11-08。</p>
       </main>
     </div>
   </div>
@@ -277,7 +283,7 @@
       },
       'latent-alignment': {
         title: '验证 latent 与中间物理状态的对应关系',
-        summary: '检查不同位置的 latent 是否能对应到正确的中间视觉状态。',
+        summary: '结合状态对齐、物理类别及受控干预探针，检验 latent 包含的物理信息。',
         kind: '表征分析',
         setup: '在留出的轨迹上做状态检索、特征对齐或轻量 probe。优先使用同一视频内的候选帧，并加入位置先验、打乱标签等对照，区分场景识别与状态识别。',
         deliverable: '定量对齐结果与代表性可视化，并明确这些分析能够支持的物理表征结论。'
@@ -375,7 +381,7 @@
       'frame-sampling': ['7 / 8 号 · 原视频已补齐', '作者已确认原视频补齐。8 号 K4 change-uniform 已完成单步课程 smoke，正式训练结果待接入；中断恢复验收与正式排卡状态继续跟进执行记录。', ''],
       'state-count': ['8 / 9 / 10 号 · 原视频已补齐，后续验收待确认', 'K=2/4/8 的训练及评测已有编号入口，作者已确认原视频补齐。其余输入、多帧数串行运行、训练恢复与 inference 续跑的验收状态继续按执行记录核对。', ''],
       'direct-compression': ['11 号 · 已有入口，正式结果待做', '两条路线需共用 Stage I 起点，匹配后续更新和最终结构。现有记录未显示完整训练及评测完成；终态监督对照不能单独隔离渐进压缩的贡献。', ''],
-      'latent-alignment': ['6 号 · 物理类别与亮度读出已完成；逐状态对齐仍未证实', '六领域平衡准确率 86.91% vs 源图加指令 76.28%，配对增益名义 95% CI +4.10 至 +17.90 pp；同布局预训练为 85.94%，与 PhysFlow 的差异 CI 跨 0。82 个照明测试视频的亮度变化读出 R²=0.370，预训练为 0.402。支持压缩 latent 中物理类别与视觉变化信息可读出，不能归因为训练获得物理机制。此前状态检索 29.83% vs 位置 29.25% 的阴性结论保持不变。图件、全部控制与历史结果已保留，GPU 已释放。', ''],
+      'latent-alignment': ['6 号 · 三组证据已接入正式回复', '六领域平衡准确率 86.91%，随机 16.67%；四个中间视觉 token 均值的支撑后果读出为 99.61% 状态准确率、99.22% 配对准确率（同图两种干预均正确）。原有顺序干预补充生成功能证据。关键对照保留：同布局预训练 85.94%；支撑任务的条件门控源图与文本 latent 达到 100%。结果支持可读出，未建立训练新增物理规律、逐时刻对齐或生成物理因果中介。全部阴性探索与审计保留。', '#reply-latent-representation'],
       'physics-evaluation': ['13 号 · 待人工几何标注与失败分析', '镜面测量已有方案，仍需预先确定样本及配对标注。验收要求相同规则比较骨干与完整方法，并保留失败案例；现有 MLLM 评分不能代替这一证据。', ''],
       'inference-statistics': ['4 号 · 生成中，评分与统计待做', '11 月 8 日 06:24 PST 快照：84/7,560 张，处于 base seed42 PICA。总范围为 base/full × 3 seeds × PICA900/RISE360；预计约 8.4 个单卡日，72B 评分仍需多卡。生成与评分完成后才能计算均值、标准差和配对 CI。', ''],
       'training-seeds': ['12 号 · 待训练预算安排', '完整方法和 SFT 各补训练 seeds43/44，再与 seed42 汇总。当前 4 号仅改变生成 seed，不能作为训练稳定性的证据。', ''],
@@ -391,7 +397,7 @@
       'terminal-only': '2026-11-08-terminal-pica-verified',
       'same-data-sft': '2026-11-08-sft-pica-verified',
       'dataset-comparison': '2026-11-08-sft-dataset-reply',
-      'latent-alignment': '2026-11-08-h100-state-probes',
+      'latent-alignment': '2026-11-08-physical-readout-reply',
       'physicedit-score': '2026-11-08-author-pica',
       'physicedit-discussion': '2026-11-08-r1-response',
       'parameters-memory': '2026-11-08-author-cost',

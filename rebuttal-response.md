@@ -65,6 +65,8 @@ The resource and timing measurements come from separate runs. In these reported 
 
 ### R2: Latent representation and supervision
 
+> 三组证据已接入正式英文回复：六领域平衡准确率 86.91%；受控支撑移除的中间视觉 token 读出为 99.61% 状态准确率、99.22% 配对准确率；原有顺序干预作为生成功能证据。后两项探针指标不代表生成成功率。保留同布局预训练与输入侧强对照；逐 token 的时间状态对应仍未确立。支撑移除结果与完整审计、全部对照。
+
 > 6 号 H100 补充分析已完成，见 完整报告。validation212 拟合、test212 检索：共享线性读出 29.83% vs 位置原型 29.25%，配对增益 95% CI 为 −1.30 至 +2.36 pp。扩展判别式探索为 48.23% vs 位置 46.11%（+2.12 pp，名义 CI +0.24 至 +4.13 pp），但源图与终态控制为 48.00%/48.58%，对应配对优势未成立。现有证据仍不足以支持逐 token 的物理状态对应。分析完成不等于正面主张成立；所有历史结果保留。
 
 > 6 号新增物理类别与亮度分析，见 报告与三组图件。原始 taxonomy 为六领域、26 细类，另有八类 PICA 标签。六领域平衡准确率 86.91% vs 源图加指令 76.28%（配对增益名义 CI +4.10 至 +17.90 pp）；同布局预训练对照为 85.94%，与 PhysFlow 的差异未确立。82 个照明测试视频的亮度变化读出 R²=0.370，指令 TF-IDF 为 0.365，预训练为 0.402。可主张压缩 latent 保留了可读出的物理类别与视觉变化信息；训练获得额外物理规律、逐状态对齐与因果物理作用仍缺证据。所有结果属于探索性后续分析。
@@ -73,7 +75,19 @@ The six latent thoughts form a learned conditioning sequence Z = [h, l, m₁, m�
 
 Section 3.4 specifies how these roles enter training. Stage I aligns each 16-token intermediate block with the corresponding frame encoding from a moving-average teacher. Stage II replaces each intermediate block with one latent token and removes that block's direct alignment loss. Later uncompressed blocks, the final visual block, and the generation objective provide the remaining supervision. After Stage II compresses all intermediate blocks, the final-block alignment and generation objectives supervise the planner. This training defines the intended roles of the latent positions, while their physical-state correspondence remains an empirical question.
 
-The intervention in Appendix C.6 shows that the generator uses order-sensitive information in the intermediate tokens on the tested 64 examples. Establishing which physical variables or intermediate states those tokens encode requires representation-level evidence. We will scope the interpretation of Figure 7 to this observed order sensitivity and clarify that “causal” in the attention mechanism specifies the direction of information flow.
+<!-- reply:latent-representation:start -->
+**The latent plan contains linearly decodable physical-domain information and intervention-dependent state consequences.** We now add two representation analyses to complement the token-order intervention in Appendix C.6.
+
+**1. Physical-domain information.** A linear probe on the six-token plan achieves 86.91% balanced accuracy across six physical domains on 212 held-out videos, compared with 16.67% chance. A probe on the mean of the four intermediate visual tokens reaches 76.90%. The source-image-plus-instruction control reaches 76.28%, and the pretrained model with the same token layout reaches 85.94%. These results establish domain information in the plan; attributing that information to PhysFlow training requires further evidence.
+
+**2. Physical consequences of controlled support removal.** Each synthetic scene contains a ball resting on one of two colored blocks. We fix the initial image and change which block the instruction removes. The analytic reference predicts falling after removing the supporting block and continued support after removing the other block. Instructions specify the removal color without naming the outcome. We freeze PhysFlow and fit a linear ridge probe using only the mean of its four intermediate visual tokens, with separate scene families for probe training, validation, and testing.
+
+On 64 held-out test families, the probe achieves 99.61% state accuracy (255/256) and 99.22% paired accuracy (127/128). Paired accuracy requires both intervention outcomes for the same image to be correct. The 95% family-bootstrap intervals are 98.83% to 100% and 97.66% to 100%, respectively. Source-image-only and removal-color-only probes each score 50% state accuracy; the source-image-and-instruction prefix probe before latent planning scores 92.58%. Both textual latent probes and a source-image probe with separate weights for each removal condition reach 100%. The result establishes linear access to support-dependent consequences in intermediate visual tokens; these scores measure supervised readout accuracy.
+
+**3. Token order affects generation.** The original experiment on 64 PICABench-Superficial inputs reports a 3.42-percentage-point accuracy decrease after reversing or shuffling intermediate-token contents. This supplies functional evidence that generation uses order-sensitive information.
+
+Together, these analyses support physical-semantic readout and sensitivity to token order. Alignment of individual tokens with successive physical states, training-specific acquisition of physical laws, and causal mediation of physical behavior through the generator remain separate questions. We will add these analyses and their controls to the appendix and clarify that causal attention specifies the direction of information flow.
+<!-- reply:latent-representation:end -->
 
 ### R2: Sampling and compression
 
