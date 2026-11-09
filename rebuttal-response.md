@@ -164,7 +164,7 @@ Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow ex
 
 ### R3: General-editing trade-offs
 
-> 状态：基础回复已完成并接入 HTML，独立核对通过；论文修订尚未同步。已有失败案例正在核查，Table 6 对应的 D3 / RL 版本及逐样本评分尚未确认。基础回复仅使用原表数值，不加入原因归因。
+> 状态：基础回复已完成并接入 HTML，独立核对通过；论文修订尚未同步。39 例候选初查完成，6 例已核对三种训练后输出；Table 6 对应的 D3 / RL 版本及逐样本评分尚未确认。基础回复仅使用原表数值，不加入原因归因。
 
 <!-- reply:general-editing:start -->
 Thank you for pointing out the category-level declines. Table 6 reports an overall ImgEdit-Bench score of 4.39 for PhysFlow and 4.41 for Qwen-Image-Edit-2511. PhysFlow scores higher in six of nine categories, but Hybrid decreases from 3.76 to 3.26, Extract from 4.16 to 3.91, and Add from 4.45 to 4.26. The similar aggregate scores therefore coexist with larger declines in specific editing categories.
