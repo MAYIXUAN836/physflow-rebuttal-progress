@@ -97,13 +97,23 @@ Change-uniform sampling aims to distribute supervision across visible changes in
 
 We use four intermediate states as a fixed design choice, which yields four visual reasoning tokens after compression. The existing experiments evaluate this configuration. Selecting the best state count and establishing the benefit of progressive over direct compression require separate ablations. We will make these distinctions explicit when discussing the sampling rule and curriculum.
 
-### R2: Statistical uncertainty and physical evaluation
+### R2: Statistical uncertainty
 
-> 已有文字草稿。待生成 seeds、配对 CI、训练 seeds，以及物理测量和失败案例。
+> 已有统计回复草稿。待生成 seeds、配对 CI 和训练 seeds；物理评测范围见下方独立回复。
 
 We agree that the reported gains require careful interpretation. The main tables report increases of 2.06 percentage points on PICABench and 1.38 points on RISEBench over the backbone. These are point estimates under the reported evaluation settings. Their uncertainty across training runs and evaluation samples requires repeated runs and confidence intervals.
 
-The alternative evaluators in Tables 7 and 8 assess sensitivity to the choice of multimodal judge, and the user study provides human preference evidence. These evaluations support conclusions about judged physical plausibility. Verification of measurable physical laws requires task-specific measurements, such as geometric consistency under known scene conditions. We will distinguish these forms of evidence and describe the physical interpretation of the benchmark scores accordingly.
+### R2: Physical evaluation and human evidence
+
+> 状态：独立 discussion 已完成。依据原稿 17 人、100 对随机样本的 user study 与定性案例，说明可比性、人工证据及评测边界；物理指标作为未来 benchmark 方向。未声称人机逐样本一致率、客观物理验证或新的物理测量已完成。13 号实验安排与完成状态不变。
+
+<!-- reply:physical-evaluation:start -->
+Thank you for highlighting the distinction between judged physical plausibility and objective physical correctness. We agree that the GPT-based evaluations in Tables 7 and 8 address dependence on the evaluator, while objective verification requires measurements of physical quantities. We use the tasks and scoring frameworks of [PICABench](https://arxiv.org/html/2510.17681v3#S4.SS1) and [RISEBench](https://arxiv.org/html/2504.02826v3#S2.SS2) to compare editing methods on established benchmarks. This choice provides a common basis for comparison while retaining the limitations of judgment-based evaluation.
+
+Our evidence also includes human assessment and qualitative case studies. In our existing user study, 17 participants evaluate 100 randomly sampled image-instruction pairs from the two benchmarks. They compare PhysFlow with five competing methods on physical plausibility, instruction following, and visual consistency, and favor PhysFlow across all three criteria. These preferences provide human evidence consistent with the overall improvement indicated by the automated evaluations. Our qualitative examples further examine visible physical consequences, including updating a mirror reflection after an object replacement and deforming a pillow beneath a dog's weight (Section 4, User Study and Qualitative Results).
+
+Together, these results support improvements in assessed physical plausibility. We will clarify this scope and the distinction from quantitative verification of physical laws in the revised manuscript. For example, measuring reflection geometry under known scene conditions would provide complementary evidence. Developing such metrics alongside human assessment is a valuable direction for future physical image-editing benchmarks.
+<!-- reply:physical-evaluation:end -->
 
 ### R2: Data separation
 
