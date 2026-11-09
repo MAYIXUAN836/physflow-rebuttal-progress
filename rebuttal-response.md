@@ -60,7 +60,7 @@ The resource and timing measurements come from separate runs. In these reported 
 
 **3. Framework comparison on the same PhysTrace pairs: +1.20 points.** PhysFlow reaches 56.32, compared with 55.12 for image-pair SFT. This comparison fixes the source-target pairs, rank-512 generator LoRA configuration, and 537 generator updates. It shows that the complete PhysFlow training framework improves on direct adaptation to the same image pairs.
 
-**Training conditions.** Across datasets, PICA100K SFT uses 4,926 updates, PhysTrace SFT uses 537, and PhysFlow uses 4,632 on PhysicTran38K versus 1,790 on PhysTrace. PhysFlow adds planner capacity and training to the matched generator budget. These results therefore compare the reported data and framework configurations; the terminal-only and direct-compression controls address finer attribution to process supervision and the curriculum. We will organize Tables 4 and 9 and their discussion around these three comparisons.
+**Training conditions.** Across datasets, PICA100K SFT uses 4,926 updates, PhysTrace SFT uses 537, and PhysFlow uses 4,632 on PhysicTran38K versus 1,790 on PhysTrace. PhysFlow adds planner capacity and training to the matched generator budget. These results compare the reported data and framework configurations. The added same-architecture terminal-only control scores 55.57, below full PhysFlow by 0.75 points with matched planner and generator update counts. This supports the full process-supervised training configuration; the direct-compression control will separate the contribution of the curriculum. We will organize Tables 4 and 9 and their discussion around these three comparisons.
 <!-- reply:sft-dataset:end -->
 
 ### R2: Latent representation and supervision
@@ -135,7 +135,7 @@ PhysFlow uses 28.87 billion parameters and 58.11 GiB peak memory, compared with 
 
 **Relative to Monet, we jointly internalize textual and visual process supervision for image generation.** Monet distills auxiliary visual information into latent embeddings within text-latent interleaved reasoning and further trains them with visual-latent policy optimization. Its latent embeddings support a model that produces textual answers. [Monet, Section 3](https://arxiv.org/html/2511.21395v2#S3). PhysFlow compresses both the textual rationales and the intermediate visual representations into a continuous plan before generating the edited image. During planner training, the flow-matching loss propagates through a frozen image generator to train the conditioning representations. We then freeze the planner and adapt the generator to these representations. This couples learning the plan to its use in image generation (Section 3.4).
 
-**The same-data control now measures the gain beyond adaptation to the training pairs.** PhysFlow scores 56.32 on PICABench-Superficial, compared with 55.12 for image-pair SFT on the same PhysTrace pairs. Both use the same generator LoRA configuration and 537 generator updates; PhysFlow additionally trains its planner, for 1,790 total updates. Isolating the contribution of process supervision requires the same-architecture terminal-only control, whose evaluation is underway. The direct-compression control will test the progressive curriculum. We will clarify these design differences in Sections 2 and 3 and report each control alongside the claim it tests.
+**The same-data control now measures the gain beyond adaptation to the training pairs.** PhysFlow scores 56.32 on PICABench-Superficial, compared with 55.12 for image-pair SFT on the same PhysTrace pairs. Both use the same generator LoRA configuration and 537 generator updates; PhysFlow additionally trains its planner, for 1,790 total updates. The same-architecture terminal-only control now scores 55.57 with the same planner and generator update counts as full PhysFlow. The 0.75-point gain supports the full process-supervised training configuration, while the direct-compression control remains necessary to separate the curriculum contribution. These comparisons report single-run point estimates. We will clarify these design differences in Sections 2 and 3 and report each control alongside the claim it tests.
 <!-- reply:method-contribution:end -->
 
 ### R3-Q2: Identity of the no-reasoning baseline
@@ -151,12 +151,24 @@ The 54.26 row in Table 3 reports the original Qwen-Image-Edit-2511 backbone. We 
 | PhysTrace image-pair SFT | 55.12 |
 | Full PhysFlow | 56.32 |
 
-Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow exceeds this adapted baseline by 1.20 points. Both use the same rank-512 generator LoRA configuration and 537 generator updates. PhysFlow also trains a planner, for 1,790 total updates, so this comparison includes additional capacity and training. The same-architecture terminal-only control addresses the contribution of process supervision; its evaluation is underway.
+Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow exceeds this adapted baseline by 1.20 points. Both use the same rank-512 generator LoRA configuration and 537 generator updates. PhysFlow also trains a planner, for 1,790 total updates, so this comparison includes additional capacity and training. The added same-architecture terminal-only control scores 55.57 under the same planner and generator update counts as full PhysFlow. The remaining 0.75-point gap supports the full process-supervised training configuration; Question 3 details this control and its scope.
 <!-- reply:sft-baseline:end -->
 
-### R3-Q3: Terminal-only supervision
+### R3-Q3 / R2: Terminal-only supervision
 
-> 2026-11-08 18:42 PST：2 号 planner 的 7×179 步和生成器 537 步均完成，阶段 checkpoint 交接已核验；PICABench 已开始生成，八个 rank 合计至少 8/900 张，之后自动接 Qwen72B 与 consistency 评分。尚无最终分数，保持未完成；保留 latent tokens、final visual block 和可训练模块，仅使用终态视觉监督及生成损失。运行任务继续由实验对话监控。
+> 2026-11-08 22:35 PST：2 号最终结果已独立核验，Overall 55.57；900 张与 4,112 QA 完整。与完整方法同结构、同数据、planner 1,253 与 generator 537 更新，完整方法高 0.75 pp。该项已完成并接入；11 号直接压缩仍待结果。详见 最终结果记录及 独立核验。
+
+<!-- reply:terminal-only:start -->
+**The same-architecture terminal-only control scores 55.57, compared with 56.32 for full PhysFlow.** Following your suggestion, we retain the recurrent latent tokens, final visual block, and trainable modules. The control receives the initial image and editing instruction and uses only terminal visual supervision and the generation loss. It excludes textual CoT and intermediate visual supervision. Both settings use the same PhysTrace pairs, 1,253 planner updates, and 537 generator updates.
+
+| Configuration on PhysTrace | PICABench-Superficial (%) |
+|---|---:|
+| Image-pair SFT | 55.12 |
+| Same-architecture terminal-only | 55.57 |
+| Full PhysFlow | 56.32 |
+
+We evaluate all 900 PICABench-Superficial examples with Qwen2.5-VL-72B-Instruct and average accuracy over examples. Full PhysFlow exceeds terminal-only by 0.75 percentage points; terminal-only exceeds image-pair SFT by 0.45 points. The same-architecture comparison controls for planner capacity and update counts, supporting the benefit of the full process-supervised training configuration. It evaluates that configuration as a whole; separating the effects of process supervision and progressive compression requires the direct-compression control. These scores come from single training runs and provide point estimates of the gains. We will add this comparison and its training conditions to the revised ablation study.
+<!-- reply:terminal-only:end -->
 
 ### R3-Q4: PhysicEdit comparison
 
