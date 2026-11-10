@@ -138,15 +138,20 @@
       .task-checkbox:disabled { opacity: 1; cursor: default; }
     .task-label { cursor: default; }
   </style>
+  <link rel="stylesheet" href="assets/reply-workspace.css">
 </head>
 <body>
   <div class="page">
     <header class="page-header">
       <h1>PhysFlow · Rebuttal progress</h1>
-      <p class="intro">持续汇总实验与 reviewer 回复。同数据 SFT 已接入：55.12；完整方法为 56.32。同结构终态监督 55.57 已接入；下一重点为直接压缩对照。</p>
-    <p><a href="rebuttal-response.md">持续更新回复 · Markdown</a> · <a href="#reply-r1">8uwk 完整回复</a> · <a href="#reply-data-split">数据来源回复</a> · <a href="#reply-latent-representation">物理表征回复</a> · <a href="#reply-method-contribution">EndoCoT / Monet 回复</a> · <a href="#reply-sft-dataset">SFT 与数据集比较</a> · <a href="#reply-sft-baseline">SFT 基线回复</a> · <a href="#reply-terminal-status">终态监督对照</a> · <a href="#reply-general-editing">一般编辑权衡回复</a> · <a href="#reply-physical-evaluation">物理评测与人工证据</a> · <a href="#reply-cost">Cost 回复</a></p>
+      <p class="intro">一处查看实验进度，一处逐点打磨审稿回复。任务、证据和英文主稿持续同步。</p>
+    <p class="legacy-shortcuts"><a href="rebuttal-response.md">持续更新回复 · Markdown</a> · <a href="#reply-r1">8uwk 完整回复</a> · <a href="#reply-data-split">数据来源回复</a> · <a href="#reply-latent-representation">物理表征回复</a> · <a href="#reply-method-contribution">EndoCoT / Monet 回复</a> · <a href="#reply-sft-dataset">SFT 与数据集比较</a> · <a href="#reply-sft-baseline">SFT 基线回复</a> · <a href="#reply-terminal-status">终态监督对照</a> · <a href="#reply-general-editing">一般编辑权衡回复</a> · <a href="#reply-physical-evaluation">物理评测与人工证据</a> · <a href="#reply-cost">Cost 回复</a></p>
+      <div class="workspace-tabs" role="tablist" aria-label="工作面板">
+        <button type="button" id="view-tasks" role="tab" aria-selected="true" aria-controls="tasks-panel">任务进度</button>
+        <button type="button" id="view-responses" role="tab" aria-selected="false" aria-controls="responses">逐点回复</button>
+      </div>
     </header>
-    <div class="layout">
+    <div class="layout" id="tasks-panel" role="tabpanel" aria-labelledby="view-tasks">
       <aside class="sidebar" aria-label="完成进度与审稿人导航">
         <div class="overall">
           <p class="overall-label">已完成并接入回复 · 共用任务计一次</p>
@@ -156,7 +161,7 @@
         </div>
         <nav id="reviewer-nav" aria-label="审稿人"></nav>
         <p class="sidebar-note">所有访客查看同一份进度。展开“设置与完成标准”查看实验细节。</p>
-        <p class="sidebar-note">最近发布：2026-11-09 22:23 PST。刷新页面查看最新发布的进度与回复。</p>
+        <p class="sidebar-note">最近发布：2026-11-09 23:00 PST。刷新页面查看最新发布的进度与回复。</p>
       </aside>
       <main>
         <noscript>请启用 JavaScript，以显示进度清单；英文回复正文仍可直接阅读。</noscript>
@@ -247,6 +252,27 @@
         <p class="footer">共 16 项独立任务；同一任务在不同审稿人下同步勾选。已完成项包括同结构终态监督、同数据 SFT（PICABench；RISE 由 15 号追加）、数据集比较回复、PhysicEdit 结果与讨论、cost、数据来源回复及 6 号物理表征回复；可读出证据不表示逐状态对齐主张成立。更新于 2026-11-08。</p>
       </main>
     </div>
+    <section id="responses" role="tabpanel" aria-labelledby="view-responses" hidden>
+      <div class="reply-workspace">
+        <aside class="reply-rail" aria-label="回复导航">
+          <div class="reply-rail-label">REVIEWER RESPONSES</div>
+          <nav id="response-reviewers" class="reply-reviewers" aria-label="选择审稿人"></nav>
+          <nav id="response-outline" class="reply-outline" aria-label="当前审稿人的回复点"></nav>
+        </aside>
+        <div class="reply-main">
+          <div class="reply-workspace-toolbar">
+            <div><h2>逐点回复工作台</h2><p>审稿原文 → 中文分析 → 可编辑英文回复</p></div>
+            <button type="button" class="editor-button" id="export-replies">导出全部回复 .md</button>
+          </div>
+          <div class="editor-note">
+            <p><strong>每个回复框可单独复制为一条评论。</strong>计数包含空格、换行和 Markdown 标记；多点合并成一条评论时，上限仍按整条正文计算。</p>
+            <p>修改自动保存在当前浏览器；公开链接展示已发布稿，不会自动同步你的本机修改。<span id="reply-draft-total" class="draft-total">正在查看已发布稿</span>。</p>
+            <details><summary>5,000 字符依据与预览说明</summary><p><a href="https://docs.openreview.net/reference/default-forms/default-comment-form" target="_blank" rel="noopener noreferrer">OpenReview 官方默认表单</a>规定正文最多 5,000 字符。<a href="https://iclr.cc/Conferences/2027/AuthorGuidelines" target="_blank" rel="noopener noreferrer">ICLR 2027 作者指南</a>确认每条评论有限长、可多次回复，但未公布数值；本论文实际表单上限尚未确认，本页先按默认值提示。计数使用浏览器字符串长度。常用 Markdown 实时预览；最终显示与校验以 OpenReview 为准。</p></details>
+          </div>
+          <div id="response-sections"></div>
+        </div>
+      </div>
+    </section>
   </div>
   <script>
     const tasks = {
@@ -539,5 +565,8 @@
     renderReviewers();
     updateProgress();
   </script>
+  <script src="assets/vendor/markdown-it.min.js"></script>
+  <script src="assets/reply-data.js"></script>
+  <script src="assets/reply-workspace.js"></script>
 </body>
 </html>
