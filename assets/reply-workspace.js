@@ -1,6 +1,7 @@
 (() => {
   'use strict';
   const data = window.PHYSFLOW_REPLIES;
+  const groups = data.overview ? [data.overview, ...data.reviewers] : data.reviewers;
   const prefix = 'physflow-reply-draft-v1:';
   const limit = data.characterLimit;
   const editors = new Map();
@@ -75,7 +76,8 @@
     }
     const analysis = element('div', 'response-analysis');
     analysis.append(element('strong', '', '我们的分析'), element('p', '', item.analysis));
-    card.append(comments, analysis);
+    if (item.comments.length) card.append(comments);
+    card.append(analysis);
     const columns = element('div', 'editor-columns');
     const source = element('div', 'editor-column');
     const sourceHead = element('div', 'editor-column-head');
@@ -140,24 +142,29 @@
 
   const navigation = document.getElementById('response-reviewers');
   const sections = document.getElementById('response-sections');
-  for (const reviewer of data.reviewers) {
+  for (const reviewer of groups) {
+    const heading = reviewer === data.overview ? reviewer.name : reviewer.name + ' · ' + reviewer.code;
     const navLink = element('a', 'reply-reviewer-link');
     navLink.href = '#response-' + reviewer.code;
     navLink.dataset.replyReviewer = reviewer.code;
-    navLink.append(element('strong', '', reviewer.name + ' · ' + reviewer.code), element('span', '', reviewer.items.length + ' 个回复点'));
+    navLink.append(element('strong', '', heading), element('span', '', reviewer === data.overview ? '给所有审稿人和 AC 的开场回复' : reviewer.items.length + ' 个回复点'));
     navigation.append(navLink);
     const section = element('section', 'response-reviewer');
     section.id = 'response-' + reviewer.code;
     section.dataset.replyReviewer = reviewer.code;
     const header = element('header', 'reply-reviewer-head');
-    const link = element('a', '', '查看 OpenReview 原始评审 ↗');
-    link.href = reviewer.url;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    header.append(element('h2', '', reviewer.name + ' · ' + reviewer.code), link);
-    const original = element('details', 'original-review');
-    original.append(element('summary', '', '展开完整评审原文 · 2026-11-06 快照'), element('pre', '', reviewer.original));
-    section.append(header, original);
+    header.append(element('h2', '', heading));
+    section.append(header);
+    if (reviewer.url) {
+      const link = element('a', '', '查看 OpenReview 原始评审 ↗');
+      link.href = reviewer.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      header.append(link);
+      const original = element('details', 'original-review');
+      original.append(element('summary', '', '展开完整评审原文 · 2026-11-06 快照'), element('pre', '', reviewer.original));
+      section.append(original);
+    }
     reviewer.items.forEach((item, i) => section.append(makeCard(reviewer, item, i)));
     sections.append(section);
   }
@@ -165,7 +172,7 @@
   function route() {
     const hash = location.hash.slice(1);
     const replyMode = hash === 'responses' || hash.startsWith('response-');
-    const reviewer = data.reviewers.find(r => hash === 'response-' + r.code || hash.startsWith('response-' + r.code + '-')) || data.reviewers[0];
+    const reviewer = groups.find(r => hash === 'response-' + r.code || hash.startsWith('response-' + r.code + '-')) || groups[0];
     taskPanel.hidden = replyMode;
     replyPanel.hidden = !replyMode;
     page.classList.toggle('reply-mode', replyMode);
@@ -192,7 +199,7 @@
   });
   window.addEventListener('hashchange', route);
   document.getElementById('export-replies').addEventListener('click', () => {
-    const text = data.reviewers.map(reviewer => `## ${reviewer.name} (${reviewer.code})\n\n` + reviewer.items.map(item => `### ${item.subject}\n\n${editors.get(reviewer.code + '-' + item.id).input.value}`).join('\n\n')).join('\n\n');
+    const text = groups.map(reviewer => `## ${reviewer.name} (${reviewer.code})\n\n` + reviewer.items.map(item => `### ${item.subject}\n\n${editors.get(reviewer.code + '-' + item.id).input.value}`).join('\n\n')).join('\n\n');
     const url = URL.createObjectURL(new Blob([text + '\n'], { type: 'text/markdown;charset=utf-8' }));
     const a = element('a'); a.href = url; a.download = 'physflow-replies-' + new Date().toISOString().slice(0, 10) + '.md';
     document.body.append(a); a.click(); a.remove();

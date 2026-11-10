@@ -1,12 +1,38 @@
 # PhysFlow rebuttal：持续更新主稿
 
-更新日期：2026-11-09。与 [HTML checklist](index.html) 配套维护；后续结果继续补入本文件。
+更新日期：2026-11-10。与 [HTML checklist](index.html) 配套维护；后续结果继续补入本文件。
 
 - 已接入：作者确认的六模型 cost 表；PhysicEdit 的 PICABench 方法级结果；8uwk 的完整首轮回复草稿；基于 PICABench 原论文的训练与评测数据来源说明。
 - 中文引用块为内部状态，提交时只复制英文回复及对应表格。论文修订和 OpenReview 提交另行完成。
 - 其余英文模块沿用 11 月 6 日文字素材，仍按下方标注等待实验或核验。
 
-> 进度快照（2026-11-09 22:21 PST）：9/16 项已完成并接入回复。time-uniform 已到第 5/7 轮；K2 第 4/7 轮，K8 尚未开始。多推理 seed 已记录 1,562/7,560 张，评分与统计待完成；11/12 最新执行记录为停止。新 K2/K8 与复用 K4 的数据版本差异需在消融表中说明。
+> 进度快照（2026-11-09 22:21 PST）：9/16 项已完成并接入回复。time-uniform 已到第 5/7 轮；K2 第 4/7 轮，K8 尚未开始。多推理 seed 上次记录 1,562/7,560 张；11 月 10 日按作者停机要求核查，生成任务及调度器已退出（143），评分与统计未完成；11/12 最新执行记录为停止。新 K2/K8 与复用 K4 的数据版本差异需在消融表中说明。
+
+## 修改总览：给所有审稿人和 AC
+
+> 本地标蓝修订稿已完成编译与排版检查：正文 10 页，总计 20 页；尚未上传 Overleaf / OpenReview。下方为开场回复草稿，论文上传后再作为正式修改总览提交。正文、附录与图表编号已核对。未完成的新实验不列为已完成。
+
+<!-- reply:overview:start -->
+Dear Reviewers and Area Chair,
+
+Thank you for your comments and suggestions. We have revised the manuscript to clarify the method and report additional comparisons and representation analyses. Blue text marks the corresponding revisions.
+
+**In the main paper:**
+
+1. **Clarified the distinction from PhysicEdit and added its results** (Section 2.2; Table 1). PhysicEdit combines explicit textual reasoning with video-supervised transition queries. PhysFlow progressively internalizes textual rationales and visual process supervision into a compact latent plan. We report 56.32 for PhysFlow and 52.35 for PhysicEdit, while making their different backbones explicit.
+
+2. **Added same-data image-pair supervised fine-tuning (SFT) and organized three comparisons** (Table 4; Appendix C.4, Table 9). PhysTrace exceeds PICA100K by 1.74 points under SFT and PhysicTran38K by 2.50 points under PhysFlow training. On the same PhysTrace pairs, PhysFlow exceeds SFT by 1.20 points. We report optimization budgets and clarify that the full framework adds planner capacity and training to the matched generator updates.
+
+3. **Expanded the computation-cost comparison** (Table 5). We report parameters, peak memory, and latency for six configurations. PhysFlow takes 49.39 seconds per edit versus 52.19 for PhysicEdit, a 5.4% latency reduction, with 1.86 GiB more peak memory. We distinguish resource and timing measurements from separate runs.
+
+**In the appendix:**
+
+4. **Added physical-domain and intervention-outcome probes alongside token-role and order analyses** (Appendix C.6; Figure 7). The six-token domain probe reaches 86.91% balanced accuracy across six domains, compared with 16.67% uniform chance. Controlled synthetic experiments test whether the four intermediate visual tokens encode information about intervention outcomes; token reversal or shuffling reduces editing accuracy by 3.42 points on 64 inputs. We report controls and exploratory selection, and limit the conclusions to readable physical information and sensitivity to token order.
+
+5. **Clarified the trade-offs in general editing** (Appendix C.1; Table 6). PhysFlow scores 4.39 overall versus 4.41 for the backbone, with improvements in six of nine categories. We now discuss the declines in Hybrid, Extract, and Add, and identify the proposed explanation as an interpretation of task-dependent transfer.
+
+Our point-by-point responses provide the supporting results and address the remaining questions.
+<!-- reply:overview:end -->
 
 ## Reviewer 8uwk
 
