@@ -156,16 +156,17 @@
         </div>
         <nav id="reviewer-nav" aria-label="审稿人"></nav>
         <p class="sidebar-note">所有访客查看同一份进度。展开“设置与完成标准”查看实验细节。</p>
-        <p class="sidebar-note">最近发布：2026-11-09 05:49 PST。刷新页面查看最新发布的进度与回复。</p>
+        <p class="sidebar-note">最近发布：2026-11-09 22:23 PST。刷新页面查看最新发布的进度与回复。</p>
       </aside>
       <main>
         <noscript>请启用 JavaScript，以显示进度清单；英文回复正文仍可直接阅读。</noscript>
         <section class="reviewer coordination" aria-labelledby="coordination-heading">
           <h2 id="coordination-heading">进度总表 · 2026-11-09</h2>
           <p>按审稿人汇总实验进度、待办事项与英文回复草稿。<a href="rebuttal-response.md">查看 Markdown 主稿</a>。</p>
-          <p><strong>本次完成：</strong>1 号同数据 SFT 的 PICABench 结果 55.12 已核验并接入，与完整方法 56.32 相差 1.20 pp。生成器 LoRA 与 537 更新一致，总训练量与容量不同；三组比较分别报告数据集与框架收益：+1.74、+2.50、+1.20 pp；训练条件列在表后。2 号终态监督已核验：55.57；完整分项表已接入，与论文完整模型报告值 56.32 相差 0.75 pp，RFR 为终态监督更高。11 号直接压缩结果待接入。PhysicEdit 方法级比较及 cost 回复继续保留。</p>
+          <p><strong>本次完成：</strong>1 号同数据 SFT 的 PICABench 结果 55.12 已核验并接入，与完整方法 56.32 相差 1.20 pp。生成器 LoRA 与 537 更新一致，总训练量与容量不同；三组比较分别报告数据集与框架收益：+1.74、+2.50、+1.20 pp；训练条件列在表后。2 号终态监督已核验：55.57；完整分项表已接入，与论文完整模型报告值 56.32 相差 0.75 pp，RFR 为终态监督更高。11 号直接压缩最新执行记录为停止，暂无正式结果。PhysicEdit 方法级比较及 cost 回复继续保留。</p>
           <p><strong>数据来源回复已完成并打钩：</strong>依据 PICABench 原论文，说明 PICA-100K 合成训练数据与单独构建的 900 例评测 benchmark 的来源区别。<a href="#reply-data-split">查看英文回复</a>；各版训练清单与重叠检查的对应关系保留为合稿核验备注。</p>
           <p><strong>EndoCoT / Monet discussion 已成稿：</strong><a href="#reply-method-contribution">查看英文回复</a>。1 号同数据 SFT 和 2 号终态监督结果已接入；11 号直接压缩结果待接入，相关方法条目暂未整体勾选。</p>
+          <p><strong>最新运行快照 · 2026-11-09 22:21 PST：</strong>time-uniform 第 5/7 轮（3/179）；K2 第 4/7 轮（99/179），K8 尚未开始；多推理 seed 已记录 1,562/7,560 张（20.7%），评分与统计待完成。11/12 最新执行记录为停止。完成并接入回复仍为 9/16。</p>
           <p><strong>一般编辑权衡回复已完成：</strong>已补入 Hybrid／Extract 的任务差异解释，并与论文的类别权衡表述同步；对应项已勾选。<a href="#reply-general-editing">查看英文回复</a>。</p>
           <p><strong>勾选含义：</strong>该项工作已完成并接入回复草稿；论文修订、最终核对和 OpenReview 提交另行完成。本页展示作者确认并发布的完成状态，供老师查看。其余实验保留各自注明日期的状态快照。</p>
           <details open>
@@ -388,13 +389,13 @@
       'physicedit-score': ['3 号 · 已完成并接入回复', '作者主表给出 PhysicEdit 52.35、PhysFlow 56.32，均采用 PICABench-Superficial / Qwen2.5-VL-72B-Instruct。R1 回复已列各自骨干、+2.64/+2.06 pp 的增益及 3.97 pp 系统差距，并保留骨干差异说明。', '#reply-r1'],
       'physicedit-discussion': ['已完成 · 8uwk 首轮回复已形成', '先认可 PhysicEdit 的视频转移先验与共同动机，再解释 PhysFlow 将层次化文本和有序视觉监督逐步内化为六个 latent tokens 的设计；质量结果、cost 和 53.82 的行身份均已衔接。待作者最终审阅及论文合稿。', '#reply-r1'],
       'same-data-sft': ['1 号 · PICABench 已完成并接入回复', '11 月 8 日 18:42 PST 核验：537 更新、900 张生成和 4,112 QA 评分完成，准确率 55.12；完整方法 56.32，高 1.20 pp。双方生成器预算一致，完整方法总计 1,790 更新。wrapper 因 15 个官方空 mask 的合理 PSNR 不适用项退出 1，独立核验确认评分产物完整；保留原始诊断。RISE 由 15 号追加。', '#reply-sft-dataset'],
-      'frame-sampling': ['7 / 8 号 · 原视频已补齐', '作者已确认原视频补齐。8 号 K4 change-uniform 已完成单步课程 smoke，正式训练结果待接入；中断恢复验收与正式排卡状态继续跟进执行记录。', ''],
-      'state-count': ['8 / 9 / 10 号 · 原视频已补齐，后续验收待确认', 'K=2/4/8 的训练及评测已有编号入口，作者已确认原视频补齐。其余输入、多帧数串行运行、训练恢复与 inference 续跑的验收状态继续按执行记录核对。', ''],
-      'direct-compression': ['11 号 · 已有入口，正式结果待做', '两条路线需共用 Stage I 起点，匹配后续更新和最终结构。现有记录未显示完整训练及评测完成；终态监督对照不能单独隔离渐进压缩的贡献。', ''],
+      'frame-sampling': ['7 号 · time-uniform 第 5/7 轮训练中', '2026-11-09 22:21 PST 只读快照：前 4 轮 planner 各 179 更新完成，第 5 轮 3/179；之后仍需完成其余 planner、generator 537 更新、PICA900／RISE360 生成评分及 profiling。原视频已补齐。此为训练进度，不是完整实验结果。', ''],
+      'state-count': ['9 / 10 号 · K2 第 4/7 轮，K8 待启动', '2026-11-09 22:21 PST 只读快照：K2 前 3 轮 planner 各 179 更新完成，第 4 轮 99/179。K2 完成训练与评测后才进入 K8；K8 尚未开始。复用旧 K4 与新 K2/K8 的 weak3+899 数据版本不同，不能称严格只改变帧数的消融。', ''],
+      'direct-compression': ['11 号 · 最新执行记录为停止，暂无结果', '最新训练监督记录注明：作者已停止后续两条显示为 11_directcompression 的任务（实际分别对应 11 和 12）。本轮未重新查询平台状态，未启动或恢复任务；尚无直接压缩正式成绩，不能用终态监督对照代替课程消融。', ''],
       'latent-alignment': ['6 号 · 最终四联图回复已同步', 'a 原聚类支持压缩后的角色组织；b 六领域平衡准确率 86.91%，随机 16.67%；c 七项配对读出为 Support 99.22、Torque 100、Buoyancy 99.22、Outflow 96.09、Absorption 99.22、Phase change 100、Shape recovery 91.41%。Phase change 为独立确认 256 对／128 新家族，其余六项各 128 对／64 家族。d 编辑顺序干预为 57.36→53.94。七项只是十一项探索的展示子集，其余四项和全部强对照保留；不归因于训练独有物理收益，逐帧对齐未确立。', '#reply-latent-representation'],
       'physics-evaluation': ['Discussion 已完成 · 客观测量未完成', '已独立回应评测边界：沿用 benchmark 任务与评分框架以便比较，并补充已有 17 人、100 对样本的 user study 和物理案例。未虚构人机一致率，也未把人工判断当成客观物理验证。物理指标列为未来 benchmark 方向；13 号真实测量和标注仍未完成。', '#reply-physical-evaluation'],
-      'inference-statistics': ['4 号 · 生成中，评分与统计待做', '11 月 8 日 06:24 PST 快照：84/7,560 张，处于 base seed42 PICA。总范围为 base/full × 3 seeds × PICA900/RISE360；预计约 8.4 个单卡日，72B 评分仍需多卡。生成与评分完成后才能计算均值、标准差和配对 CI。', ''],
-      'training-seeds': ['12 号 · 待训练预算安排', '完整方法和 SFT 各补训练 seeds43/44，再与 seed42 汇总。当前 4 号仅改变生成 seed，不能作为训练稳定性的证据。', ''],
+      'inference-statistics': ['4 号 · 已生成 1,562/7,560 张（20.7%）', '2026-11-09 22:21 PST 只读实查：base seed42 的 PICA 已记录 900 张、RISE 360 张；full seed42 的 PICA 为 302/900，生成进程仍在运行。总范围为 base/full × 3 seeds × PICA900/RISE360；全量生成、72B 评分、均值／标准差与配对 CI 仍待完成。本次计数核对记录，未逐张重新解码图片。', ''],
+      'training-seeds': ['12 号 · 最新执行记录为停止，暂无重复训练结果', '新增 full/SFT seeds43/44 的入口已准备，最新训练监督记录注明对应任务已停止；本轮未重新查询平台或恢复任务。4 号改变生成 seed，不能代替训练稳定性证据；历史 seed42 与新协议能否合并仍需核对。', ''],
       'parameters-memory': ['5 号 · 已完成并接入回复', '六模型表逐项采用作者确认数据，PhysicEdit latency 保留 52.19 秒。62MG 的 cost 回复已写入 Markdown；8uwk 回复引用 PhysFlow/PhysicEdit 两行，准确描述约 5.4% 的延迟降低及 1.86 GiB 的显存增加。', '#reply-cost'],
       'data-split': ['14 号 · 回复已完成并接入', '已按 PICABench 原论文补入 PICA-100K 合成训练数据与 900 例评测 benchmark 的来源区别，按作者要求标记回复完成。合稿核验备注：11,448 条源图检查得到 1,094 条 dHash 候选，另有一例同源图视觉复核；候选数不是确认重叠数。原稿最终权重与本轮 +899 权重仍需各自对应训练清单；来源说明不代替跨集查重。', '#reply-data-split'],
       'dataset-comparison': ['已完成 · 三组比较已接入回复', '同为 SFT：PhysTrace 对 PICA100K +1.74 pp；同为 PhysFlow：PhysTrace 对 PhysicTran38K +2.50 pp；同一 PhysTrace：完整框架对 SFT +1.20 pp。前两组支持较小数据集的有效性，第三组支持完整框架收益。三列表聚焦数据、策略、成绩；预算差异及额外 planner 训练在表后交代。作者自行更新 Overleaf。', '#reply-sft-dataset'],
