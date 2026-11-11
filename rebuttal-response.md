@@ -81,16 +81,16 @@ We sincerely appreciate your suggestion, which helped us present the relationshi
 
 ## Reviewer 62MG
 
-> 编辑说明：十个回复点采用固定编号 R2.1–R2.10；按主题暂合并为四条评论。完整分组与字符计数见 output/reviewer2-general-2026-11-10/README.md。R2.3、R2.6 的待补结果按各点状态保留，后续逐点修改后重新计数。
+> 编辑说明：十个回复点采用固定编号 Response 1–Response 10；按主题暂合并为四条评论。完整分组与字符计数见 output/reviewer2-general-2026-11-10/README.md。Response 3、Response 6 的待补结果按各点状态保留，后续逐点修改后重新计数。
 
-### R2.1: Same-data image-pair fine-tuning baseline
+### Response 1: Same-data image-pair fine-tuning baseline
 
 <!-- reply:r2-sft-baseline:start -->
 Dear Reviewer 62MG,
 
 Thank you very much for your careful reading and detailed, constructive feedback. We sincerely appreciate your recognition of the motivation, the framework, and the empirical improvements. Your questions have helped us identify where the original manuscript needed clearer explanations and stronger supporting evidence. We have carefully considered every concern and suggestion. We organize our response into ten points below, covering your concerns and questions.
 
-**R2.1. Same-data image-pair fine-tuning baseline**
+**Response 1. Same-data image-pair fine-tuning baseline**
 
 Thank you for requesting this controlled comparison. We agree that the original backbone baseline alone could not distinguish gains from PhysTrace adaptation and latent reasoning.
 
@@ -105,12 +105,12 @@ The 54.26 row in Table 3 reports the original Qwen-Image-Edit-2511 backbone. The
 Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow exceeds this adapted baseline by 1.20 points. Both use the same rank-512 generator LoRA configuration and 537 generator updates. PhysFlow also trains a planner, for 1,790 total updates, so this comparison includes additional capacity and training.
 <!-- reply:r2-sft-baseline:end -->
 
-### R2.2: Dataset effectiveness and training framework
+### Response 2: Dataset effectiveness and training framework
 
 > 状态：1 号 PICABench 结果已完成独立核验并接入回复；同数据 SFT 与 dataset-comparison 文字回应完成，RISE 由 15 号追加。2026-11-08 18:42 PST 快照：2 号训练完成、评测中；11 号结果待接入。
 
 <!-- reply:sft-dataset:start -->
-**R2.2. Dataset effectiveness and training framework**
+**Response 2. Dataset effectiveness and training framework**
 
 Thank you for pointing out that the dataset comparisons also involve differences in supervision and training procedure.
 
@@ -132,12 +132,12 @@ All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superfic
 **Training conditions.** Across datasets, PICA100K SFT uses 4,926 updates, PhysTrace SFT uses 537, and PhysFlow uses 4,632 on PhysicTran38K versus 1,790 on PhysTrace. PhysFlow adds planner capacity and training to the matched generator budget. These results compare the reported data and framework configurations. The terminal-only run scores 55.57, 0.75 points below the paper's reported full PhysFlow score of 56.32. We report this difference at the training-configuration level; the direct-compression control will address the curriculum separately. We organize Tables 4 and 9 and their discussion around these three comparisons.
 <!-- reply:sft-dataset:end -->
 
-### R2.3: Frame sampling, state count, and compression
+### Response 3: Frame sampling, state count, and compression
 
 > time-uniform 采用作者提供的重跑结果：作者确认与 change-uniform 使用相同数据集设置，Overall 55.09 vs. 56.32，差 1.23 个百分点；完整类别数据见下表。状态数 K2/K6 和直接压缩仍待结果。
 
 <!-- reply:sampling:start -->
-**R2.3. Frame sampling, state count, and compression**
+**Response 3. Frame sampling, state count, and compression**
 
 Thank you for identifying these missing ablations. We have added a time-uniform sampling comparison.
 
@@ -155,19 +155,19 @@ Change-uniform improves Overall by **1.23 percentage points** and scores higher 
 We use four intermediate states as a fixed design choice. State-count and direct-compression ablations remain pending; this comparison does not establish the best state count or isolate the compression curriculum.
 <!-- reply:sampling:end -->
 
-### R2.4: Latent-token roles and supervision
+### Response 4: Latent-token roles and supervision
 
 <!-- reply:latent-definition:start -->
-**R2.4. Latent-token roles and supervision**
+**Response 4. Latent-token roles and supervision**
 
-Thank you for asking how the intermediate visual tokens relate to physical state transitions. We first clarify their intended roles and supervision; Point R2.5 then presents the representation analyses and controlled interventions.
+Thank you for asking how the intermediate visual tokens relate to physical state transitions. We first clarify their intended roles and supervision; Response 5 then presents the representation analyses and controlled interventions.
 
 The six latent thoughts form a learned conditioning sequence Z = [h, l, m₁, m₂, m₃, m₄] ∈ ℝ⁶ˣᵈ, where d is the planner's hidden dimension. The training design assigns h and l to high-level physical rationales and low-level transition descriptions, and assigns m₁ through m₄ to ordered intermediate visual states. The planner additionally predicts F ∈ ℝ¹⁶ˣᵈ, a final visual block. Thus, the additional conditioning consists of six reasoning tokens and 16 final-state tokens.
 
 Section 3.4 specifies how these roles enter training. Stage I aligns each 16-token intermediate block with the corresponding frame encoding from a moving-average teacher. Stage II replaces each intermediate block with one latent token and removes that block's direct alignment loss. Later uncompressed blocks, the final visual block, and the generation objective provide the remaining supervision. After Stage II compresses all intermediate blocks, the final-block alignment and generation objectives supervise the planner. This training defines the intended roles of the latent positions, while their physical-state correspondence remains an empirical question.
 <!-- reply:latent-definition:end -->
 
-### R2.5: Physical information in the latent representations
+### Response 5: Physical information in the latent representations
 
 > 2026-11-09：已同步最终 Figure 7 四联图。a：原角色聚类支持压缩后的角色组织；b：六领域线性探针平衡准确率 86.91%；c：十一项探索中的七项展示子集，统一报告配对准确率；Phase change 为固定读出器在 256 对／128 新家族上的独立确认，其余六项各 128 对／64 家族；d：保留 64 例编辑顺序干预。全部十一项、强对照、阴性结果和逐 token 对齐未成立的结论保留。v14 结果与对照快照、确认集审计。
 
@@ -176,7 +176,7 @@ Section 3.4 specifies how these roles enter training. Stage I aligns each 16-tok
 > 6 号新增物理类别与亮度分析，见 报告与三组图件。原始 taxonomy 为六领域、26 细类，另有八类 PICA 标签。六领域平衡准确率 86.91% vs 源图加指令 76.28%（配对增益名义 CI +4.10 至 +17.90 pp）；同布局预训练对照为 85.94%，与 PhysFlow 的差异未确立。82 个照明测试视频的亮度变化读出 R²=0.370，指令 TF-IDF 为 0.365，预训练为 0.402。可主张压缩 latent 保留了可读出的物理类别与视觉变化信息；训练获得额外物理规律、逐状态对齐与因果物理作用仍缺证据。所有结果属于探索性后续分析。
 
 <!-- reply:latent-representation:start -->
-**R2.5. Physical information in the latent representations**
+**Response 5. Physical information in the latent representations**
 
 We appreciate your careful distinction between sensitivity to token order and evidence of physically meaningful representations. Following your suggestion, we have expanded Figure 7 with representation analyses and controlled intervention tasks.
 
@@ -211,24 +211,24 @@ Together, these results support physical-semantic and conditional-consequence re
 
 附件（v15）：[Overleaf 替换包 ZIP](attachments/physflow-latent-appendix.zip) · [LaTeX 片段](attachments/latent-representation-analysis.tex) · [四联图 PDF](attachments/latent-analysis-four.pdf) · [单页附录预览 PDF](attachments/latent-appendix-preview.pdf)。
 
-### R2.6: Statistical uncertainty and repeated runs
+### Response 6: Statistical uncertainty and repeated runs
 
 > 已有统计回复草稿。待生成 seeds、配对 CI 和训练 seeds；物理评测范围见下方独立回复。
 
 <!-- reply:statistics:start -->
-**R2.6. Statistical uncertainty and repeated runs**
+**Response 6. Statistical uncertainty and repeated runs**
 
 Thank you for emphasizing the need to quantify uncertainty, particularly for the modest absolute gains on RISEBench.
 
 The main tables report increases of 2.06 percentage points on PICABench and 1.38 points on RISEBench over the backbone. These are point estimates under the reported evaluation settings. Their uncertainty across training runs and evaluation samples requires repeated runs and confidence intervals.
 <!-- reply:statistics:end -->
 
-### R2.7: Multimodal-model evaluation and human evidence
+### Response 7: Multimodal-model evaluation and human evidence
 
 > 状态：独立 discussion 已完成，已补充评测目的与人工证据。依据原稿 17 人、100 对随机样本的 user study 与定性案例，说明可比性、人工证据及评测边界；物理指标作为未来 benchmark 方向。未声称人机逐样本一致率、客观物理验证或新的物理测量已完成。13 号实验安排与完成状态不变。
 
 <!-- reply:physical-evaluation:start -->
-**R2.7. Multimodal-model evaluation and human evidence**
+**Response 7. Multimodal-model evaluation and human evidence**
 
 Thank you for raising this concern about multimodal-model judgments. Your comment prompted us to clarify the roles of the model-based evaluations, the human study, and the qualitative examples.
 
@@ -239,12 +239,12 @@ Our user study provides complementary human evidence: 17 participants evaluate 1
 We clarify the evaluation scope and discuss physically grounded metrics as a valuable direction for future benchmarks in Appendix C.9. Together, the model-based evaluations and our human study support improved physical plausibility.
 <!-- reply:physical-evaluation:end -->
 
-### R2.8: Positioning relative to earlier latent-reasoning methods
+### Response 8: Positioning relative to earlier latent-reasoning methods
 
 > 已整理为 62MG 的独立编号回复；保留原有方法定位依据，后续继续逐点打磨。直接压缩消融仍待结果。
 
 <!-- reply:r2-method-contribution:start -->
-**R2.8. Positioning relative to earlier latent-reasoning methods**
+**Response 8. Positioning relative to earlier latent-reasoning methods**
 
 Thank you for highlighting the overlap with earlier latent-reasoning approaches.
 
@@ -257,24 +257,24 @@ Thank you for highlighting the overlap with earlier latent-reasoning approaches.
 **The same-data control now measures the gain beyond adaptation to the training pairs.** PhysFlow scores 56.32 on PICABench-Superficial, compared with 55.12 for image-pair SFT on the same PhysTrace pairs. Both use the same generator LoRA configuration and 537 generator updates; PhysFlow additionally trains its planner, for 1,790 total updates. The terminal-only run scores 55.57, compared with 56.32 for full PhysFlow as reported in the paper. The 0.75-point difference compares training configurations; finer attribution to supervision and curriculum requires further controls. These comparisons report single-run point estimates. We clarify these design differences in Sections 2 and 3 and report each completed control alongside the claim it tests.
 <!-- reply:r2-method-contribution:end -->
 
-### R2.9: Training and evaluation data sources
+### Response 9: Training and evaluation data sources
 
 > 状态：回复已完成并接入，按作者要求勾选 checklist 的 data-split 项。下段说明 PICA-100K 与 PICABench 的构建方式及用途。合稿核验备注：原稿最终版本与本轮 +899 补实验版本仍需分别对应实际训练清单、checkpoint 和检查记录；来源说明不等同于跨集近重复审计。
 
 <!-- reply:data-split:start -->
-**R2.9. Training and evaluation data sources**
+**Response 9. Training and evaluation data sources**
 
 Thank you for raising the question of training and evaluation data separation. We have clarified the construction sources and the respective roles of PICA-100K, PhysTrace, and PICABench in Section 3.2 and Appendix A.
 
 PICA-100K provides training data, while PICABench provides a separately curated evaluation set of 900 editing examples (Pu et al., [Sections 3.1 and 3.2](https://arxiv.org/html/2510.17681v3#S3.SS2), and [Section 3.4](https://arxiv.org/html/2510.17681v3#S3.SS4)). The authors collect PICABench evaluation images from licensed and public sources and construct PICA-100K from generated source images and synthetic videos. We start constructing our PhysTrace training dataset with PICA-100K image-instruction pairs (Section 3.2 of our manuscript).
 <!-- reply:data-split:end -->
 
-### R2.10: Parameter count, peak memory, and latency
+### Response 10: Parameter count, peak memory, and latency
 
 > 状态：实验完成，已接入回复。对应 checklist：parameters-memory。全部数值采用作者本轮确认表格。
 
 <!-- reply:cost:start -->
-**R2.10. Parameter count, peak memory, and latency**
+**Response 10. Parameter count, peak memory, and latency**
 
 Thank you for suggesting parameter-count and peak-memory comparisons in addition to latency. We have added these measurements to Table 5 to give a fuller account of inference costs.
 
