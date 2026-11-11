@@ -161,7 +161,7 @@
         </div>
         <nav id="reviewer-nav" aria-label="审稿人"></nav>
         <p class="sidebar-note">所有访客查看同一份进度。展开“设置与完成标准”查看实验细节。</p>
-        <p class="sidebar-note">最近发布：2026-11-10 23:22 PST。刷新页面查看最新发布的进度与回复。</p>
+        <p class="sidebar-note">最近发布：2026-11-10 23:30 PST。刷新页面查看最新发布的进度与回复。</p>
       </aside>
       <main>
         <noscript>请启用 JavaScript，以显示进度清单；英文回复正文仍可直接阅读。</noscript>
@@ -171,7 +171,7 @@
           <p><strong>本次完成：</strong>1 号同数据 SFT 的 PICABench 结果 55.12 已核验并接入，与完整方法 56.32 相差 1.20 pp。生成器 LoRA 与 537 更新一致，总训练量与容量不同；三组比较分别报告数据集与框架收益：+1.74、+2.50、+1.20 pp；训练条件列在表后。2 号终态监督已核验：55.57；完整分项表已接入，与论文完整模型报告值 56.32 相差 0.75 pp，RFR 为终态监督更高。11 号直接压缩最新执行记录为停止，暂无正式结果。PhysicEdit 方法级比较及 cost 回复继续保留。</p>
           <p><strong>数据来源回复已完成并打钩：</strong>依据 PICABench 原论文，说明 PICA-100K 合成训练数据与单独构建的 900 例评测 benchmark 的来源区别。<a href="#reply-data-split">查看英文回复</a>；各版训练清单与重叠检查的对应关系保留为合稿核验备注。</p>
           <p><strong>EndoCoT / Monet discussion 已成稿：</strong><a href="#reply-method-contribution">查看英文回复</a>。1 号同数据 SFT 和 2 号终态监督结果已接入；11 号直接压缩结果待接入，相关方法条目暂未整体勾选。</p>
-          <p><strong>本次进度更新 · 2026-11-10：</strong>time-uniform 已完成 PICABench 全量评测：900 张、4,112 个问题，Overall 54.16；完整 PhysFlow 为 56.32，作者确认使用同一版训练数据。共 10/16 项任务已完成并接入回复。K2/K6 状态数、直接压缩和多 seed 统计仍待结果。</p>
+          <p><strong>本次进度更新 · 2026-11-10：</strong>time-uniform 采用作者按相同数据集设置重跑的结果：Overall 55.09；change-uniform 为 56.32，差 1.23 个百分点。共 10/16 项任务已完成并接入回复。K2/K6 状态数、直接压缩和多 seed 统计仍待结果。</p>
           <p><strong>一般编辑权衡回复已完成：</strong>已补入 Hybrid／Extract 的任务差异解释，并与论文的类别权衡表述同步；对应项已勾选。<a href="#reply-general-editing">查看英文回复</a>。</p>
           <p><strong>勾选含义：</strong>该项工作已完成并接入回复草稿；论文修订、最终核对和 OpenReview 提交另行完成。本页展示作者确认并发布的完成状态，供老师查看。其余实验保留各自注明日期的状态快照。</p>
           <details open>
@@ -422,7 +422,7 @@
       'physicedit-score': ['3 号 · 已完成并接入回复', 'R1 回复新增 PhysicEdit 与 PhysFlow 的两行 PICABench-Superficial 分项表，列齐八类及 Overall（52.35 vs. 56.32），评测器为 Qwen2.5-VL-72B-Instruct。PhysFlow 在八类均取得更高分数；回复说明我们使用 Qwen-Image-Edit-2511。', '#reply-r1'],
       'physicedit-discussion': ['已完成 · 8uwk 首轮回复已形成', '以感谢、承认讨论遗漏及肯定 PhysicEdit 设计开篇；解释六个 token 的训练角色与独立 final visual block，补入 Figure 7 的角色结构、领域探针、干预预测、顺序扰动四组分析及对应控制范围；保留 PICABench 分项表并引用论文 Tables 1、5。待作者最终审阅及论文合稿。', '#reply-r1'],
       'same-data-sft': ['1 号 · PICABench 已完成并接入回复', '11 月 8 日 18:42 PST 核验：537 更新、900 张生成和 4,112 QA 评分完成，准确率 55.12；完整方法 56.32，高 1.20 pp。双方生成器预算一致，完整方法总计 1,790 更新。wrapper 因 15 个官方空 mask 的合理 PSNR 不适用项退出 1，独立核验确认评分产物完整；保留原始诊断。RISE 由 15 号追加。', '#reply-sft-dataset'],
-      'frame-sampling': ['已完成 · PICABench 54.16', '按作者更新后的 PICA-only 范围完成训练与评测，900 张、4,112 个问题完整。完整 PhysFlow 为 56.32，同一版训练数据；两者差 2.16 个百分点。已接入抽帧回复和本地论文 Appendix C.7。', ''],
+      'frame-sampling': ['已完成 · PICABench 55.09', '采用作者提供的重跑结果，确认与 change-uniform 使用相同数据集设置。Overall 55.09 vs. 56.32，差 1.23 个百分点；time-uniform 在 Reflection、Refraction 上更高。完整类别结果已接入 R2.3 和本地论文 Appendix C.7。', ''],
       'state-count': ['K2 / K6 · 待最终结果', '执行计划已由 K2/K8 调整为 K2/K6。作者确认与完整 K4 模型使用同一版数据；本页尚未接入最终状态数比较结果。', ''],
       'direct-compression': ['11 号 · 最新执行记录为停止，暂无结果', '最新训练监督记录注明：作者已停止后续两条显示为 11_directcompression 的任务（实际分别对应 11 和 12）。本轮未重新查询平台状态，未启动或恢复任务；尚无直接压缩正式成绩，不能用终态监督对照代替课程消融。', ''],
       'latent-alignment': ['6 号 · 最终四联图回复已同步', 'a 原聚类支持压缩后的角色组织；b 六领域平衡准确率 86.91%，随机 16.67%；c 七项配对读出为 Support 99.22、Torque 100、Buoyancy 99.22、Outflow 96.09、Absorption 99.22、Phase change 100、Shape recovery 91.41%。Phase change 为独立确认 256 对／128 新家族，其余六项各 128 对／64 家族。d 编辑顺序干预为 57.36→53.94。七项只是十一项探索的展示子集，其余四项和全部强对照保留；不归因于训练独有物理收益，逐帧对齐未确立。', '#reply-latent-representation'],
@@ -438,7 +438,7 @@
     };
 
     const completedInFile = {
-      'frame-sampling': '2026-11-10-time-uniform-pica-verified',
+      'frame-sampling': '2026-11-10-time-uniform-author-rerun-5509',
       'terminal-only': '2026-11-08-terminal-pica-verified',
       'same-data-sft': '2026-11-08-sft-pica-verified',
       'dataset-comparison': '2026-11-08-sft-dataset-reply',
@@ -574,7 +574,7 @@
     updateProgress();
   </script>
   <script src="assets/vendor/markdown-it.min.js?v=38c70a1e7ca9"></script>
-  <script src="assets/reply-data.js?v=efc4c7e84bf5"></script>
+  <script src="assets/reply-data.js?v=20d0dda2f5ed"></script>
   <script src="assets/vendor/diff3.js?v=a08aa76a79bd"></script>
   <script src="assets/reply-merge.js?v=9fae3be99cd4"></script>
   <script src="assets/reply-sync.js?v=877a216b57ca"></script>

@@ -6,7 +6,7 @@
 - 中文引用块为内部状态，提交时只复制英文回复及对应表格。论文修订和 OpenReview 提交另行完成。
 - 其余英文模块沿用 11 月 6 日文字素材，仍按下方标注等待实验或核验。
 
-> 进度更新（2026-11-10）：time-uniform 的 PICABench 评测已完成，Overall 54.16，已接入回复；共 10/16 项任务完成。作者确认 full 与新增对照使用同一版训练数据。K2/K6 状态数、直接压缩和多 seed 统计仍待结果。16 个逐点回复另行对应到论文修改；回复点与任务项不是同一计数。
+> 进度更新（2026-11-10）：time-uniform 采用作者按相同数据集设置重跑的最新结果，Overall 55.09，与 change-uniform 56.32 相差 1.23 个百分点，已接入回复；共 10/16 项任务完成。作者确认 full 与新增对照使用同一版训练数据。K2/K6 状态数、直接压缩和多 seed 统计仍待结果。16 个逐点回复另行对应到论文修改；回复点与任务项不是同一计数。
 
 ## 修改总览：给所有审稿人和 AC
 
@@ -134,16 +134,25 @@ All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superfic
 
 ### R2.3: Frame sampling, state count, and compression
 
-> time-uniform 已完成 PICABench 全量评测：900 张、4,112 个问题，Overall 54.16；full 使用同一版训练数据，Overall 56.32。状态数 K2/K6 和直接压缩仍待结果。
+> time-uniform 采用作者提供的重跑结果：作者确认与 change-uniform 使用相同数据集设置，Overall 55.09 vs. 56.32，差 1.23 个百分点；完整类别数据见下表。状态数 K2/K6 和直接压缩仍待结果。
 
 <!-- reply:sampling:start -->
 **R2.3. Frame sampling, state count, and compression**
 
-Thank you for identifying these missing ablations. We have added the time-uniform sampling comparison and distinguish it below from the state-count and direct-compression ablations.
+Thank you for identifying these missing ablations. We have added a time-uniform sampling comparison.
 
-Change-uniform sampling aims to distribute supervision across visible changes in a trajectory. Appendix A.2 combines normalized DINOv2, optical-flow, and pixel-change scores, then selects four intermediate frames that divide cumulative change into approximately equal intervals. This criterion gives more temporal sampling density to portions of a clip with larger measured changes. We have added a time-uniform control using the same PhysTrace training dataset and four intermediate states, retaining progressive compression, 1,253 planner updates, and 537 generator updates. It scores 54.16% on PICABench-Superficial, compared with 56.32% for change-uniform sampling. This single-run comparison supports change-uniform sampling under the tested configuration.
+Change-uniform sampling selects four intermediate frames at equal intervals of cumulative visual change, using normalized DINOv2, optical-flow, and pixel-change scores (Appendix A.2).
 
-We use four intermediate states as a fixed design choice, which yields four visual reasoning tokens after compression. The existing experiments evaluate this configuration. Selecting the best state count and establishing the benefit of progressive over direct compression require separate ablations. We clarify these distinctions in Appendix A.2 and report the sampling control in Appendix C.7.
+We reran time-uniform sampling with the same PhysTrace dataset settings as change-uniform sampling. The PICABench-Superficial results are:
+
+| Sampling | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Time-uniform | 53.72 | 63.06 | 59.30 | 58.24 | 43.29 | 46.21 | 62.35 | 53.65 | 55.09 |
+| Change-uniform | 54.45 | 65.19 | 58.52 | 57.99 | 44.91 | 47.31 | 64.32 | 56.43 | 56.32 |
+
+Change-uniform improves Overall by **1.23 percentage points** and scores higher in six of eight categories; time-uniform scores higher on reflection and refraction. This single-run comparison supports change-uniform sampling under the tested configuration (Appendix C.7).
+
+We use four intermediate states as a fixed design choice. State-count and direct-compression ablations remain pending; this comparison does not establish the best state count or isolate the compression curriculum.
 <!-- reply:sampling:end -->
 
 ### R2.4: Latent-token roles and supervision
