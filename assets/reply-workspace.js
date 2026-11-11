@@ -5,6 +5,8 @@
   const prefix = 'physflow-reply-draft-v1:';
   const limit = data.characterLimit;
   const editors = new Map();
+  const legacyDrafts = [];
+  const sync = window.PhysFlowSync(groups, refreshSharedEditors);
   const page = document.querySelector('.page');
   const taskPanel = document.getElementById('tasks-panel');
   const replyPanel = document.getElementById('responses');
@@ -24,12 +26,58 @@
   }
 
   function updateDraftTotal() {
-    const count = [...editors.values()].filter(e => e.input.value !== e.item.markdown).length;
-    document.getElementById('reply-draft-total').textContent = count ? `本机有 ${count} 份未发布修改` : '正在查看已发布稿';
+    const state = sync.summary();
+    document.getElementById('reply-draft-total').textContent = !state.ready ? '正在载入共享稿…' :
+      state.conflicts ? `${state.conflicts} 份回复需要合并冲突，双方内容均已保留` :
+      state.error ? state.error : state.pending ? `${state.pending} 份修改待同步${state.connected ? '' : ' · 请开启共享保存'}` : '正在查看共享最新版';
+    document.getElementById('shared-disconnect').hidden = !state.connected;
+    document.getElementById('shared-connect-label').textContent = state.connected ? '共享保存已连接' : '开启共享保存';
+  }
+
+  function refreshSharedEditors() {
+    for (const editor of editors.values()) {
+      const state = sync.state(editor.item);
+      const value = sync.view(editor.item);
+      if (!editor.composing && editor.input.value !== value) {
+        const old = editor.input.value;
+        let first = 0;
+        while (first < old.length && old[first] === value[first]) first++;
+        const offset = value.length - old.length;
+        const start = editor.input.selectionStart, end = editor.input.selectionEnd;
+        editor.input.value = value;
+        if (document.activeElement === editor.input) editor.input.setSelectionRange(
+          first < start ? Math.max(first, start + offset) : start,
+          first < end ? Math.max(first, end + offset) : end);
+      }
+      if (!editor.composing) editor.displayed = value;
+      editor.input.readOnly = !state.ready;
+      editor.saveState.textContent = !state.ready ? '正在载入…' : state.conflict ? '有冲突 · 请核对双方文字' :
+        state.pending ? (state.connected ? (state.busy ? '正在同步…' : '已备份 · 待同步') : '已备份 · 待开启共享保存') :
+        state.error ? '离线缓存' : '与共享稿一致';
+      editor.saveState.classList.toggle('error', Boolean(state.error || state.conflict));
+      editor.conflictBox.hidden = !state.conflict;
+      editor.conflictText.textContent = state.conflict?.theirs || '';
+      editor.restore.disabled = !state.pending && !state.conflict;
+      if (editor.lastRendered !== editor.input.value) renderEditor(editor);
+    }
+    updateDraftTotal();
+    // Task-view excerpts and response editors read the same shared text.
+    const legacy = { r1: 'r1', 'data-split': 'data-split', 'latent-representation': 'latent-representation',
+      'method-contribution': 'method-contribution', 'sft-dataset': 'sft-dataset', 'sft-baseline': 'sft-baseline',
+      'terminal-only': 'terminal-status', 'general-editing': 'general-editing', cost: 'cost' };
+    for (const [block, id] of Object.entries(legacy)) {
+      const editor = [...editors.values()].find(e => e.item.syncKey === 'block:' + block);
+      const prose = document.querySelector('#reply-' + id + ' .reply-prose');
+      if (editor && prose) {
+        const text = sync.view(editor.item);
+        if (prose.dataset.sharedText !== text) { prose.innerHTML = md.render(text); prose.dataset.sharedText = text; }
+      }
+    }
   }
 
   function renderEditor(editor) {
     const { input, preview, counter, card } = editor;
+    editor.lastRendered = input.value;
     preview.innerHTML = md.render(input.value);
     if (!input.value.trim()) preview.append(element('p', 'preview-empty', '左侧输入 Markdown，这里会实时显示预览。'));
     for (const table of preview.querySelectorAll('table')) {
@@ -91,23 +139,15 @@
     input.spellcheck = false;
     input.setAttribute('aria-label', reviewer.code + ' · ' + item.title + ' Markdown');
     const saved = readDraft(key);
-    // Apply the author's requested sentence edit without replacing their draft.
-    if (key === 'overview-summary' && saved) {
-      const previous = 'We have carefully considered your feedback and revised the paper, with the main changes in blue.';
-      const revised = 'We have carefully considered every comment and suggestion and revised the paper accordingly, with the main changes marked in blue.';
-      if (saved.text.includes(previous) && item.markdown.includes(revised)) {
-        saved.text = saved.text.replace(previous, revised);
-        try { localStorage.setItem(prefix + key, JSON.stringify(saved)); } catch {}
-      }
-    }
-    let draftRevision = saved?.revision || item.revision;
-    input.value = saved ? saved.text : item.markdown;
+    if (saved) legacyDrafts.push({ key, item, saved });
+    input.value = sync.view(item);
+    input.readOnly = true;
     const foot = element('div', 'editor-column-foot');
     const counter = element('span', 'char-counter');
     counter.id = 'count-' + key;
     counter.setAttribute('aria-live', 'polite');
     input.setAttribute('aria-describedby', counter.id);
-    const saveState = element('span', 'draft-save-state', saved ? (saved.revision !== item.revision ? '本机草稿 · 发布稿已有更新' : '已恢复本机草稿') : '已发布稿 · 编辑后自动保存本机');
+    const saveState = element('span', 'draft-save-state', '正在载入共享稿…');
     foot.append(counter, saveState);
     source.append(sourceHead, input, foot);
     const rendered = element('div', 'editor-column');
@@ -117,33 +157,36 @@
     preview.setAttribute('lang', 'en');
     const renderedFoot = element('div', 'editor-column-foot');
     renderedFoot.append(element('span', '', '复制内容不包含审稿原文和中文分析'));
-    const restore = element('button', 'editor-button restore-button', '还原已发布稿');
+    const restore = element('button', 'editor-button restore-button', '撤销未同步修改');
     restore.type = 'button';
     renderedFoot.append(restore);
     rendered.append(renderedHead, preview, renderedFoot);
     columns.append(source, rendered);
     card.append(columns);
-    const editor = { key, item, reviewer, card, input, preview, counter, saveState };
+    const conflictBox = element('div', 'shared-conflict');
+    conflictBox.hidden = true;
+    conflictBox.append(element('strong', '', '同一处文字有不同修改，双方内容都已保留。'),
+      element('p', '', '下方是共享稿；上方编辑框保留你的内容。请核对或手动合并后选择。'));
+    const conflictText = element('pre', 'shared-conflict-text');
+    const useShared = element('button', 'editor-button', '采用共享稿');
+    const useEdited = element('button', 'editor-button primary', '将编辑框内容作为合并稿');
+    useShared.type = useEdited.type = 'button';
+    conflictBox.append(conflictText, useShared, useEdited);
+    card.append(conflictBox);
+    const editor = { key, item, reviewer, card, input, preview, counter, saveState, restore,
+      conflictBox, conflictText, displayed: input.value, composing: false };
     editors.set(key, editor);
     input.addEventListener('input', () => {
-      renderEditor(editor);
-      try {
-        if (input.value === item.markdown) {
-          localStorage.removeItem(prefix + key);
-          draftRevision = item.revision;
-        } else localStorage.setItem(prefix + key, JSON.stringify({ text: input.value, revision: draftRevision }));
-        saveState.textContent = input.value === item.markdown ? '与已发布稿一致' : '已保存到当前浏览器';
-        saveState.classList.remove('error');
-      } catch {
-        saveState.textContent = '浏览器未能保存，请复制或导出';
-        saveState.classList.add('error');
-      }
+      if (!editor.composing) sync.edit(item, editor.displayed, input.value);
     });
+    input.addEventListener('compositionstart', () => { editor.composing = true; });
+    input.addEventListener('compositionend', () => { editor.composing = false; sync.edit(item, editor.displayed, input.value); });
+    useShared.addEventListener('click', () => sync.accept(item, false));
+    useEdited.addEventListener('click', () => sync.accept(item, true));
     copy.addEventListener('click', () => copyEditor(editor, copy));
     restore.addEventListener('click', () => {
-      if (input.value !== item.markdown && !window.confirm('用已发布稿替换这一个回复框的本机修改？此操作不能撤销。')) return;
-      input.value = item.markdown;
-      input.dispatchEvent(new Event('input', { bubbles: true }));
+      if (!window.confirm('撤销这份回复尚未同步的修改，恢复共享稿？')) return;
+      sync.restore(item);
     });
     renderEditor(editor);
     return card;
@@ -215,4 +258,20 @@
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   });
   route();
+  document.getElementById('shared-auth-form').addEventListener('submit', async event => {
+    event.preventDefault();
+    const input = document.getElementById('shared-token');
+    const message = document.getElementById('shared-auth-status');
+    const button = event.currentTarget.querySelector('button[type="submit"]');
+    button.disabled = true; message.textContent = '正在连接…';
+    try {
+      await sync.connect(input.value);
+      message.textContent = '已连接；待同步修改会自动保存。';
+      document.getElementById('shared-connection').open = false;
+    } catch (error) { message.textContent = error.message; }
+    finally { input.value = ''; button.disabled = false; }
+  });
+  document.getElementById('shared-disconnect').addEventListener('click', sync.disconnect);
+  document.getElementById('shared-refresh').addEventListener('click', sync.refresh);
+  sync.start(legacyDrafts);
 })();

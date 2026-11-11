@@ -24,7 +24,7 @@ We summarize the main revisions below.
 1. Expanded the discussion of PhysicEdit, EndoCoT, and Monet to clarify their relationship with our method.
 2. Clarified the roles of the latent tokens, their supervision during compression, and the separate final visual block.
 3. Clarified the original backbone baseline and added image-pair fine-tuning on the same PhysTrace data.
-4. Reorganized the comparisons of training data and training strategies, including their training budgets.
+4. Added experiments to better disentangle the contributions of the training data and the training framework.
 5. Added a method-level comparison with PhysicEdit and expanded the computation-cost comparison.
 6. Clarified the sources and roles of the training and evaluation data.
 
@@ -108,9 +108,11 @@ The resource and timing measurements come from separate runs. In these reported 
 
 > 6 号新增物理类别与亮度分析，见 报告与三组图件。原始 taxonomy 为六领域、26 细类，另有八类 PICA 标签。六领域平衡准确率 86.91% vs 源图加指令 76.28%（配对增益名义 CI +4.10 至 +17.90 pp）；同布局预训练对照为 85.94%，与 PhysFlow 的差异未确立。82 个照明测试视频的亮度变化读出 R²=0.370，指令 TF-IDF 为 0.365，预训练为 0.402。可主张压缩 latent 保留了可读出的物理类别与视觉变化信息；训练获得额外物理规律、逐状态对齐与因果物理作用仍缺证据。所有结果属于探索性后续分析。
 
+<!-- reply:latent-definition:start -->
 The six latent thoughts form a learned conditioning sequence Z = [h, l, m₁, m₂, m₃, m₄] ∈ ℝ⁶ˣᵈ, where d is the planner's hidden dimension. The training design assigns h and l to high-level physical rationales and low-level transition descriptions, and assigns m₁ through m₄ to ordered intermediate visual states. The planner additionally predicts F ∈ ℝ¹⁶ˣᵈ, a final visual block. Thus, the additional conditioning consists of six reasoning tokens and 16 final-state tokens.
 
 Section 3.4 specifies how these roles enter training. Stage I aligns each 16-token intermediate block with the corresponding frame encoding from a moving-average teacher. Stage II replaces each intermediate block with one latent token and removes that block's direct alignment loss. Later uncompressed blocks, the final visual block, and the generation objective provide the remaining supervision. After Stage II compresses all intermediate blocks, the final-block alignment and generation objectives supervise the planner. This training defines the intended roles of the latent positions, while their physical-state correspondence remains an empirical question.
+<!-- reply:latent-definition:end -->
 
 <!-- reply:latent-representation:start -->
 **The latent plan exposes physical-domain and conditional outcome information to linear probes; token order also affects editing.** The revised Figure 7 organizes these findings into panels (a) through (d).
@@ -148,15 +150,19 @@ Together, these results support physical-semantic and conditional-consequence re
 
 > time-uniform 已完成 PICABench 全量评测：900 张、4,112 个问题，Overall 54.16；full 使用同一版训练数据，Overall 56.32。状态数 K2/K6 和直接压缩仍待结果。
 
+<!-- reply:sampling:start -->
 Change-uniform sampling aims to distribute supervision across visible changes in a trajectory. Appendix A.2 combines normalized DINOv2, optical-flow, and pixel-change scores, then selects four intermediate frames that divide cumulative change into approximately equal intervals. This criterion gives more temporal sampling density to portions of a clip with larger measured changes. We have added a time-uniform control using the same PhysTrace training dataset and four intermediate states, retaining progressive compression, 1,253 planner updates, and 537 generator updates. It scores 54.16% on PICABench-Superficial, compared with 56.32% for change-uniform sampling. This single-run comparison supports change-uniform sampling under the tested configuration.
 
 We use four intermediate states as a fixed design choice, which yields four visual reasoning tokens after compression. The existing experiments evaluate this configuration. Selecting the best state count and establishing the benefit of progressive over direct compression require separate ablations. We clarify these distinctions in Appendix A.2 and report the sampling control in Appendix C.7.
+<!-- reply:sampling:end -->
 
 ### R2: Statistical uncertainty
 
 > 已有统计回复草稿。待生成 seeds、配对 CI 和训练 seeds；物理评测范围见下方独立回复。
 
+<!-- reply:statistics:start -->
 We agree that the reported gains require careful interpretation. The main tables report increases of 2.06 percentage points on PICABench and 1.38 points on RISEBench over the backbone. These are point estimates under the reported evaluation settings. Their uncertainty across training runs and evaluation samples requires repeated runs and confidence intervals.
+<!-- reply:statistics:end -->
 
 ### R2: Physical evaluation and human evidence
 

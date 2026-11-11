@@ -138,7 +138,7 @@
       .task-checkbox:disabled { opacity: 1; cursor: default; }
     .task-label { cursor: default; }
   </style>
-  <link rel="stylesheet" href="assets/reply-workspace.css">
+  <link rel="stylesheet" href="assets/reply-workspace.css?v=51961cffac5e">
 </head>
 <body>
   <div class="page">
@@ -161,7 +161,7 @@
         </div>
         <nav id="reviewer-nav" aria-label="审稿人"></nav>
         <p class="sidebar-note">所有访客查看同一份进度。展开“设置与完成标准”查看实验细节。</p>
-        <p class="sidebar-note">最近发布：2026-11-10 21:41 PST。刷新页面查看最新发布的进度与回复。</p>
+        <p class="sidebar-note">最近发布：2026-11-10 22:13 PST。刷新页面查看最新发布的进度与回复。</p>
       </aside>
       <main>
         <noscript>请启用 JavaScript，以显示进度清单；英文回复正文仍可直接阅读。</noscript>
@@ -266,7 +266,13 @@
           </div>
           <div class="editor-note">
             <p><strong>每个回复框可单独复制为一条评论。</strong>计数包含空格、换行和 Markdown 标记；多点合并成一条评论时，上限仍按整条正文计算。</p>
-            <p>修改自动保存在当前浏览器；公开链接展示已发布稿，不会自动同步你的本机修改。<span id="reply-draft-total" class="draft-total">正在查看已发布稿</span>。</p>
+            <p>开启共享保存后，你在网页和我们在讨论中确认的修改会合并到同一份回复。不同位置自动合并，同一处冲突保留双方内容；未同步内容自动备份在本机。<span id="reply-draft-total" class="draft-total">正在载入共享稿…</span>。</p>
+            <div class="shared-toolbar"><button type="button" class="editor-button" id="shared-refresh">刷新共享稿</button><button type="button" class="editor-button" id="shared-disconnect" hidden>断开编辑授权</button></div>
+            <details id="shared-connection"><summary id="shared-connect-label">开启共享保存</summary>
+              <p>作者首次使用需为这个仓库提供 GitHub 写入授权；老师查看无需授权。</p>
+              <ol><li><a href="https://github.com/settings/personal-access-tokens/new?name=PhysFlow%20rebuttal%20editing&amp;target_name=MAYIXUAN836&amp;expires_in=30&amp;contents=write" target="_blank" rel="noopener noreferrer">创建编辑授权</a>，选择 <strong>Only select repositories → physflow-rebuttal-progress</strong>，确认 <strong>Contents: Read and write</strong>。</li><li>复制生成的 token，粘贴到下方连接。授权仅用于当前浏览器会话，不要发到聊天里。</li></ol>
+              <form id="shared-auth-form"><label for="shared-token">GitHub 编辑授权</label><input id="shared-token" type="password" autocomplete="off" spellcheck="false" required><button type="submit" class="editor-button primary">连接并自动保存</button><span id="shared-auth-status" role="status"></span></form>
+            </details>
             <details><summary>5,000 字符依据与预览说明</summary><p><a href="https://docs.openreview.net/reference/default-forms/default-comment-form" target="_blank" rel="noopener noreferrer">OpenReview 官方默认表单</a>规定正文最多 5,000 字符。<a href="https://iclr.cc/Conferences/2027/AuthorGuidelines" target="_blank" rel="noopener noreferrer">ICLR 2027 作者指南</a>确认每条评论有限长、可多次回复，但未公布数值；本论文实际表单上限尚未确认，本页先按默认值提示。计数使用浏览器字符串长度。常用 Markdown 实时预览；最终显示与校验以 OpenReview 为准。</p></details>
           </div>
           <div id="response-sections"></div>
@@ -566,8 +572,11 @@
     renderReviewers();
     updateProgress();
   </script>
-  <script src="assets/vendor/markdown-it.min.js"></script>
-  <script src="assets/reply-data.js?v=d36ca25689d9"></script>
-  <script src="assets/reply-workspace.js?v=36b945ec42a8"></script>
+  <script src="assets/vendor/markdown-it.min.js?v=38c70a1e7ca9"></script>
+  <script src="assets/reply-data.js?v=8f3fedafb409"></script>
+  <script src="assets/vendor/diff3.js?v=a08aa76a79bd"></script>
+  <script src="assets/reply-merge.js?v=8c14b6b22091"></script>
+  <script src="assets/reply-sync.js?v=877a216b57ca"></script>
+  <script src="assets/reply-workspace.js?v=8fa7abccb58c"></script>
 </body>
 </html>
