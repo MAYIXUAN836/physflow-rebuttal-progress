@@ -50,18 +50,31 @@ The Authors
 > 状态：方法级结果及 cost 已接入，首轮完整回复草稿已形成；尚未提交。对应 checklist：physicedit-score、physicedit-discussion。
 
 <!-- reply:r1:start -->
-Thank you for highlighting this closely related work. We appreciate [PhysicEdit’s contribution to physics-aware image editing](https://arxiv.org/html/2602.21778v2#S3.SS3), particularly its combination of explicit physical reasoning and video-supervised transition queries. This design uses video-derived transition priors to guide image editing without generating intermediate videos at inference. We share its motivation of using process information to improve physical image editing, and have expanded the related-work discussion to acknowledge this connection.
+Thank you very much for your careful review and for recognizing the motivation behind combining textual explanations with visual trajectories. We are grateful that you brought PhysicEdit to our attention, and we apologize for not discussing this closely related work in the original manuscript. Your comment has helped us improve both our discussion and experimental comparison.
 
-**Our focus is the progressive internalization of both textual reasoning and visual processes into a compact latent plan.** PhysicEdit combines an explicit textual reasoning trace with learned visual-transition queries. PhysFlow progressively compresses high-level physical rationales, low-level transition descriptions, and ordered intermediate visual blocks into six latent tokens. These tokens condition image generation together with a separate 16-token final visual block. At inference, PhysFlow generates the latent plan directly, without decoding a textual reasoning trace. We have clarified these differences in Sections 2 and 3.
+We appreciate [PhysicEdit's thoughtful combination of explicit physical reasoning and video-supervised transition queries](https://arxiv.org/html/2602.21778v2#S3.SS3), which uses video-derived transition priors without generating intermediate videos at inference. We share the motivation of using process information to improve physical image editing and have expanded Section 2 to acknowledge this connection.
 
-**Following your suggestion, we have added an experimental comparison with PhysicEdit on PICABench-Superficial.** We use Qwen2.5-VL-72B-Instruct for evaluation. Our PhysFlow implementation uses Qwen-Image-Edit-2511.
+**Our work focuses on progressively internalizing both textual reasoning and visual processes into a compact latent plan.** PhysicEdit retains an explicit textual reasoning trace at inference. PhysFlow progressively compresses textual rationales and intermediate visual blocks into the six-token plan Z = [h, l, m₁, m₂, m₃, m₄]. The training design assigns h to high-level physical rationales, l to low-level transition descriptions, and m₁ through m₄ to the ordered intermediate visual stages used during training. A separate 16-token final visual block provides final-state conditioning. At inference, PhysFlow generates the latent plan directly, without decoding a textual reasoning trace. We have clarified this design and these token roles in Section 3.
+
+To better explain what these tokens retain after compression, we have expanded the four-part analysis in Figure 7:
+
+- **(a) Token-role structure.** Different reasoning roles occupy distinct regions in a shared principal-component projection, supporting role-dependent representation structure after compression.
+- **(b) Physical-domain information.** A linear probe on the six latent tokens reaches 86.91% balanced accuracy across six physical domains on 212 held-out videos (same-layout pretrained control: 85.94%), showing that physical-domain information remains accessible after compression.
+- **(c) Physical-intervention prediction.** Across 11 exploratory synthetic tasks, probes on the four visual tokens predict both outcomes in same-image intervention pairs. Seven selected tasks reach 91.41–100% pair accuracy; the other four reach 28.91–68.75%. A fixed phase-change probe also reaches 100% on 256 pairs from 128 new confirmation families.
+- **(d) Token-order sensitivity.** On 64 PICABench-Superficial inputs, reversing or shuffling the intermediate visual tokens reduces mean accuracy from 57.36% to 53.94%, with textual and final-visual conditioning fixed. This 3.42-point decrease supports sensitivity to the ordering of the intermediate tokens.
+
+The appendix includes the full task set and input/text controls. Together, these analyses provide evidence of role-dependent structure, readable physical-domain and conditional-outcome information, and order-sensitive editing in our compressed representation.
+
+**Following your helpful suggestion, we have also added an experimental comparison with PhysicEdit on PICABench-Superficial.** We use Qwen2.5-VL-72B-Instruct for evaluation. Our PhysFlow implementation uses Qwen-Image-Edit-2511.
 
 | Method | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | PhysicEdit | 51.62 | 61.63 | 51.56 | 52.96 | 44.03 | 45.89 | 57.64 | 53.07 | 52.35 |
 | **PhysFlow (Ours)** | **54.45** | **65.19** | **58.52** | **57.99** | **44.91** | **47.31** | **64.32** | **56.43** | **56.32** |
 
-PhysFlow achieves an overall score of **56.32**, compared with **52.35** for PhysicEdit, with higher scores across all eight categories. We have incorporated these results into Table 1 and added a computational-cost comparison in Table 5.
+In this evaluation, PhysFlow achieves an overall score of **56.32**, compared with **52.35** for PhysicEdit, with higher scores across all eight categories. We have incorporated these results into Table 1 and added a computational-cost comparison in Table 5.
+
+We sincerely appreciate your suggestion, which helped us present the relationship to PhysicEdit and the evidence for our latent representation more clearly.
 <!-- reply:r1:end -->
 
 ## Reviewer 62MG
