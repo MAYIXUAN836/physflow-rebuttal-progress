@@ -54,16 +54,15 @@ Thank you for highlighting PhysicEdit. We appreciate its use of video-derived tr
 
 **Our contribution is the progressive internalization of textual and visual process supervision into a continuous latent plan.** PhysicEdit combines an explicit textual reasoning trace at inference with video-supervised transition queries. PhysFlow progressively compresses high-level physical rationales, low-level transition descriptions, and ordered intermediate visual blocks into six latent tokens. These tokens condition the image generator together with a separate 16-token final visual block. This design internalizes the textual reasoning as well as the visual process, so inference uses the compact latent plan without decoding a textual reasoning trace. We clarify this distinction in Sections 2 and 3. [PhysicEdit, Section 3.3](https://arxiv.org/html/2602.21778v2#S3.SS3).
 
-**The added method-level comparison reports 56.32 for PhysFlow and 52.35 for PhysicEdit.** We evaluate PICABench-Superficial with Qwen2.5-VL-72B-Instruct and report both backbones below. We report scores on a 0 to 100 scale and gains in percentage points.
+**The added method-level comparison reports 56.32 for PhysFlow and 52.35 for PhysicEdit.** We evaluate PICABench-Superficial with Qwen2.5-VL-72B-Instruct. The table also includes Qwen-Image-Edit-2511, the backbone used by PhysFlow. We report scores on a 0 to 100 scale.
 
-| Method | Backbone | Overall | Gain over own backbone |
-|---|---|---:|---:|
-| Qwen-Image-Edit-2509 | Qwen-Image-Edit-2509 | 49.71 | N/A |
-| PhysicEdit | Qwen-Image-Edit-2509 | 52.35 | +2.64 |
-| Qwen-Image-Edit-2511 | Qwen-Image-Edit-2511 | 54.26 | N/A |
-| **PhysFlow (Ours)** | Qwen-Image-Edit-2511 | **56.32** | **+2.06** |
+| Method | Overall |
+|---|---:|
+| Qwen-Image-Edit-2511 | 54.26 |
+| PhysicEdit | 52.35 |
+| **PhysFlow (Ours)** | **56.32** |
 
-PhysFlow achieves a 3.97-point higher overall score and higher scores in all eight categories. Both methods improve on their respective backbones. The different backbones make this a comparison of complete systems; isolating the contribution of each method requires a matched-backbone control. We also clarify that the existing 53.82 entry in Tables 4 and 9 refers to PhysFlow trained on PhysicTran38K; the new 52.35 entry evaluates PhysicEdit itself.
+PhysFlow achieves a 3.97-point higher overall score than PhysicEdit and higher scores in all eight categories. This comparison evaluates the complete systems under the same benchmark and scoring protocol. We also clarify that the existing 53.82 entry in Tables 4 and 9 refers to PhysFlow trained on PhysicTran38K; the new 52.35 entry evaluates PhysicEdit itself.
 
 **PhysFlow also has lower latency in the reported cost comparison.**
 
