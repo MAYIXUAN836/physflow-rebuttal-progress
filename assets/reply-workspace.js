@@ -5,6 +5,8 @@
   const prefix = 'physflow-reply-draft-v1:';
   const limit = data.characterLimit;
   const editors = new Map();
+  let activeReviewer = groups[0];
+  let lastSubmission = '';
   const legacyDrafts = [];
   const sync = window.PhysFlowSync(groups, refreshSharedEditors);
   const page = document.querySelector('.page');
@@ -61,6 +63,7 @@
       if (editor.lastRendered !== editor.input.value) renderEditor(editor);
     }
     updateDraftTotal();
+    refreshSubmissionBlocks();
     // Task-view excerpts and response editors read the same shared text.
     const legacy = { r1: 'r1', 'data-split': 'data-split', 'latent-representation': 'latent-representation',
       'method-contribution': 'method-contribution', 'sft-dataset': 'sft-dataset', 'sft-baseline': 'sft-baseline',
@@ -98,6 +101,7 @@
   }
 
   async function copyEditor(editor, button) {
+    const label = button.dataset.copyLabel || (button.dataset.copyLabel = button.textContent);
     try {
       await navigator.clipboard.writeText(editor.input.value);
       button.textContent = '已复制';
@@ -106,7 +110,95 @@
       editor.input.select();
       button.textContent = '已选中，请按 Ctrl / ⌘ C';
     }
-    setTimeout(() => { button.textContent = '复制 Markdown'; }, 2200);
+    setTimeout(() => { button.textContent = label; }, 2200);
+  }
+
+  function submissionBlocks(reviewer) {
+    let closing = '';
+    const entries = reviewer.items.map(item => {
+      let text = sync.view(item).trim();
+      const ending = reviewer.submissionClosing;
+      if (ending?.item === item.id) {
+        const start = text.lastIndexOf('\n\n' + ending.startsWith);
+        if (start >= 0) { closing = text.slice(start + 2); text = text.slice(0, start); }
+      }
+      if (reviewer !== data.overview && !text.includes(`**${item.subject}**`)) text = `**${item.subject}**\n\n${text}`;
+      return { item, text };
+    });
+    const compose = (block, index, total) => {
+      const heading = reviewer === data.overview ? '' :
+        `**Response to Reviewer ${reviewer.code}: Part ${index + 1}/${total}${block.title ? '. ' + block.title : ''}**\n\n`;
+      return heading + block.entries.map(entry => entry.text).join('\n\n');
+    };
+    let blocks;
+    if (reviewer.submissionBlocks) {
+      blocks = reviewer.submissionBlocks.map(block => ({ title: block.title,
+        entries: block.items.map(id => entries.find(entry => entry.item.id === id)) }));
+    } else {
+      blocks = [];
+      for (const entry of entries) {
+        const target = blocks.find(block => compose({ entries: [...block.entries, entry] }, 0, entries.length).length <= limit);
+        if (target) target.entries.push(entry);
+        else blocks.push({ entries: [entry] });
+      }
+    }
+    return blocks.map((block, index) => ({ ...block,
+      text: compose(block, index, blocks.length) + (closing && index === blocks.length - 1 ? '\n\n' + closing : '') }));
+  }
+
+  function refreshSubmissionBlocks() {
+    const reviewer = activeReviewer;
+    const blocks = submissionBlocks(reviewer);
+    const state = sync.summary();
+    const signature = JSON.stringify([reviewer.code, blocks.map(block => block.text), state.ready, state.error, state.conflicts]);
+    if (signature === lastSubmission) return;
+    lastSubmission = signature;
+    const panel = document.getElementById('response-blocks');
+    const opened = new Set([...panel.querySelectorAll('details[open]')].map(detail => detail.id));
+    panel.replaceChildren();
+    const heading = element('div', 'submission-heading');
+    heading.append(element('h2', '', '提交用回复 Blocks'),
+      element('span', '', `${reviewer.name} · ${blocks.length} 个 Blocks`));
+    panel.append(heading, element('p', 'submission-note',
+      `每个 Block 复制为一条评论，目标不超过 ${limit.toLocaleString('en-US')} 字符。下方逐点修改后，这里同步更新；回复点保持完整。`));
+    if (!state.ready || state.error || state.conflicts) panel.append(element('p', 'submission-warning',
+      !state.ready ? '正在载入共享稿…' : state.conflicts ? '共享稿有冲突，请先在下方核对双方文字。' : '当前使用缓存内容，请刷新共享稿后核对。'));
+    blocks.forEach((block, index) => {
+      const count = block.text.length;
+      const card = element('article', 'submission-block' + (count > limit ? ' over-limit' : ''));
+      const head = element('div', 'submission-block-head');
+      const title = element('h3', '', `Block ${index + 1} / ${blocks.length}`);
+      const counter = element('span', 'char-counter' + (count > limit ? ' over-limit' : count >= 4500 ? ' near-limit' : ''),
+        `${count.toLocaleString('en-US')} / ${limit} 字符${count > limit ? ` · 超出 ${count - limit}` : ` · 还可写 ${limit - count}`}`);
+      const copy = element('button', 'editor-button primary', `复制 Block ${index + 1}`);
+      copy.type = 'button';
+      copy.disabled = !state.ready;
+      head.append(title, counter, copy);
+      card.append(head);
+      if (block.title) card.append(element('p', 'submission-topic', block.title));
+      const points = element('div', 'submission-points');
+      points.append(element('span', '', '包含回复点：'));
+      block.entries.forEach(({ item }) => {
+        const link = element('a', '', item.title);
+        link.href = '#response-' + reviewer.code + '-' + item.id;
+        points.append(link);
+      });
+      card.append(points);
+      if (block.entries.some(({ item }) => item.pending)) card.append(element('p', 'submission-warning', '含待补充回复点，提交前请核对。'));
+      const detail = element('details', 'submission-content');
+      detail.id = `submission-${reviewer.code}-${index + 1}`;
+      detail.open = opened.has(detail.id);
+      detail.append(element('summary', '', '展开合并正文 · Markdown'));
+      const input = element('textarea', 'markdown-input');
+      input.readOnly = true;
+      input.spellcheck = false;
+      input.value = block.text;
+      input.setAttribute('aria-label', `${reviewer.name} Block ${index + 1} 合并正文`);
+      detail.append(input);
+      card.append(detail);
+      copy.addEventListener('click', () => copyEditor({ input }, copy));
+      panel.append(card);
+    });
   }
 
   function makeCard(reviewer, item, index) {
@@ -225,6 +317,8 @@
     const hash = location.hash.slice(1);
     const replyMode = hash === 'responses' || hash.startsWith('response-');
     const reviewer = groups.find(r => hash === 'response-' + r.code || hash.startsWith('response-' + r.code + '-')) || groups[0];
+    activeReviewer = reviewer;
+    refreshSubmissionBlocks();
     taskPanel.hidden = replyMode;
     replyPanel.hidden = !replyMode;
     page.classList.toggle('reply-mode', replyMode);
@@ -234,12 +328,16 @@
     for (const link of navigation.children) link.setAttribute('aria-current', String(link.dataset.replyReviewer === reviewer.code));
     const outline = document.getElementById('response-outline');
     outline.replaceChildren();
+    const blocksLink = element('a', '', '↑ 提交用回复 Blocks');
+    blocksLink.href = '#response-' + reviewer.code;
+    outline.append(blocksLink);
     reviewer.items.forEach((item, i) => {
       const a = element('a', '', `${String(i + 1).padStart(2, '0')}  ${item.title}`);
       a.href = '#response-' + reviewer.code + '-' + item.id;
       outline.append(a);
     });
-    if (hash.startsWith('response-')) requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView({ block: 'start' }));
+    if (hash.startsWith('response-')) requestAnimationFrame(() =>
+      document.getElementById(hash === 'response-' + reviewer.code ? 'response-blocks' : hash)?.scrollIntoView({ block: 'start' }));
   }
   document.getElementById('view-tasks').addEventListener('click', () => { location.hash = 'tasks-panel'; });
   document.getElementById('view-responses').addEventListener('click', () => { location.hash = 'responses'; });

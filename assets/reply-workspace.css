@@ -28,6 +28,22 @@
 .editor-note details { margin: 8px 0 0; }
 .editor-note summary { font-size: 12px; }
 .draft-total { color: var(--green); font-weight: 600; }
+.submission-panel { border: 1px solid #b6cbbb; border-radius: 12px; background: #f0f4ee; padding: 22px; margin-bottom: 22px; }
+.submission-heading, .submission-block-head { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px; }
+.submission-heading { justify-content: space-between; }
+.submission-heading h2 { margin: 0; font-size: 21px; }
+.submission-heading > span, .submission-note { color: var(--muted); font-size: 12px; }
+.submission-note { margin: 8px 0 18px; }
+.submission-block { border: 1px solid var(--line); border-radius: 9px; background: white; padding: 16px; margin-top: 12px; }
+.submission-block.over-limit { border-color: #d99b91; }
+.submission-block-head h3 { margin: 0 auto 0 0; font-size: 16px; }
+.submission-topic { margin: 8px 0; font-size: 13px; color: var(--ink); }
+.submission-points { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; margin-top: 10px; font-size: 12px; color: var(--muted); }
+.submission-points a { color: var(--green); }
+.submission-warning { margin: 8px 0; font-size: 12px; color: var(--amber); }
+.submission-content { margin-top: 12px; }
+.submission-content summary { color: var(--green); font-size: 12px; cursor: pointer; }
+.submission-content .markdown-input { height: 340px; border: 1px solid var(--line); border-radius: 6px; margin-top: 12px; }
 .shared-toolbar { display: flex; gap: 8px; margin-top: 10px; }
 #shared-auth-form { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
 #shared-token { min-width: 180px; flex: 1; border: 1px solid var(--line); border-radius: 6px; padding: 8px; }
@@ -94,6 +110,9 @@
   .reply-outline, .reply-rail-label { display: none; }
 }
 @media (max-width: 760px) {
+  .submission-panel { padding: 14px; }
+  .submission-block { padding: 12px; }
+  .submission-block-head .editor-button { width: 100%; }
   .workspace-tabs { display: flex; }
   .workspace-tabs button { flex: 1; padding: 9px 12px; }
   .reply-workspace-toolbar h2 { font-size: 22px; }
