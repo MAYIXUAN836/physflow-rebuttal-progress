@@ -50,9 +50,9 @@ The Authors
 > 状态：方法级结果及 cost 已接入，首轮完整回复草稿已形成；尚未提交。对应 checklist：physicedit-score、physicedit-discussion。
 
 <!-- reply:r1:start -->
-Thank you for highlighting PhysicEdit. We appreciate its use of video-derived transition priors to guide physical image editing without rendering intermediate videos at inference. We agree that our original discussion should have made this connection explicit, and we will expand the related-work discussion accordingly.
+Thank you for highlighting PhysicEdit. We appreciate its use of video-derived transition priors to guide physical image editing without rendering intermediate videos at inference. We agree that our original discussion should have made this connection explicit, and we have expanded the related-work discussion accordingly.
 
-**Our contribution is the progressive internalization of textual and visual process supervision into a continuous latent plan.** PhysicEdit combines an explicit textual reasoning trace at inference with video-supervised transition queries. PhysFlow progressively compresses high-level physical rationales, low-level transition descriptions, and ordered intermediate visual blocks into six latent tokens. These tokens condition the image generator together with a separate 16-token final visual block. This design internalizes the textual reasoning as well as the visual process, so inference uses the compact latent plan without decoding a textual reasoning trace. We will clarify this distinction in Sections 2 and 3. [PhysicEdit, Section 3.3](https://arxiv.org/html/2602.21778v2#S3.SS3).
+**Our contribution is the progressive internalization of textual and visual process supervision into a continuous latent plan.** PhysicEdit combines an explicit textual reasoning trace at inference with video-supervised transition queries. PhysFlow progressively compresses high-level physical rationales, low-level transition descriptions, and ordered intermediate visual blocks into six latent tokens. These tokens condition the image generator together with a separate 16-token final visual block. This design internalizes the textual reasoning as well as the visual process, so inference uses the compact latent plan without decoding a textual reasoning trace. We clarify this distinction in Sections 2 and 3. [PhysicEdit, Section 3.3](https://arxiv.org/html/2602.21778v2#S3.SS3).
 
 **The added method-level comparison reports 56.32 for PhysFlow and 52.35 for PhysicEdit.** We evaluate PICABench-Superficial with Qwen2.5-VL-72B-Instruct and report both backbones below. We report scores on a 0 to 100 scale and gains in percentage points.
 
@@ -72,7 +72,7 @@ PhysFlow achieves a 3.97-point higher overall score and higher scores in all eig
 | PhysicEdit | 29.00 | 56.25 | 52.19 |
 | **PhysFlow (Ours)** | **28.87** | **58.11** | **49.39** |
 
-The resource and timing measurements come from separate runs. In these reported results, PhysFlow takes 2.80 fewer seconds per edit, a 5.4% latency reduction, while using 1.86 GiB more peak memory. These measurements show a latency advantage with a memory trade-off. We will include the method-level results and cost comparison in the revised manuscript.
+The resource and timing measurements come from separate runs. In these reported results, PhysFlow takes 2.80 fewer seconds per edit, a 5.4% latency reduction, while using 1.86 GiB more peak memory. These measurements show a latency advantage with a memory trade-off. The revised manuscript includes the method-level results and cost comparison.
 <!-- reply:r1:end -->
 
 ## Reviewer 62MG
@@ -97,7 +97,7 @@ The resource and timing measurements come from separate runs. In these reported 
 
 **3. Framework comparison on the same PhysTrace pairs: +1.20 points.** PhysFlow reaches 56.32, compared with 55.12 for image-pair SFT. This comparison fixes the source-target pairs, rank-512 generator LoRA configuration, and 537 generator updates. It shows that the complete PhysFlow training framework improves on direct adaptation to the same image pairs.
 
-**Training conditions.** Across datasets, PICA100K SFT uses 4,926 updates, PhysTrace SFT uses 537, and PhysFlow uses 4,632 on PhysicTran38K versus 1,790 on PhysTrace. PhysFlow adds planner capacity and training to the matched generator budget. These results compare the reported data and framework configurations. The terminal-only run scores 55.57, 0.75 points below the paper's reported full PhysFlow score of 56.32. We report this difference at the training-configuration level; the direct-compression control will address the curriculum separately. We will organize Tables 4 and 9 and their discussion around these three comparisons.
+**Training conditions.** Across datasets, PICA100K SFT uses 4,926 updates, PhysTrace SFT uses 537, and PhysFlow uses 4,632 on PhysicTran38K versus 1,790 on PhysTrace. PhysFlow adds planner capacity and training to the matched generator budget. These results compare the reported data and framework configurations. The terminal-only run scores 55.57, 0.75 points below the paper's reported full PhysFlow score of 56.32. We report this difference at the training-configuration level; the direct-compression control will address the curriculum separately. We organize Tables 4 and 9 and their discussion around these three comparisons.
 <!-- reply:sft-dataset:end -->
 
 ### R2: Latent representation and supervision
@@ -167,7 +167,7 @@ We thank the reviewer for this thoughtful observation and agree that vision-lang
 
 Our user study provides complementary human evidence: 17 participants evaluate 100 randomly sampled image-instruction pairs and favor PhysFlow over five competing methods in physical plausibility. Our case studies also examine visible physical consequences, such as updating reflections after object replacement and deforming a pillow under a dog's weight.
 
-Together, these results support improved physical plausibility under model and human assessment. We will clarify this scope and discuss physically grounded metrics as a valuable direction for future benchmarks.
+Together, these results support improved physical plausibility under model and human assessment. We clarify this scope and discuss physically grounded metrics as a valuable direction for future benchmarks in Appendix C.9.
 <!-- reply:physical-evaluation:end -->
 
 ### R2: Data separation
@@ -175,7 +175,7 @@ Together, these results support improved physical plausibility under model and h
 > 状态：回复已完成并接入，按作者要求勾选 checklist 的 data-split 项。下段说明 PICA-100K 与 PICABench 的构建方式及用途。合稿核验备注：原稿最终版本与本轮 +899 补实验版本仍需分别对应实际训练清单、checkpoint 和检查记录；来源说明不等同于跨集近重复审计。
 
 <!-- reply:data-split:start -->
-PICA-100K provides training data, while PICABench provides a separately curated evaluation set of 900 editing examples (Pu et al., [Sections 3.1 and 3.2](https://arxiv.org/html/2510.17681v3#S3.SS2), and [Section 3.4](https://arxiv.org/html/2510.17681v3#S3.SS4)). The authors collect PICABench evaluation images from licensed and public sources and construct PICA-100K from generated source images and synthetic videos. We start constructing our PhysTrace training dataset with PICA-100K image-instruction pairs (Section 3.2 of our manuscript). We will clarify these distinct data sources and their training and evaluation roles in Section 3.2 and Appendix A.
+PICA-100K provides training data, while PICABench provides a separately curated evaluation set of 900 editing examples (Pu et al., [Sections 3.1 and 3.2](https://arxiv.org/html/2510.17681v3#S3.SS2), and [Section 3.4](https://arxiv.org/html/2510.17681v3#S3.SS4)). The authors collect PICABench evaluation images from licensed and public sources and construct PICA-100K from generated source images and synthetic videos. We start constructing our PhysTrace training dataset with PICA-100K image-instruction pairs (Section 3.2 of our manuscript). We clarify these distinct data sources and their training and evaluation roles in Section 3.2 and Appendix A.
 <!-- reply:data-split:end -->
 
 ### R2: Computation cost
@@ -194,7 +194,7 @@ Thank you for this suggestion. We now report parameter counts and peak GPU memor
 | ChronoEdit | 22.83 | 54.81 | 228.68 |
 | **PhysFlow (Ours)** | **28.87** | **58.11** | **49.39** |
 
-PhysFlow uses 28.87 billion parameters and 58.11 GiB peak memory, compared with 28.85 billion parameters and 58.06 GiB for Qwen-Image-Edit. Its latency increases from 44.34 to 49.39 seconds per edit, an 11.4% overhead. We will include this comparison in the revised efficiency table.
+PhysFlow uses 28.87 billion parameters and 58.11 GiB peak memory, compared with 28.85 billion parameters and 58.06 GiB for Qwen-Image-Edit. Its latency increases from 44.34 to 49.39 seconds per edit, an 11.4% overhead. The revised efficiency table includes this comparison.
 <!-- reply:cost:end -->
 
 ### R2: Method positioning
@@ -214,7 +214,7 @@ PhysFlow uses 28.87 billion parameters and 58.11 GiB peak memory, compared with 
 
 **Relative to Monet, we jointly internalize textual and visual process supervision for image generation.** Monet distills auxiliary visual information into latent embeddings within text-latent interleaved reasoning and further trains them with visual-latent policy optimization. Its latent embeddings support a model that produces textual answers. [Monet, Section 3](https://arxiv.org/html/2511.21395v2#S3). PhysFlow compresses both the textual rationales and the intermediate visual representations into a continuous plan before generating the edited image. During planner training, the flow-matching loss propagates through a frozen image generator to train the conditioning representations. We then freeze the planner and adapt the generator to these representations. This couples learning the plan to its use in image generation (Section 3.4).
 
-**The same-data control now measures the gain beyond adaptation to the training pairs.** PhysFlow scores 56.32 on PICABench-Superficial, compared with 55.12 for image-pair SFT on the same PhysTrace pairs. Both use the same generator LoRA configuration and 537 generator updates; PhysFlow additionally trains its planner, for 1,790 total updates. The terminal-only run scores 55.57, compared with 56.32 for full PhysFlow as reported in the paper. The 0.75-point difference compares training configurations; finer attribution to supervision and curriculum requires further controls. These comparisons report single-run point estimates. We will clarify these design differences in Sections 2 and 3 and report each control alongside the claim it tests.
+**The same-data control now measures the gain beyond adaptation to the training pairs.** PhysFlow scores 56.32 on PICABench-Superficial, compared with 55.12 for image-pair SFT on the same PhysTrace pairs. Both use the same generator LoRA configuration and 537 generator updates; PhysFlow additionally trains its planner, for 1,790 total updates. The terminal-only run scores 55.57, compared with 56.32 for full PhysFlow as reported in the paper. The 0.75-point difference compares training configurations; finer attribution to supervision and curriculum requires further controls. These comparisons report single-run point estimates. We clarify these design differences in Sections 2 and 3 and report each completed control alongside the claim it tests.
 <!-- reply:method-contribution:end -->
 
 ### R3-Q2: Identity of the no-reasoning baseline
@@ -222,7 +222,7 @@ PhysFlow uses 28.87 billion parameters and 58.11 GiB peak memory, compared with 
 > 状态：已接入 1 号 PICABench 同数据 SFT 结果；RISE 补测由 15 号追加。完整方法与 SFT 的生成器配置及更新数一致，总训练量不同。
 
 <!-- reply:sft-baseline:start -->
-The 54.26 row in Table 3 reports the original Qwen-Image-Edit-2511 backbone. We will label it explicitly as “Original backbone” and state its training status in the caption. We have now added a baseline fine-tuned on the same PhysTrace source-target pairs:
+The 54.26 row in Table 3 reports the original Qwen-Image-Edit-2511 backbone. The revised caption explicitly identifies it as “Original backbone” and states that it has no PhysTrace fine-tuning. We have now added a baseline fine-tuned on the same PhysTrace source-target pairs:
 
 | Configuration | PICABench-Superficial (%) |
 |---|---:|
