@@ -90,14 +90,14 @@ window.PHYSFLOW_REPLIES = {
               "text": "First, the change-uniform frame sampling strategy is motivated in Appendix A.2 but is not quantitatively compared with ordinary temporal-uniform sampling. Second, the choice of four intermediate visual states and the proposed progressive compression sequence are not systematically ablated against alternative token counts or direct compression strategies."
             }
           ],
-          "analysis": "先解释 change-uniform 的动机，以及四个状态只是当前配置。time-uniform 和 K2 在训，K8 待执行，直接压缩暂无结果。新 K2/K8 与复用 K4 存在数据版本差异，拿到结果后也不能称为严格只改变帧数的消融。",
+          "analysis": "作者已确认 full 与新增对照使用同一版训练数据。time-uniform 已完成 PICABench 评测，Overall 54.16；完整 PhysFlow 为 56.32，差 2.16 个百分点。K2/K6 状态数与直接压缩仍待结果。四个状态是当前配置，不能把尚未完成的状态数与压缩实验写成结论。",
           "source": {
             "section": "R2: Sampling and compression"
           },
-          "status": "待补实验结果",
+          "status": "抽帧对照已接入 · 状态数/直接压缩待结果",
           "pending": true,
-          "markdown": "Change-uniform sampling aims to distribute supervision across visible changes in a trajectory. Appendix A.2 combines normalized DINOv2, optical-flow, and pixel-change scores, then selects four intermediate frames that divide cumulative change into approximately equal intervals. This criterion gives more temporal sampling density to portions of a clip with larger measured changes. Its benefit over time-uniform sampling requires a comparison that fixes the videos, endpoints, state count, and training procedure.\n\nWe use four intermediate states as a fixed design choice, which yields four visual reasoning tokens after compression. The existing experiments evaluate this configuration. Selecting the best state count and establishing the benefit of progressive over direct compression require separate ablations. We will make these distinctions explicit when discussing the sampling rule and curriculum.",
-          "revision": "0ced54e59005f1d8"
+          "markdown": "Change-uniform sampling aims to distribute supervision across visible changes in a trajectory. Appendix A.2 combines normalized DINOv2, optical-flow, and pixel-change scores, then selects four intermediate frames that divide cumulative change into approximately equal intervals. This criterion gives more temporal sampling density to portions of a clip with larger measured changes. We have added a time-uniform control using the same PhysTrace training dataset and four intermediate states, retaining progressive compression, 1,253 planner updates, and 537 generator updates. It scores 54.16% on PICABench-Superficial, compared with 56.32% for change-uniform sampling. This single-run comparison supports change-uniform sampling under the tested configuration.\n\nWe use four intermediate states as a fixed design choice, which yields four visual reasoning tokens after compression. The existing experiments evaluate this configuration. Selecting the best state count and establishing the benefit of progressive over direct compression require separate ablations. We clarify these distinctions in Appendix A.2 and report the sampling control in Appendix C.7.",
+          "revision": "b92f02e12de3dc5f"
         },
         {
           "id": "latent-definition",
@@ -364,14 +364,14 @@ window.PHYSFLOW_REPLIES = {
         "title": "修改总览 · 给所有审稿人和 AC",
         "subject": "Summary of Revisions and Additional Evidence",
         "comments": [],
-        "analysis": "按作者提供的范例，用诚恳的感谢开场，再以正文／附录两组短清单交代修改，结尾再次致谢。每项只写一句，不列分数、增幅和详细论证；具体证据留在后续逐点回复。总览对应已完成的本地修订稿，待作者检查并上传论文后提交。",
+        "analysis": "按作者要求，先把解释澄清、补充实验与分析全部纳入总览，再在后面逐点展开。正文／附录两组共 12 项，覆盖 16 个回复点中的共用主题；保持诚恳感谢，每项一句，不列分数或长篇论证。已纳入终态监督、time-uniform、物理表征及对照、数据来源、评测边界与统计局限；状态数、直接压缩和多 seed 仍未写成已完成实验。作者已确认 full 与新增对照使用同一版数据。",
         "source": {
           "block": "overview"
         },
         "status": "总览已成稿 · 论文待作者检查",
         "pending": false,
-        "markdown": "Dear Reviewers and Area Chair,\n\nThank you very much for the time and care you have devoted to reviewing our work. We sincerely appreciate your constructive comments and suggestions, which have helped us improve the manuscript. We have carefully considered your feedback and revised the paper, with the main changes in blue.\n\nWe summarize the main revisions below.\n\n**In the main paper:**\n\n1. Clarified the relationship with PhysicEdit and added experimental comparisons.\n2. Added image-pair fine-tuning on PhysTrace and clarified the comparisons of training data and training strategies.\n3. Expanded the computation-cost comparison to include parameter counts and peak memory.\n\n**In the appendix:**\n\n1. Added analyses of the physical information in the latent representations.\n2. Clarified the discussion of general editing performance and its trade-offs.\n\nWe provide detailed responses to each reviewer's comments below. Thank you again for your time and helpful suggestions.\n\nBest regards,  \nThe Authors",
-        "revision": "676e04d118afa5d9"
+        "markdown": "Dear Reviewers and Area Chair,\n\nThank you very much for the time and care you have devoted to reviewing our work. We sincerely appreciate your constructive comments and suggestions, which have helped us improve the manuscript. We have carefully considered your feedback and revised the paper, with the main changes in blue.\n\nWe summarize the main revisions below.\n\n**In the main paper:**\n\n1. Expanded the discussion of PhysicEdit, EndoCoT, and Monet to clarify their relationship with our method.\n2. Clarified the roles of the latent tokens, their supervision during compression, and the separate final visual block.\n3. Clarified the original backbone baseline and added image-pair fine-tuning on the same PhysTrace data.\n4. Reorganized the comparisons of training data and training strategies, including their training budgets.\n5. Added a method-level comparison with PhysicEdit and expanded the computation-cost comparison.\n6. Clarified the sources and roles of the training and evaluation data.\n\n**In the appendix:**\n\n1. Added the terminal-only supervision control and its category-level results.\n2. Added the comparison between time-uniform and change-uniform frame sampling.\n3. Expanded the latent-representation analysis with domain probes, controlled intervention tasks, and token-order perturbations, together with their controls and limitations.\n4. Expanded the discussion of general editing performance and category-level trade-offs.\n5. Clarified what the model-based evaluations and human study support about physical plausibility.\n6. Clarified the uncertainty of single-run results and the remaining questions about state count and the compression curriculum.\n\nWe provide detailed responses to each reviewer's comments below. Thank you again for your time and helpful suggestions.\n\nBest regards,  \nThe Authors",
+        "revision": "f9446f406fac9e3e"
       }
     ]
   }

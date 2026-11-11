@@ -6,11 +6,11 @@
 - 中文引用块为内部状态，提交时只复制英文回复及对应表格。论文修订和 OpenReview 提交另行完成。
 - 其余英文模块沿用 11 月 6 日文字素材，仍按下方标注等待实验或核验。
 
-> 进度快照（2026-11-09 22:21 PST）：9/16 项已完成并接入回复。time-uniform 已到第 5/7 轮；K2 第 4/7 轮，K8 尚未开始。多推理 seed 上次记录 1,562/7,560 张；11 月 10 日按作者停机要求核查，生成任务及调度器已退出（143），评分与统计未完成；11/12 最新执行记录为停止。新 K2/K8 与复用 K4 的数据版本差异需在消融表中说明。
+> 进度更新（2026-11-10）：time-uniform 的 PICABench 评测已完成，Overall 54.16，已接入回复；共 10/16 项任务完成。作者确认 full 与新增对照使用同一版训练数据。K2/K6 状态数、直接压缩和多 seed 统计仍待结果。16 个逐点回复另行对应到论文修改；回复点与任务项不是同一计数。
 
 ## 修改总览：给所有审稿人和 AC
 
-> 本地标蓝修订稿已完成编译与排版检查：正文 10 页，总计 20 页；尚未上传 Overleaf / OpenReview。下方为开场回复草稿，论文上传后再作为正式修改总览提交。正文、附录与图表编号已核对。未完成的新实验不列为已完成。
+> 本地标蓝修订稿已完成编译与排版检查：正文 10 页，总计 22 页；尚未上传 Overleaf / OpenReview。下方为开场回复草稿，论文上传后再作为正式修改总览提交。正文、附录与图表编号已核对。未完成的新实验不列为已完成。
 
 <!-- reply:overview:start -->
 Dear Reviewers and Area Chair,
@@ -21,14 +21,21 @@ We summarize the main revisions below.
 
 **In the main paper:**
 
-1. Clarified the relationship with PhysicEdit and added experimental comparisons.
-2. Added image-pair fine-tuning on PhysTrace and clarified the comparisons of training data and training strategies.
-3. Expanded the computation-cost comparison to include parameter counts and peak memory.
+1. Expanded the discussion of PhysicEdit, EndoCoT, and Monet to clarify their relationship with our method.
+2. Clarified the roles of the latent tokens, their supervision during compression, and the separate final visual block.
+3. Clarified the original backbone baseline and added image-pair fine-tuning on the same PhysTrace data.
+4. Reorganized the comparisons of training data and training strategies, including their training budgets.
+5. Added a method-level comparison with PhysicEdit and expanded the computation-cost comparison.
+6. Clarified the sources and roles of the training and evaluation data.
 
 **In the appendix:**
 
-1. Added analyses of the physical information in the latent representations.
-2. Clarified the discussion of general editing performance and its trade-offs.
+1. Added the terminal-only supervision control and its category-level results.
+2. Added the comparison between time-uniform and change-uniform frame sampling.
+3. Expanded the latent-representation analysis with domain probes, controlled intervention tasks, and token-order perturbations, together with their controls and limitations.
+4. Expanded the discussion of general editing performance and category-level trade-offs.
+5. Clarified what the model-based evaluations and human study support about physical plausibility.
+6. Clarified the uncertainty of single-run results and the remaining questions about state count and the compression curriculum.
 
 We provide detailed responses to each reviewer's comments below. Thank you again for your time and helpful suggestions.
 
@@ -139,11 +146,11 @@ Together, these results support physical-semantic and conditional-consequence re
 
 ### R2: Sampling and compression
 
-> 已有文字草稿。待 time-uniform、状态数及直接压缩对照结果。
+> time-uniform 已完成 PICABench 全量评测：900 张、4,112 个问题，Overall 54.16；full 使用同一版训练数据，Overall 56.32。状态数 K2/K6 和直接压缩仍待结果。
 
-Change-uniform sampling aims to distribute supervision across visible changes in a trajectory. Appendix A.2 combines normalized DINOv2, optical-flow, and pixel-change scores, then selects four intermediate frames that divide cumulative change into approximately equal intervals. This criterion gives more temporal sampling density to portions of a clip with larger measured changes. Its benefit over time-uniform sampling requires a comparison that fixes the videos, endpoints, state count, and training procedure.
+Change-uniform sampling aims to distribute supervision across visible changes in a trajectory. Appendix A.2 combines normalized DINOv2, optical-flow, and pixel-change scores, then selects four intermediate frames that divide cumulative change into approximately equal intervals. This criterion gives more temporal sampling density to portions of a clip with larger measured changes. We have added a time-uniform control using the same PhysTrace training dataset and four intermediate states, retaining progressive compression, 1,253 planner updates, and 537 generator updates. It scores 54.16% on PICABench-Superficial, compared with 56.32% for change-uniform sampling. This single-run comparison supports change-uniform sampling under the tested configuration.
 
-We use four intermediate states as a fixed design choice, which yields four visual reasoning tokens after compression. The existing experiments evaluate this configuration. Selecting the best state count and establishing the benefit of progressive over direct compression require separate ablations. We will make these distinctions explicit when discussing the sampling rule and curriculum.
+We use four intermediate states as a fixed design choice, which yields four visual reasoning tokens after compression. The existing experiments evaluate this configuration. Selecting the best state count and establishing the benefit of progressive over direct compression require separate ablations. We clarify these distinctions in Appendix A.2 and report the sampling control in Appendix C.7.
 
 ### R2: Statistical uncertainty
 
@@ -228,7 +235,7 @@ Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow ex
 
 ### R3-Q3 / R2: Terminal-only supervision
 
-> 2026-11-08 22:35 PST：2 号最终结果已独立核验，Overall 55.57；900 张与 4,112 QA 完整。该对照保留六个 recurrent latent tokens、16-token final visual block 和可训练模块，使用 planner 1,253 与 generator 537 更新。分项表对比本轮 55.57 与论文完整模型报告值 56.32；差 0.75 pp。实验与回复保持完成；合稿时仍需核对论文完整模型 checkpoint、数据版本与评分产物的对应关系及评测口径，11 号直接压缩仍待结果。详见 最终结果记录及 独立核验。
+> 2026-11-08 22:35 PST：2 号最终结果已独立核验，Overall 55.57；900 张与 4,112 QA 完整。该对照保留六个 recurrent latent tokens、16-token final visual block 和可训练模块，使用 planner 1,253 与 generator 537 更新。分项表对比本轮 55.57 与论文完整模型报告值 56.32；差 0.75 pp。实验与回复保持完成；作者已确认完整模型与本轮对照使用同一版训练数据；11 号直接压缩仍待结果。详见 最终结果记录及 独立核验。
 
 <!-- reply:terminal-only:start -->
 Following your suggestion, we retain the six recurrent latent tokens, the 16-token final visual block, and the trainable modules. We train the terminal-only control using terminal visual supervision and the generation loss, without textual or intermediate-frame supervision. This control uses 1,253 planner updates and 537 generator updates. The table compares this new run with the full PhysFlow results reported in the paper.

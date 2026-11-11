@@ -155,29 +155,29 @@
       <aside class="sidebar" aria-label="完成进度与审稿人导航">
         <div class="overall">
           <p class="overall-label">已完成并接入回复 · 共用任务计一次</p>
-          <p class="overall-count"><span id="total-done">9</span><span class="overall-total">/ <span id="total-count">16</span> 项</span></p>
-          <progress id="total-progress" value="9" max="16" aria-label="全部任务完成进度"></progress>
+          <p class="overall-count"><span id="total-done">10</span><span class="overall-total">/ <span id="total-count">16</span> 项</span></p>
+          <progress id="total-progress" value="10" max="16" aria-label="全部任务完成进度"></progress>
           <p id="save-status" class="save-status" role="status" aria-live="polite">共享进度 · 作者统一更新</p>
         </div>
         <nav id="reviewer-nav" aria-label="审稿人"></nav>
         <p class="sidebar-note">所有访客查看同一份进度。展开“设置与完成标准”查看实验细节。</p>
-        <p class="sidebar-note">最近发布：2026-11-10 20:59 PST。刷新页面查看最新发布的进度与回复。</p>
+        <p class="sidebar-note">最近发布：2026-11-10 21:18 PST。刷新页面查看最新发布的进度与回复。</p>
       </aside>
       <main>
         <noscript>请启用 JavaScript，以显示进度清单；英文回复正文仍可直接阅读。</noscript>
         <section class="reviewer coordination" aria-labelledby="coordination-heading">
-          <h2 id="coordination-heading">进度总表 · 2026-11-09</h2>
+          <h2 id="coordination-heading">进度总表 · 2026-11-10</h2>
           <p>按审稿人汇总实验进度、待办事项与英文回复草稿。<a href="rebuttal-response.md">查看 Markdown 主稿</a>。</p>
           <p><strong>本次完成：</strong>1 号同数据 SFT 的 PICABench 结果 55.12 已核验并接入，与完整方法 56.32 相差 1.20 pp。生成器 LoRA 与 537 更新一致，总训练量与容量不同；三组比较分别报告数据集与框架收益：+1.74、+2.50、+1.20 pp；训练条件列在表后。2 号终态监督已核验：55.57；完整分项表已接入，与论文完整模型报告值 56.32 相差 0.75 pp，RFR 为终态监督更高。11 号直接压缩最新执行记录为停止，暂无正式结果。PhysicEdit 方法级比较及 cost 回复继续保留。</p>
           <p><strong>数据来源回复已完成并打钩：</strong>依据 PICABench 原论文，说明 PICA-100K 合成训练数据与单独构建的 900 例评测 benchmark 的来源区别。<a href="#reply-data-split">查看英文回复</a>；各版训练清单与重叠检查的对应关系保留为合稿核验备注。</p>
           <p><strong>EndoCoT / Monet discussion 已成稿：</strong><a href="#reply-method-contribution">查看英文回复</a>。1 号同数据 SFT 和 2 号终态监督结果已接入；11 号直接压缩结果待接入，相关方法条目暂未整体勾选。</p>
-          <p><strong>最新运行快照 · 2026-11-09 22:21 PST：</strong>time-uniform 第 5/7 轮（3/179）；K2 第 4/7 轮（99/179），K8 尚未开始；多推理 seed 上次记录 1,562/7,560 张（20.7%）；11 月 10 日按作者停机要求核查，生成任务已退出（143），评分与统计未完成。11/12 最新执行记录为停止。完成并接入回复仍为 9/16。</p>
+          <p><strong>本次进度更新 · 2026-11-10：</strong>time-uniform 已完成 PICABench 全量评测：900 张、4,112 个问题，Overall 54.16；完整 PhysFlow 为 56.32，作者确认使用同一版训练数据。共 10/16 项任务已完成并接入回复。K2/K6 状态数、直接压缩和多 seed 统计仍待结果。</p>
           <p><strong>一般编辑权衡回复已完成：</strong>已补入 Hybrid／Extract 的任务差异解释，并与论文的类别权衡表述同步；对应项已勾选。<a href="#reply-general-editing">查看英文回复</a>。</p>
           <p><strong>勾选含义：</strong>该项工作已完成并接入回复草稿；论文修订、最终核对和 OpenReview 提交另行完成。本页展示作者确认并发布的完成状态，供老师查看。其余实验保留各自注明日期的状态快照。</p>
           <details open>
             <summary>需要优先处理的证据与进度问题</summary>
             <ol>
-              <li><strong>数据与 checkpoint 对应关系：</strong>作者确认的原稿最终无重叠版本，与本轮指定的 +899 D3 恢复权重需要分别标识。本轮 14 号检出 1,094 条近重复候选；编号文档记录至少一例经视觉复核的同源图。候选总数不是已确认重叠数，这批检查也不能推断另一服务器的最终版本。合稿前需对应到实际训练清单、权重和结果。</li>
+              <li><strong>数据版本已确认：</strong>作者确认 full 与新增对照使用同一版训练数据，撤回此前“数据版本不同”的判断。训练／评测来源说明已写入论文；近重复候选检查仍应区分候选与经确认的重叠。</li>
               <li><strong>物理表征回复已同步最终四联图：</strong>a 角色组织；b 六领域平衡准确率 86.91%；c 七项受控干预的配对读出，Phase change 使用 256 对／128 新家族确认集，其余六项各 128 对／64 家族；d 保留编辑顺序干预。<a href="#reply-latent-representation">查看四组证据的英文回复</a>。十一项探索与全部对照保留；展示子集不代表完整物理 benchmark，逐 token 状态对应仍未确立。</li>
               <li><strong>Cost 与长任务：</strong>Cost 已使用作者本轮确认表格写入回复，其中 PhysicEdit 为另一次测量的 52.19 秒；不使用历史日志覆盖。原稿测量设置描述在论文合稿时同步核对。4 号生成任务与调度器已退出（143），开发机显存已释放；全量生成及 72B 评分未完成。作者已确认原视频补齐；7/9/10 号的其余输入与中断续跑验收继续按执行记录跟进。</li>
             </ol>
@@ -233,7 +233,7 @@
 <article class="reply-block" id="reply-sft-baseline"><h3>xuAm · 原始骨干与同数据 SFT 对照</h3><div class="reply-prose" lang="en"><p>The 54.26 row in Table 3 reports the original Qwen-Image-Edit-2511 backbone. We will label it explicitly as “Original backbone” and state its training status in the caption. We have now added a baseline fine-tuned on the same PhysTrace source-target pairs:</p>
 <div class="reply-table table-wrap"><table><thead><tr><th scope="col">Configuration</th><th scope="col">PICABench-Superficial (%)</th></tr></thead><tbody><tr><td>Original Qwen-Image-Edit-2511</td><td>54.26</td></tr><tr><td>PhysTrace image-pair SFT</td><td>55.12</td></tr><tr><td>Full PhysFlow</td><td>56.32</td></tr></tbody></table></div>
 <p>Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow exceeds this adapted baseline by 1.20 points. Both use the same rank-512 generator LoRA configuration and 537 generator updates. PhysFlow also trains a planner, for 1,790 total updates, so this comparison includes additional capacity and training. Question 3 compares the terminal-only run with the full PhysFlow results reported in the paper, including the category breakdown and the scope of this training-configuration comparison.</p></div></article>
-<article class="reply-block" id="reply-terminal-status"><h3>62MG / xuAm · 同结构终态监督对照</h3><p>终态监督新跑结果已独立核验；两行完整分项表已接入，完整 PhysFlow 一行使用论文报告值。合稿仍需核对论文完整模型的 checkpoint、数据版本与评分产物及评测口径；11 号直接压缩待完成。</p><div class="reply-prose" lang="en"><p>Following your suggestion, we retain the six recurrent latent tokens, the 16-token final visual block, and the trainable modules. We train the terminal-only control using terminal visual supervision and the generation loss, without textual or intermediate-frame supervision. This control uses 1,253 planner updates and 537 generator updates. The table compares this new run with the full PhysFlow results reported in the paper.</p>
+<article class="reply-block" id="reply-terminal-status"><h3>62MG / xuAm · 同结构终态监督对照</h3><p>终态监督新跑结果已独立核验；两行完整分项表已接入，完整 PhysFlow 一行使用论文报告值。作者已确认 full 与本轮对照使用同一版训练数据；11 号直接压缩待完成。</p><div class="reply-prose" lang="en"><p>Following your suggestion, we retain the six recurrent latent tokens, the 16-token final visual block, and the trainable modules. We train the terminal-only control using terminal visual supervision and the generation loss, without textual or intermediate-frame supervision. This control uses 1,253 planner updates and 537 generator updates. The table compares this new run with the full PhysFlow results reported in the paper.</p>
 <p>Editing accuracy (%) on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct; higher is better.</p>
 <div class="reply-table table-wrap"><table><thead><tr><th scope="col">Training strategy</th><th scope="col">LP</th><th scope="col">LSE</th><th scope="col">RFL</th><th scope="col">RFR</th><th scope="col">DFM</th><th scope="col">CSL</th><th scope="col">GST</th><th scope="col">LST</th><th scope="col">Overall</th></tr></thead><tbody><tr><td>Terminal-only supervision</td><td>53.84</td><td>64.48</td><td>57.73</td><td><strong>59.18</strong></td><td>42.57</td><td>46.68</td><td>63.59</td><td>55.71</td><td>55.57</td></tr><tr><td>Full PhysFlow</td><td><strong>54.45</strong></td><td><strong>65.19</strong></td><td><strong>58.52</strong></td><td>57.99</td><td><strong>44.91</strong></td><td><strong>47.31</strong></td><td><strong>64.32</strong></td><td><strong>56.43</strong></td><td><strong>56.32</strong></td></tr></tbody></table></div>
 <p>Full PhysFlow achieves 0.75 percentage points higher overall accuracy. Terminal-only scores higher on refraction (59.18 versus 57.99). These single-run scores compare training configurations as a whole; isolating contributions from individual supervision terms and the compression curriculum requires further controls.</p></div></article>
@@ -415,8 +415,8 @@
       'physicedit-score': ['3 号 · 已完成并接入回复', '作者主表给出 PhysicEdit 52.35、PhysFlow 56.32，均采用 PICABench-Superficial / Qwen2.5-VL-72B-Instruct。R1 回复已列各自骨干、+2.64/+2.06 pp 的增益及 3.97 pp 系统差距，并保留骨干差异说明。', '#reply-r1'],
       'physicedit-discussion': ['已完成 · 8uwk 首轮回复已形成', '先认可 PhysicEdit 的视频转移先验与共同动机，再解释 PhysFlow 将层次化文本和有序视觉监督逐步内化为六个 latent tokens 的设计；质量结果、cost 和 53.82 的行身份均已衔接。待作者最终审阅及论文合稿。', '#reply-r1'],
       'same-data-sft': ['1 号 · PICABench 已完成并接入回复', '11 月 8 日 18:42 PST 核验：537 更新、900 张生成和 4,112 QA 评分完成，准确率 55.12；完整方法 56.32，高 1.20 pp。双方生成器预算一致，完整方法总计 1,790 更新。wrapper 因 15 个官方空 mask 的合理 PSNR 不适用项退出 1，独立核验确认评分产物完整；保留原始诊断。RISE 由 15 号追加。', '#reply-sft-dataset'],
-      'frame-sampling': ['7 号 · time-uniform 第 5/7 轮训练中', '2026-11-09 22:21 PST 只读快照：前 4 轮 planner 各 179 更新完成，第 5 轮 3/179；之后仍需完成其余 planner、generator 537 更新、PICA900／RISE360 生成评分及 profiling。原视频已补齐。此为训练进度，不是完整实验结果。', ''],
-      'state-count': ['9 / 10 号 · K2 第 4/7 轮，K8 待启动', '2026-11-09 22:21 PST 只读快照：K2 前 3 轮 planner 各 179 更新完成，第 4 轮 99/179。K2 完成训练与评测后才进入 K8；K8 尚未开始。复用旧 K4 与新 K2/K8 的 weak3+899 数据版本不同，不能称严格只改变帧数的消融。', ''],
+      'frame-sampling': ['已完成 · PICABench 54.16', '按作者更新后的 PICA-only 范围完成训练与评测，900 张、4,112 个问题完整。完整 PhysFlow 为 56.32，同一版训练数据；两者差 2.16 个百分点。已接入抽帧回复和本地论文 Appendix C.7。', ''],
+      'state-count': ['K2 / K6 · 待最终结果', '执行计划已由 K2/K8 调整为 K2/K6。作者确认与完整 K4 模型使用同一版数据；本页尚未接入最终状态数比较结果。', ''],
       'direct-compression': ['11 号 · 最新执行记录为停止，暂无结果', '最新训练监督记录注明：作者已停止后续两条显示为 11_directcompression 的任务（实际分别对应 11 和 12）。本轮未重新查询平台状态，未启动或恢复任务；尚无直接压缩正式成绩，不能用终态监督对照代替课程消融。', ''],
       'latent-alignment': ['6 号 · 最终四联图回复已同步', 'a 原聚类支持压缩后的角色组织；b 六领域平衡准确率 86.91%，随机 16.67%；c 七项配对读出为 Support 99.22、Torque 100、Buoyancy 99.22、Outflow 96.09、Absorption 99.22、Phase change 100、Shape recovery 91.41%。Phase change 为独立确认 256 对／128 新家族，其余六项各 128 对／64 家族。d 编辑顺序干预为 57.36→53.94。七项只是十一项探索的展示子集，其余四项和全部强对照保留；不归因于训练独有物理收益，逐帧对齐未确立。', '#reply-latent-representation'],
       'physics-evaluation': ['Discussion 已完成 · 客观测量未完成', '已独立回应评测边界：沿用 benchmark 任务与评分框架以便比较，并补充已有 17 人、100 对样本的 user study 和物理案例。未虚构人机一致率，也未把人工判断当成客观物理验证。物理指标列为未来 benchmark 方向；13 号真实测量和标注仍未完成。', '#reply-physical-evaluation'],
@@ -431,6 +431,7 @@
     };
 
     const completedInFile = {
+      'frame-sampling': '2026-11-10-time-uniform-pica-verified',
       'terminal-only': '2026-11-08-terminal-pica-verified',
       'same-data-sft': '2026-11-08-sft-pica-verified',
       'dataset-comparison': '2026-11-08-sft-dataset-reply',
