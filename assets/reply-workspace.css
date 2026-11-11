@@ -41,9 +41,7 @@
 .submission-points { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; margin-top: 10px; font-size: 12px; color: var(--muted); }
 .submission-points a { color: var(--green); }
 .submission-warning { margin: 8px 0; font-size: 12px; color: var(--amber); }
-.submission-content { margin-top: 12px; }
-.submission-content summary { color: var(--green); font-size: 12px; cursor: pointer; }
-.submission-content .markdown-input { height: 340px; border: 1px solid var(--line); border-radius: 6px; margin-top: 12px; }
+.submission-columns { margin-top: 16px; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; }
 .shared-toolbar { display: flex; gap: 8px; margin-top: 10px; }
 #shared-auth-form { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
 #shared-token { min-width: 180px; flex: 1; border: 1px solid var(--line); border-radius: 6px; padding: 8px; }

@@ -6,7 +6,8 @@
   const limit = data.characterLimit;
   const editors = new Map();
   let activeReviewer = groups[0];
-  let lastSubmission = '';
+  let submissionReviewer;
+  const submissionEditors = [];
   const legacyDrafts = [];
   const sync = window.PhysFlowSync(groups, refreshSharedEditors);
   const page = document.querySelector('.page');
@@ -113,22 +114,25 @@
     setTimeout(() => { button.textContent = label; }, 2200);
   }
 
-  function submissionBlocks(reviewer) {
-    let closing = '';
+  function submissionBlocks(reviewer, sources = {}) {
+    let closing = '', closingItem;
+    const source = item => sources[item.syncKey] ?? sync.view(item);
     const entries = reviewer.items.map(item => {
-      let text = sync.view(item).trim();
+      const sourceText = source(item);
+      let text = sourceText;
       const ending = reviewer.submissionClosing;
       if (ending?.item === item.id) {
         const start = text.lastIndexOf('\n\n' + ending.startsWith);
-        if (start >= 0) { closing = text.slice(start + 2); text = text.slice(0, start); }
+        if (start >= 0) { closing = text.slice(start + 2); closingItem = item; text = text.slice(0, start); }
       }
-      if (reviewer !== data.overview && !text.includes(`**${item.subject}**`)) text = `**${item.subject}**\n\n${text}`;
-      return { item, text };
+      const addedHeading = reviewer !== data.overview && !text.includes(`**${item.subject}**`);
+      if (addedHeading) text = `**${item.subject}**\n\n${text}`;
+      return { item, text, sourceText, addedHeading };
     });
+    const heading = (block, index, total) => reviewer === data.overview ? '' :
+      `**Response to Reviewer ${reviewer.code}: Part ${index + 1}/${total}${block.title ? '. ' + block.title : ''}**\n\n`;
     const compose = (block, index, total) => {
-      const heading = reviewer === data.overview ? '' :
-        `**Response to Reviewer ${reviewer.code}: Part ${index + 1}/${total}${block.title ? '. ' + block.title : ''}**\n\n`;
-      return heading + block.entries.map(entry => entry.text).join('\n\n');
+      return heading(block, index, total) + block.entries.map(entry => entry.text).join('\n\n');
     };
     let blocks;
     if (reviewer.submissionBlocks) {
@@ -142,62 +146,190 @@
         else blocks.push({ entries: [entry] });
       }
     }
-    return blocks.map((block, index) => ({ ...block,
+    return blocks.map((block, index) => ({ ...block, heading: heading(block, index, blocks.length),
+      closing, closingItem, closingSource: closingItem ? source(closingItem) : '',
+      hasClosing: Boolean(closing && index === blocks.length - 1),
       text: compose(block, index, blocks.length) + (closing && index === blocks.length - 1 ? '\n\n' + closing : '') }));
+  }
+
+  function splitSubmission(block, text, reviewer) {
+    const invalid = () => { throw new Error('请保留原有 Part 和回复点标题及顺序；草稿已备份在本机，尚未同步到逐点回复。'); };
+    if (!text.startsWith(block.heading)) invalid();
+    let body = text.slice(block.heading.length), closing = block.closing;
+    if (block.hasClosing) {
+      const marker = '\n\n' + reviewer.submissionClosing.startsWith;
+      const start = body.lastIndexOf(marker);
+      if (start < 0) throw new Error('请保留统一结语的起始句；草稿已备份在本机，尚未同步到逐点回复。');
+      closing = body.slice(start + 2);
+      body = body.slice(0, start);
+    }
+    const positions = block.entries.map(({ item }, index) => {
+      if (reviewer === data.overview) return 0;
+      const marker = `**${item.subject}**`;
+      const at = body.indexOf(marker);
+      if (at < 0 || body.indexOf(marker, at + marker.length) >= 0 ||
+        (index && body.slice(at - 2, at) !== '\n\n')) invalid();
+      return at;
+    });
+    if (positions.some((at, index) => index && at <= positions[index - 1])) invalid();
+    const changes = block.entries.map((entry, index) => {
+      let next = body.slice(index ? positions[index] : 0,
+        index + 1 < positions.length ? positions[index + 1] - 2 : body.length);
+      if (entry.addedHeading) {
+        const marker = `**${entry.item.subject}**\n\n`;
+        if (!next.startsWith(marker)) invalid();
+        next = next.slice(marker.length);
+      }
+      if (entry.item === block.closingItem) next += '\n\n' + closing;
+      return { item: entry.item, previous: entry.sourceText, next };
+    });
+    if (block.hasClosing && !block.entries.some(entry => entry.item === block.closingItem)) {
+      changes.push({ item: block.closingItem, previous: block.closingSource,
+        next: block.closingSource.slice(0, -block.closing.length) + closing });
+    }
+    return changes.filter(change => change.previous !== change.next);
+  }
+
+  function saveSubmissionDraft(editor) {
+    const sources = Object.fromEntries(editor.block.entries.map(entry => [entry.item.syncKey, entry.sourceText]));
+    if (editor.block.closingItem) sources[editor.block.closingItem.syncKey] = editor.block.closingSource;
+    try { localStorage.setItem(prefix + editor.key, JSON.stringify({ text: editor.input.value, sources })); }
+    catch { editor.error = '浏览器未能备份，请先复制此 Block 保存。'; }
+  }
+
+  function editSubmission(editor) {
+    renderEditor(editor);
+    if (editor.composing) return;
+    try {
+      const changes = splitSubmission(editor.block, editor.input.value, editor.reviewer);
+      editor.error = '';
+      try { localStorage.removeItem(prefix + editor.key); } catch {}
+      sync.editMany(changes);
+    } catch (error) {
+      editor.error = error.message;
+      saveSubmissionDraft(editor);
+      refreshSubmissionBlocks();
+    }
+  }
+
+  function makeSubmissionCard(reviewer, block, index, total) {
+    const card = element('article', 'submission-block');
+    const head = element('div', 'submission-block-head');
+    const title = element('h3', '', `Block ${index + 1} / ${total}`);
+    const counter = element('span', 'char-counter');
+    const copy = element('button', 'editor-button primary', `复制 Block ${index + 1}`);
+    copy.type = 'button';
+    head.append(title, counter, copy);
+    card.append(head);
+    if (block.title) card.append(element('p', 'submission-topic', block.title));
+    const points = element('div', 'submission-points');
+    points.append(element('span', '', '包含回复点：'));
+    block.entries.forEach(({ item }) => {
+      const link = element('a', '', item.title);
+      link.href = '#response-' + reviewer.code + '-' + item.id;
+      points.append(link);
+    });
+    card.append(points);
+    if (block.entries.some(({ item }) => item.pending)) card.append(element('p', 'submission-warning', '含待补充回复点，提交前请核对。'));
+    const columns = element('div', 'editor-columns submission-columns');
+    columns.id = `submission-${reviewer.code}-${index + 1}`;
+    const source = element('div', 'editor-column');
+    const sourceHead = element('div', 'editor-column-head');
+    const label = element('label', '', 'Markdown · 可编辑');
+    label.htmlFor = columns.id + '-markdown';
+    sourceHead.append(label);
+    const input = element('textarea', 'markdown-input');
+    input.id = label.htmlFor;
+    input.spellcheck = false;
+    input.value = block.text;
+    input.setAttribute('aria-label', `${reviewer.name} Block ${index + 1} 合并正文`);
+    const foot = element('div', 'editor-column-foot');
+    const saveState = element('span', 'draft-save-state');
+    saveState.setAttribute('aria-live', 'polite');
+    foot.append(saveState);
+    source.append(sourceHead, input, foot);
+    const rendered = element('div', 'editor-column');
+    const renderedHead = element('div', 'editor-column-head');
+    renderedHead.append(element('span', '', 'Preview · 实时预览'));
+    const preview = element('div', 'markdown-preview');
+    preview.setAttribute('lang', 'en');
+    preview.setAttribute('aria-label', `${reviewer.name} Block ${index + 1} Preview`);
+    const renderedFoot = element('div', 'editor-column-foot');
+    const restore = element('button', 'editor-button restore-button', '恢复同步正文');
+    restore.type = 'button';
+    renderedFoot.append(element('span', '', '与下方逐点回复双向同步'), restore);
+    rendered.append(renderedHead, preview, renderedFoot);
+    columns.append(source, rendered);
+    card.append(columns);
+    const key = `submission-${reviewer.code}-${index + 1}`;
+    const editor = { key, reviewer, block, card, input, preview, counter, copy, saveState, restore, composing: false, error: '' };
+    const saved = readDraft(key);
+    if (saved?.sources) {
+      editor.block = submissionBlocks(reviewer, saved.sources)[index];
+      input.value = saved.text;
+      editor.error = '已恢复本机 Block 草稿；保留原有标题后继续编辑即可同步。';
+    }
+    input.addEventListener('input', () => editSubmission(editor));
+    input.addEventListener('compositionstart', () => { editor.composing = true; });
+    input.addEventListener('compositionend', () => { editor.composing = false; editSubmission(editor); });
+    copy.addEventListener('click', () => copyEditor(editor, copy));
+    restore.addEventListener('click', () => {
+      if (!window.confirm('放弃这份尚未同步的 Block 草稿，恢复下方逐点回复组成的正文？')) return;
+      editor.error = '';
+      try { localStorage.removeItem(prefix + key); } catch {}
+      refreshSubmissionBlocks();
+    });
+    return editor;
   }
 
   function refreshSubmissionBlocks() {
     const reviewer = activeReviewer;
     const blocks = submissionBlocks(reviewer);
     const state = sync.summary();
-    const signature = JSON.stringify([reviewer.code, blocks.map(block => block.text), state.ready, state.error, state.conflicts]);
-    if (signature === lastSubmission) return;
-    lastSubmission = signature;
-    const panel = document.getElementById('response-blocks');
-    const opened = new Set([...panel.querySelectorAll('details[open]')].map(detail => detail.id));
-    panel.replaceChildren();
-    const heading = element('div', 'submission-heading');
-    heading.append(element('h2', '', '提交用回复 Blocks'),
-      element('span', '', `${reviewer.name} · ${blocks.length} 个 Blocks`));
-    panel.append(heading, element('p', 'submission-note',
-      `每个 Block 复制为一条评论，目标不超过 ${limit.toLocaleString('en-US')} 字符。下方逐点修改后，这里同步更新；回复点保持完整。`));
-    if (!state.ready || state.error || state.conflicts) panel.append(element('p', 'submission-warning',
-      !state.ready ? '正在载入共享稿…' : state.conflicts ? '共享稿有冲突，请先在下方核对双方文字。' : '当前使用缓存内容，请刷新共享稿后核对。'));
-    blocks.forEach((block, index) => {
-      const count = block.text.length;
-      const card = element('article', 'submission-block' + (count > limit ? ' over-limit' : ''));
-      const head = element('div', 'submission-block-head');
-      const title = element('h3', '', `Block ${index + 1} / ${blocks.length}`);
-      const counter = element('span', 'char-counter' + (count > limit ? ' over-limit' : count >= 4500 ? ' near-limit' : ''),
-        `${count.toLocaleString('en-US')} / ${limit} 字符${count > limit ? ` · 超出 ${count - limit}` : ` · 还可写 ${limit - count}`}`);
-      const copy = element('button', 'editor-button primary', `复制 Block ${index + 1}`);
-      copy.type = 'button';
-      copy.disabled = !state.ready;
-      head.append(title, counter, copy);
-      card.append(head);
-      if (block.title) card.append(element('p', 'submission-topic', block.title));
-      const points = element('div', 'submission-points');
-      points.append(element('span', '', '包含回复点：'));
-      block.entries.forEach(({ item }) => {
-        const link = element('a', '', item.title);
-        link.href = '#response-' + reviewer.code + '-' + item.id;
-        points.append(link);
+    if (submissionReviewer !== reviewer || submissionEditors.length !== blocks.length) {
+      submissionReviewer = reviewer;
+      submissionEditors.length = 0;
+      const panel = document.getElementById('response-blocks');
+      panel.replaceChildren();
+      const heading = element('div', 'submission-heading');
+      heading.append(element('h2', '', '提交用回复 Blocks'), element('span', '', `${reviewer.name} · ${blocks.length} 个 Blocks`));
+      panel.append(heading, element('p', 'submission-note',
+        `左侧编辑 Markdown，右侧实时预览，与下方逐点回复双向同步。每块复制为一条评论，目标不超过 ${limit.toLocaleString('en-US')} 字符。请保留 Part 和回复点标题。`));
+      blocks.forEach((block, index) => {
+        const editor = makeSubmissionCard(reviewer, block, index, blocks.length);
+        submissionEditors.push(editor);
+        panel.append(editor.card);
       });
-      card.append(points);
-      if (block.entries.some(({ item }) => item.pending)) card.append(element('p', 'submission-warning', '含待补充回复点，提交前请核对。'));
-      const detail = element('details', 'submission-content');
-      detail.id = `submission-${reviewer.code}-${index + 1}`;
-      detail.open = opened.has(detail.id);
-      detail.append(element('summary', '', '展开合并正文 · Markdown'));
-      const input = element('textarea', 'markdown-input');
-      input.readOnly = true;
-      input.spellcheck = false;
-      input.value = block.text;
-      input.setAttribute('aria-label', `${reviewer.name} Block ${index + 1} 合并正文`);
-      detail.append(input);
-      card.append(detail);
-      copy.addEventListener('click', () => copyEditor({ input }, copy));
-      panel.append(card);
+    }
+    submissionEditors.forEach((editor, index) => {
+      if (!editor.error && !editor.composing) {
+        editor.block = blocks[index];
+        if (editor.input.value !== editor.block.text) {
+          const start = editor.input.selectionStart, end = editor.input.selectionEnd, scroll = editor.input.scrollTop;
+          const old = editor.input.value;
+          let first = 0;
+          while (first < old.length && old[first] === editor.block.text[first]) first++;
+          const offset = editor.block.text.length - old.length;
+          editor.input.value = editor.block.text;
+          if (document.activeElement === editor.input) editor.input.setSelectionRange(
+            first < start ? Math.max(first, start + offset) : start,
+            first < end ? Math.max(first, end + offset) : end);
+          editor.input.scrollTop = scroll;
+        }
+      }
+      editor.input.readOnly = !state.ready;
+      editor.copy.disabled = !state.ready;
+      const items = [...editor.block.entries.map(entry => entry.item)];
+      if (editor.block.hasClosing) items.push(editor.block.closingItem);
+      const states = items.map(item => sync.state(item));
+      const conflict = states.some(s => s.conflict), pending = states.some(s => s.pending);
+      editor.saveState.textContent = editor.error || (!state.ready ? '正在载入共享稿…' :
+        conflict ? '有冲突 · 请在下方逐点回复中核对双方文字' :
+        pending ? (state.connected ? (state.busy ? '正在同步…' : '已备份 · 待同步') : '已备份 · 待开启共享保存') :
+        state.error ? '离线缓存 · 修改已保留' : '与共享稿一致');
+      editor.saveState.classList.toggle('error', Boolean(editor.error || conflict || state.error));
+      editor.restore.hidden = !editor.error;
+      if (editor.lastRendered !== editor.input.value) renderEditor(editor);
     });
   }
 

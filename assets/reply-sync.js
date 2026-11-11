@@ -39,12 +39,17 @@
         conflicts: values.filter(d => d.conflict).length, ready, connected: Boolean(token), busy, error };
     }
     function edit(item, previous, next) {
-      const doc = docs.get(item.syncKey);
-      const merged = mergeText(previous, next, doc.text);
-      if (!merged.ok) merged.mine = preserveHidden(item, next, doc.text);
-      doc.text = merged.ok ? merged.text : merged.mine;
-      if (!merged.ok) doc.conflict = merged;
-      else if (doc.conflict) doc.conflict.mine = doc.text;
+      editMany([{ item, previous, next }]);
+    }
+    function editMany(changes) {
+      for (const { item, previous, next } of changes) {
+        const doc = docs.get(item.syncKey);
+        const merged = mergeText(previous, next, doc.text);
+        if (!merged.ok) merged.mine = preserveHidden(item, next, doc.text);
+        doc.text = merged.ok ? merged.text : merged.mine;
+        if (!merged.ok) doc.conflict = merged;
+        else if (doc.conflict) doc.conflict.mine = doc.text;
+      }
       notify(); schedule();
     }
     function preserveHidden(item, text, full) {
@@ -171,6 +176,6 @@
       doc.base = doc.conflict ? doc.conflict.theirs : doc.base;
       doc.text = doc.base; doc.conflict = null; notify();
     }
-    return { view, state, summary, edit, accept, restore, refresh, save, connect, disconnect, start };
+    return { view, state, summary, edit, editMany, accept, restore, refresh, save, connect, disconnect, start };
   };
 })();
