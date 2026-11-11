@@ -15,7 +15,7 @@
 <!-- reply:overview:start -->
 Dear Reviewers and Area Chair,
 
-Thank you very much for the time and care you have devoted to reviewing our work. We sincerely appreciate your constructive comments and suggestions, which have helped us improve the manuscript. We have carefully considered your feedback and revised the paper, with the main changes in blue.
+Thank you very much for the time and care you have devoted to reviewing our work. We sincerely appreciate your constructive comments and suggestions, which have helped us improve the manuscript. We have carefully considered every comment and suggestion and revised the paper accordingly, with the main changes marked in blue.
 
 We summarize the main revisions below.
 
