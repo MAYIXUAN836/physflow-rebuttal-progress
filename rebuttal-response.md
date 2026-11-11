@@ -50,28 +50,18 @@ The Authors
 > 状态：方法级结果及 cost 已接入，首轮完整回复草稿已形成；尚未提交。对应 checklist：physicedit-score、physicedit-discussion。
 
 <!-- reply:r1:start -->
-Thank you for highlighting PhysicEdit. We appreciate its use of video-derived transition priors to guide physical image editing without rendering intermediate videos at inference. We agree that our original discussion should have made this connection explicit, and we have expanded the related-work discussion accordingly.
+Thank you for highlighting this closely related work. We appreciate [PhysicEdit’s contribution to physics-aware image editing](https://arxiv.org/html/2602.21778v2#S3.SS3), particularly its combination of explicit physical reasoning and video-supervised transition queries. This design uses video-derived transition priors to guide image editing without generating intermediate videos at inference. We share its motivation of using process information to improve physical image editing, and have expanded the related-work discussion to acknowledge this connection.
 
-**Our contribution is the progressive internalization of textual and visual process supervision into a continuous latent plan.** PhysicEdit combines an explicit textual reasoning trace at inference with video-supervised transition queries. PhysFlow progressively compresses high-level physical rationales, low-level transition descriptions, and ordered intermediate visual blocks into six latent tokens. These tokens condition the image generator together with a separate 16-token final visual block. This design internalizes the textual reasoning as well as the visual process, so inference uses the compact latent plan without decoding a textual reasoning trace. We clarify this distinction in Sections 2 and 3. [PhysicEdit, Section 3.3](https://arxiv.org/html/2602.21778v2#S3.SS3).
+**Our focus is the progressive internalization of both textual reasoning and visual processes into a compact latent plan.** PhysicEdit combines an explicit textual reasoning trace with learned visual-transition queries. PhysFlow progressively compresses high-level physical rationales, low-level transition descriptions, and ordered intermediate visual blocks into six latent tokens. These tokens condition image generation together with a separate 16-token final visual block. At inference, PhysFlow generates the latent plan directly, without decoding a textual reasoning trace. We have clarified these differences in Sections 2 and 3.
 
-**The added method-level comparison reports 56.32 for PhysFlow and 52.35 for PhysicEdit.** We evaluate PICABench-Superficial with Qwen2.5-VL-72B-Instruct. The table also includes Qwen-Image-Edit-2511, the backbone used by PhysFlow. We report scores on a 0 to 100 scale.
+**Following your suggestion, we have added an experimental comparison with PhysicEdit on PICABench-Superficial.** We use Qwen2.5-VL-72B-Instruct for evaluation. Our PhysFlow implementation uses Qwen-Image-Edit-2511.
 
-| Method | Overall |
-|---|---:|
-| Qwen-Image-Edit-2511 | 54.26 |
-| PhysicEdit | 52.35 |
-| **PhysFlow (Ours)** | **56.32** |
+| Method | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| PhysicEdit | 51.62 | 61.63 | 51.56 | 52.96 | 44.03 | 45.89 | 57.64 | 53.07 | 52.35 |
+| **PhysFlow (Ours)** | **54.45** | **65.19** | **58.52** | **57.99** | **44.91** | **47.31** | **64.32** | **56.43** | **56.32** |
 
-PhysFlow achieves a 3.97-point higher overall score than PhysicEdit and higher scores in all eight categories. This comparison evaluates the complete systems under the same benchmark and scoring protocol. We also clarify that the existing 53.82 entry in Tables 4 and 9 refers to PhysFlow trained on PhysicTran38K; the new 52.35 entry evaluates PhysicEdit itself.
-
-**PhysFlow also has lower latency in the reported cost comparison.**
-
-| Method | Params (B) | Memory (GiB) | Latency (s) |
-|---|---:|---:|---:|
-| PhysicEdit | 29.00 | 56.25 | 52.19 |
-| **PhysFlow (Ours)** | **28.87** | **58.11** | **49.39** |
-
-The resource and timing measurements come from separate runs. In these reported results, PhysFlow takes 2.80 fewer seconds per edit, a 5.4% latency reduction, while using 1.86 GiB more peak memory. These measurements show a latency advantage with a memory trade-off. The revised manuscript includes the method-level results and cost comparison.
+PhysFlow achieves an overall score of **56.32**, compared with **52.35** for PhysicEdit, with higher scores across all eight categories. We have incorporated these results into Table 1 and added a computational-cost comparison in Table 5.
 <!-- reply:r1:end -->
 
 ## Reviewer 62MG
