@@ -13,9 +13,9 @@
 > 本地标蓝修订稿已完成编译与排版检查：正文 10 页，总计 22 页；尚未上传 Overleaf / OpenReview。下方为开场回复草稿，论文上传后再作为正式修改总览提交。正文、附录与图表编号已核对。未完成的新实验不列为已完成。
 
 <!-- reply:overview:start -->
-Dear Reviewers and Area Chair,
+Dear Reviewers and ACs,
 
-Thank you very much for the time and care you have devoted to reviewing our work. We sincerely appreciate your constructive comments and suggestions, which have helped us improve the manuscript. We have carefully considered every comment and suggestion and revised the paper accordingly, with the main changes marked in blue.
+Thank you very much for the time and care you have devoted to reviewing our work. We sincerely appreciate your constructive comments and suggestions, which have helped us improve our previous manuscript. We have carefully considered every comment and suggestion and revised the paper accordingly, with the main changes marked in blue.
 
 We summarize the main revisions below.
 
@@ -24,9 +24,9 @@ We summarize the main revisions below.
 1. Expanded the discussion of PhysicEdit, EndoCoT, and Monet to clarify their relationship with our method.
 2. Clarified the roles of the latent tokens, their supervision during compression, and the separate final visual block.
 3. Clarified the original backbone baseline and added image-pair fine-tuning on the same PhysTrace data.
-4. Added experiments to better disentangle the contributions of the training data and the training framework.
-5. Added a method-level comparison with PhysicEdit and expanded the computation-cost comparison.
-6. Clarified the sources and roles of the training and evaluation data.
+4. Added controlled experiments to better separate the benefits of dataset adaptation from those of structured latent reasoning.
+5. Added experiments comparing PhysFlow with PhysicEdit on PICABench and evaluating computational costs.
+6. Clarified the sources and roles of PICA-100K training data and the 900 PICABench evaluation examples.
 
 **In the appendix:**
 
