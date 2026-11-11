@@ -50,11 +50,11 @@ The Authors
 > 状态：方法级结果及 cost 已接入，首轮完整回复草稿已形成；尚未提交。对应 checklist：physicedit-score、physicedit-discussion。
 
 <!-- reply:r1:start -->
-Thank you very much for your careful review and for recognizing the motivation behind combining textual explanations with visual trajectories. We are grateful that you brought PhysicEdit to our attention, and we apologize for not discussing this closely related work in the original manuscript. Your comment has helped us improve both our discussion and experimental comparison.
+Thank you for pointing out the missing discussion of PhysicEdit. We apologize for this omission and have added the discussion to Section 2.
 
-We appreciate [PhysicEdit's thoughtful combination of explicit physical reasoning and video-supervised transition queries](https://arxiv.org/html/2602.21778v2#S3.SS3), which uses video-derived transition priors without generating intermediate videos at inference. We share the motivation of using process information to improve physical image editing and have expanded Section 2 to acknowledge this connection.
+We appreciate [PhysicEdit's thoughtful design](https://arxiv.org/html/2602.21778v2#S3.SS3), which combines explicit textual reasoning with video-supervised transition queries at inference. **Our focus, however, is to progressively internalize both textual reasoning and visual processes into a compact latent plan.**
 
-**Our work focuses on progressively internalizing both textual reasoning and visual processes into a compact latent plan.** PhysicEdit retains an explicit textual reasoning trace at inference. PhysFlow progressively compresses textual rationales and intermediate visual blocks into the six-token plan Z = [h, l, m₁, m₂, m₃, m₄]. The training design assigns h to high-level physical rationales, l to low-level transition descriptions, and m₁ through m₄ to the ordered intermediate visual stages used during training. A separate 16-token final visual block provides final-state conditioning. At inference, PhysFlow generates the latent plan directly, without decoding a textual reasoning trace. We have clarified this design and these token roles in Section 3.
+PhysFlow progressively compresses textual rationales and intermediate visual blocks into the six-token plan Z = [h, l, m₁, m₂, m₃, m₄]. The training design assigns h to high-level physical rationales, l to low-level transition descriptions, and m₁ through m₄ to the ordered intermediate visual stages used during training. A separate 16-token final visual block provides final-state conditioning. At inference, PhysFlow generates the latent plan directly, without decoding a textual reasoning trace. We have clarified this design and these token roles in Section 3.
 
 To better explain what these tokens retain after compression, we have expanded the four-part analysis in Figure 7:
 

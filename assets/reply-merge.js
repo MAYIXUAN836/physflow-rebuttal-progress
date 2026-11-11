@@ -14,7 +14,7 @@
   function mergeReplies(base, mine, theirs) {
     const replies = { ...theirs }, conflicts = {};
     for (const [key, value] of Object.entries(mine)) {
-      const result = mergeText(base[key], value, theirs[key] ?? '');
+      const result = mergeText(base[key] ?? '', value, theirs[key] ?? '');
       if (result.ok) replies[key] = result.text;
       else conflicts[key] = result;
     }
