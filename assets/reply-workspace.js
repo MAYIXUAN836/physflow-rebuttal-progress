@@ -91,6 +91,15 @@
     input.spellcheck = false;
     input.setAttribute('aria-label', reviewer.code + ' · ' + item.title + ' Markdown');
     const saved = readDraft(key);
+    // Apply the author's requested sentence edit without replacing their draft.
+    if (key === 'overview-summary' && saved) {
+      const previous = 'We have carefully considered your feedback and revised the paper, with the main changes in blue.';
+      const revised = 'We have carefully considered every comment and suggestion and revised the paper accordingly, with the main changes marked in blue.';
+      if (saved.text.includes(previous) && item.markdown.includes(revised)) {
+        saved.text = saved.text.replace(previous, revised);
+        try { localStorage.setItem(prefix + key, JSON.stringify(saved)); } catch {}
+      }
+    }
     let draftRevision = saved?.revision || item.revision;
     input.value = saved ? saved.text : item.markdown;
     const foot = element('div', 'editor-column-foot');
