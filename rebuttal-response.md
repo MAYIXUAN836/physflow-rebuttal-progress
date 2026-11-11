@@ -23,7 +23,7 @@ We summarize the main revisions below.
 
 1. Expanded the discussion of PhysicEdit, EndoCoT, and Monet to clarify their relationship with our method.
 2. Clarified the roles of the latent tokens, their supervision during compression, and the separate final visual block.
-3. Clarified the original backbone baseline and added image-pair fine-tuning on the same PhysTrace data.
+3. Added experiments comparing PhysFlow with a direct fine-tuning baseline using the same PhysTrace source-target image pairs.
 4. Added controlled experiments to better separate the benefits of dataset adaptation from those of structured latent reasoning.
 5. Added experiments comparing PhysFlow with PhysicEdit on PICABench and evaluating computational costs.
 6. Clarified the sources and roles of PICA-100K training data and the 900 PICABench evaluation examples.
@@ -37,7 +37,7 @@ We summarize the main revisions below.
 5. Clarified what the model-based evaluations and human study support about physical plausibility.
 6. Clarified the uncertainty of single-run results and the remaining questions about state count and the compression curriculum.
 
-We provide detailed responses to each reviewer's comments below. Thank you again for your time and helpful suggestions.
+We provide detailed responses to each reviewer's comments below. Thank you very much again for your time and helpful suggestions.
 
 Best regards,  
 The Authors
