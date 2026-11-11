@@ -15,23 +15,25 @@
 <!-- reply:overview:start -->
 Dear Reviewers and Area Chair,
 
-Thank you for your comments and suggestions. We have revised the manuscript to clarify the method and report additional comparisons and representation analyses. Blue text marks the corresponding revisions.
+Thank you very much for the time and care you have devoted to reviewing our work. We sincerely appreciate your constructive comments and suggestions, which have helped us improve the manuscript. We have carefully considered your feedback and revised the paper, with the main changes in blue.
+
+We summarize the main revisions below.
 
 **In the main paper:**
 
-1. **Clarified the distinction from PhysicEdit and added its results** (Section 2.2; Table 1). PhysicEdit combines explicit textual reasoning with video-supervised transition queries. PhysFlow progressively internalizes textual rationales and visual process supervision into a compact latent plan. We report 56.32 for PhysFlow and 52.35 for PhysicEdit, while making their different backbones explicit.
-
-2. **Added same-data image-pair supervised fine-tuning (SFT) and organized three comparisons** (Table 4; Appendix C.4, Table 9). PhysTrace exceeds PICA100K by 1.74 points under SFT and PhysicTran38K by 2.50 points under PhysFlow training. On the same PhysTrace pairs, PhysFlow exceeds SFT by 1.20 points. We report optimization budgets and clarify that the full framework adds planner capacity and training to the matched generator updates.
-
-3. **Expanded the computation-cost comparison** (Table 5). We report parameters, peak memory, and latency for six configurations. PhysFlow takes 49.39 seconds per edit versus 52.19 for PhysicEdit, a 5.4% latency reduction, with 1.86 GiB more peak memory. We distinguish resource and timing measurements from separate runs.
+1. Clarified the relationship with PhysicEdit and added experimental comparisons.
+2. Added image-pair fine-tuning on PhysTrace and clarified the comparisons of training data and training strategies.
+3. Expanded the computation-cost comparison to include parameter counts and peak memory.
 
 **In the appendix:**
 
-4. **Added physical-domain and intervention-outcome probes alongside token-role and order analyses** (Appendix C.6; Figure 7). The six-token domain probe reaches 86.91% balanced accuracy across six domains, compared with 16.67% uniform chance. Controlled synthetic experiments test whether the four intermediate visual tokens encode information about intervention outcomes; token reversal or shuffling reduces editing accuracy by 3.42 points on 64 inputs. We report controls and exploratory selection, and limit the conclusions to readable physical information and sensitivity to token order.
+1. Added analyses of the physical information in the latent representations.
+2. Clarified the discussion of general editing performance and its trade-offs.
 
-5. **Clarified the trade-offs in general editing** (Appendix C.1; Table 6). PhysFlow scores 4.39 overall versus 4.41 for the backbone, with improvements in six of nine categories. We now discuss the declines in Hybrid, Extract, and Add, and identify the proposed explanation as an interpretation of task-dependent transfer.
+We provide detailed responses to each reviewer's comments below. Thank you again for your time and helpful suggestions.
 
-Our point-by-point responses provide the supporting results and address the remaining questions.
+Best regards,  
+The Authors
 <!-- reply:overview:end -->
 
 ## Reviewer 8uwk
