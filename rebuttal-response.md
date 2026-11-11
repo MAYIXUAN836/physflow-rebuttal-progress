@@ -50,7 +50,7 @@ The Authors
 > 状态：方法级结果及 cost 已接入，首轮完整回复草稿已形成；尚未提交。对应 checklist：physicedit-score、physicedit-discussion。
 
 <!-- reply:r1:start -->
-Thank you very much for pointing out the missing discussion of PhysicEdit. We apologize for this omission and have expanded Section 2 to clarify its relationship to our work.
+Thank you very much for pointing out the missing discussion of PhysicEdit. We apologize for this omission and have added the discussion to Section 2.2, “Visual Transition Modeling for Image Editing,” in Related Work.
 
 We appreciate [PhysicEdit's thoughtful design](https://arxiv.org/html/2602.21778v2#S3.SS3) and share its view that textual explanations and visual trajectories provide complementary forms of intermediate reasoning. Text describes the physical principles and causal relationships behind an edit, while visual trajectories describe how the scene changes. This common perspective underlies both approaches.
 
