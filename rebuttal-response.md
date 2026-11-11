@@ -30,11 +30,11 @@ We summarize the main revisions below.
 
 **In the appendix:**
 
-1. Added the terminal-only supervision control and its category-level results.
-2. Added the comparison between time-uniform and change-uniform frame sampling.
+1. Added experiments with terminal-only supervision.
+2. Added experiments comparing time-uniform and change-uniform frame sampling.
 3. Expanded the latent-representation analysis with domain probes, controlled intervention tasks, and token-order perturbations, together with their controls and limitations.
-4. Expanded the discussion of general editing performance and category-level trade-offs.
-5. Clarified what the model-based evaluations and human study support about physical plausibility.
+4. Explained the ImgEdit-Bench results, including category-level declines and broadly maintained aggregate performance.
+5. Addressed concerns about reliance on multimodal-model judgments and clarified their limitations in establishing objective physical correctness.
 6. Clarified the uncertainty of single-run results and the remaining questions about state count and the compression curriculum.
 
 We provide detailed responses to each reviewer's comments below. Thank you very much again for your time and helpful suggestions.
