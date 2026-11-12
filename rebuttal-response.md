@@ -62,16 +62,16 @@ We appreciate [PhysicEdit's thoughtful design](https://arxiv.org/html/2602.21778
 
 3. **Progressive compression internalizes both forms of reasoning.** We gradually replace explicit textual reasoning and intermediate visual blocks with latent tokens while retaining downstream visual and editing supervision. At inference, the resulting compact plan guides editing without decoding an explicit textual reasoning trace.
 
-The resulting plan contains six latent tokens, Z = [h, l, m₁, m₂, m₃, m₄]. The training design assigns h to high-level physical rationales, l to low-level transition descriptions, and m₁ through m₄ to the ordered intermediate visual stages used during training. A separate 16-token final visual block provides final-state conditioning. We have clarified this design and these token roles in Section 3.
+This progressive internalization yields a six-token latent plan, Z = [h, l, m₁, m₂, m₃, m₄]. The training curriculum assigns h to high-level physical rationales, l to low-level transition descriptions, and m₁ through m₄ to intermediate visual stages. A separate 16-token final visual block provides final-state conditioning. We have clarified this design and these token roles in Section 3.
 
-To better explain what these tokens retain after compression, we have expanded the four-part analysis in Figure 7:
+**To examine what this compact plan retains and whether its structure matters for editing, we have expanded the four-part analysis in Figure 7:**
 
 - **(a) Token-role structure.** Different reasoning roles occupy distinct regions in a shared principal-component projection, supporting role-dependent representation structure after compression.
 - **(b) Physical-domain information.** A linear probe on the six latent tokens reaches 86.91% balanced accuracy across six physical domains on 212 held-out videos (same-layout pretrained control: 85.94%), showing that physical-domain information remains accessible after compression.
 - **(c) Physical-intervention prediction.** Across 11 exploratory synthetic tasks, probes on the four visual tokens predict both outcomes in same-image intervention pairs. Seven selected tasks reach 91.41–100% pair accuracy; the other four reach 28.91–68.75%. A fixed phase-change probe also reaches 100% on 256 pairs from 128 new confirmation families.
 - **(d) Token-order sensitivity.** On 64 PICABench-Superficial inputs, reversing or shuffling the intermediate visual tokens reduces mean accuracy from 57.36% to 53.94%, with textual and final-visual conditioning fixed. This 3.42-point decrease supports sensitivity to the ordering of the intermediate tokens.
 
-The appendix includes the full task set and input/text controls. Together, these analyses provide evidence of role-dependent structure, readable physical-domain and conditional-outcome information, and order-sensitive editing in our compressed representation.
+The appendix includes the full task set and input/text controls. Together, these analyses show that the compressed plan retains role-dependent structure and accessible physical information, and that editing performance is sensitive to the ordering of its intermediate visual tokens.
 
 **Following your helpful suggestion, we have also added an experimental comparison with PhysicEdit on PICABench-Superficial.** We use Qwen2.5-VL-72B-Instruct for evaluation. Our PhysFlow implementation uses Qwen-Image-Edit-2511.
 
