@@ -54,7 +54,13 @@ Thank you very much for pointing out the missing discussion of PhysicEdit. We ap
 
 We appreciate [PhysicEdit's thoughtful design](https://arxiv.org/html/2602.21778v2#S3.SS3) and share its view that textual explanations and visual trajectories provide complementary forms of intermediate reasoning. Text describes the physical principles and causal relationships behind an edit, while visual trajectories describe how the scene changes. This common perspective underlies both approaches. At inference, PhysicEdit combines an explicit textual reasoning trace with latent visual representations produced by learned transition queries.
 
-**Our specific focus, however, is to internalize the text-to-visual reasoning process into an ordered latent plan.** The planner first predicts textual latent states trained to represent physical principles and transition steps. It then predicts intermediate visual latents conditioned on these textual states and preceding visual latents. This ordering allows text-derived physical constraints to guide visual prediction within the planner, before image generation. Through progressive compression, both forms of reasoning become part of a compact latent sequence that guides editing without decoding an explicit textual reasoning trace.
+**Our specific focus, however, is to progressively internalize the text-to-visual reasoning process into an ordered latent plan:**
+
+1. **Text-derived physical constraints guide visual prediction.** The planner first predicts latent states for physical principles and transition steps. It then predicts visual latents conditioned on these states and preceding visual latents, allowing physical reasoning to guide visual prediction within the planner.
+
+2. **Visual supervision shapes the reasoning states.** During planner training, downstream visual prediction and editing losses propagate through the continuous latent sequence to train earlier states. This encourages the text-derived states to retain information useful for the intended visual changes.
+
+3. **Progressive compression internalizes both forms of reasoning.** We gradually replace explicit textual reasoning and intermediate visual blocks with latent tokens while retaining downstream visual and editing supervision. At inference, the resulting compact plan guides editing without decoding an explicit textual reasoning trace.
 
 The resulting plan contains six latent tokens, Z = [h, l, m₁, m₂, m₃, m₄]. The training design assigns h to high-level physical rationales, l to low-level transition descriptions, and m₁ through m₄ to the ordered intermediate visual stages used during training. A separate 16-token final visual block provides final-state conditioning. We have clarified this design and these token roles in Section 3.
 
