@@ -52,7 +52,7 @@ The Authors
 <!-- reply:r1:start -->
 Thank you very much for pointing out the missing discussion of PhysicEdit. We apologize for this omission and have added the discussion to Section 2.2, “Visual Transition Modeling for Image Editing,” in Related Work.
 
-We appreciate [PhysicEdit's thoughtful design](https://arxiv.org/html/2602.21778v2#S3.SS3) and share its view that textual explanations and visual trajectories provide complementary forms of intermediate reasoning. Text describes the physical principles and causal relationships behind an edit, while visual trajectories describe how the scene changes. This common perspective underlies both approaches. At inference, PhysicEdit combines an explicit textual reasoning trace with latent visual representations produced by learned transition queries.
+At inference, [PhysicEdit](https://arxiv.org/html/2602.21778v2#S3.SS3) combines an explicit textual reasoning trace with latent visual representations produced by learned transition queries. We find this design particularly compelling because it connects explicit physical constraints with video-derived transition priors without requiring intermediate-video generation. We share the motivation behind this design: textual explanations and visual trajectories provide complementary forms of intermediate reasoning, with text explaining physical principles and causal relationships, and visual trajectories describing how the scene changes.
 
 **Our specific focus, however, is to progressively internalize the text-to-visual reasoning process into an ordered latent plan:**
 
@@ -64,14 +64,7 @@ We appreciate [PhysicEdit's thoughtful design](https://arxiv.org/html/2602.21778
 
 This progressive internalization yields a six-token latent plan, Z = [h, l, m₁, m₂, m₃, m₄]. The training curriculum assigns h to high-level physical rationales, l to low-level transition descriptions, and m₁ through m₄ to intermediate visual stages. A separate 16-token final visual block provides final-state conditioning. We have clarified this design and these token roles in Section 3.
 
-**To examine what this compact plan retains and whether its structure matters for editing, we have expanded the four-part analysis in Figure 7:**
-
-- **(a) Token-role structure.** Different reasoning roles occupy distinct regions in a shared principal-component projection, supporting role-dependent representation structure after compression.
-- **(b) Physical-domain information.** A linear probe on the six latent tokens reaches 86.91% balanced accuracy across six physical domains on 212 held-out videos (same-layout pretrained control: 85.94%), showing that physical-domain information remains accessible after compression.
-- **(c) Physical-intervention prediction.** Across 11 exploratory synthetic tasks, probes on the four visual tokens predict both outcomes in same-image intervention pairs. Seven selected tasks reach 91.41–100% pair accuracy; the other four reach 28.91–68.75%. A fixed phase-change probe also reaches 100% on 256 pairs from 128 new confirmation families.
-- **(d) Token-order sensitivity.** On 64 PICABench-Superficial inputs, reversing or shuffling the intermediate visual tokens reduces mean accuracy from 57.36% to 53.94%, with textual and final-visual conditioning fixed. This 3.42-point decrease supports sensitivity to the ordering of the intermediate tokens.
-
-The appendix includes the full task set and input/text controls. Together, these analyses show that the compressed plan retains role-dependent structure and accessible physical information, and that editing performance is sensitive to the ordering of its intermediate visual tokens.
+**To characterize what this compact plan retains, we have expanded the representation analyses in Figure 7.** Visualizations reveal role-dependent structure, while probing studies recover physical-domain information and reveal outcome-predictive information on several controlled intervention tasks. Token-order perturbations also show that editing performance is sensitive to the ordering of intermediate visual latents. Together, these analyses help explain the physical content and functional role of our compressed plan; the appendix provides detailed results and controls.
 
 **Following your helpful suggestion, we have also added an experimental comparison with PhysicEdit on PICABench-Superficial.** We use Qwen2.5-VL-72B-Instruct for evaluation. Our PhysFlow implementation uses Qwen-Image-Edit-2511.
 
