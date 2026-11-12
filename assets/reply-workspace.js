@@ -302,6 +302,22 @@
       });
     }
     submissionEditors.forEach((editor, index) => {
+      if (editor.error && !editor.composing && editor.block.text !== blocks[index].text) {
+        const merged = window.PhysFlowMerge.mergeText(editor.block.text, editor.input.value, blocks[index].text);
+        if (merged.ok) {
+          editor.block = blocks[index];
+          editor.input.value = merged.text;
+          if (merged.text === editor.block.text) {
+            editor.error = '';
+            try { localStorage.removeItem(prefix + editor.key); } catch {}
+          } else {
+            editor.error = '已合入共享更新，本机 Block 编辑已保留；保留原有标题后继续编辑即可同步。';
+            saveSubmissionDraft(editor);
+          }
+        } else {
+          editor.error = '共享更新与本机 Block 草稿有冲突；本机文字已保留，请与下方最新逐点回复核对。';
+        }
+      }
       if (!editor.error && !editor.composing) {
         editor.block = blocks[index];
         if (editor.input.value !== editor.block.text) {
