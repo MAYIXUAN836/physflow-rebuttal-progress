@@ -233,18 +233,16 @@ The main tables report increases of 2.06 percentage points on PICABench and 1.38
 
 ### Response 7: Multimodal-model evaluation and human evidence
 
-> 状态：独立 discussion 已完成，已补充评测目的与人工证据。依据原稿 17 人、100 对随机样本的 user study 与定性案例，说明可比性、人工证据及评测边界；物理指标作为未来 benchmark 方向。未声称人机逐样本一致率、客观物理验证或新的物理测量已完成。13 号实验安排与完成状态不变。
+> 状态：按作者确认的两点组织：PICABench 预设物理检查问题和参考答案，VLM 检查可见结果；17 人、100 对样本的 human study 从整体结果提供支持。未声称逐样本人机一致率或对物理规律的完备验证。13 号实验安排与完成状态不变。
 
 <!-- reply:physical-evaluation:start -->
 **Response 7. Multimodal-model evaluation and human evidence**
 
-Thank you for raising this concern about multimodal-model judgments. Your comment prompted us to clarify the roles of the model-based evaluations, the human study, and the qualitative examples.
+Thank you very much for raising this concern about objective physical correctness. We appreciate your emphasis on the physical basis of our evaluation.
 
-We agree that vision-language model judgments alone do not establish objective physical correctness. The GPT-based evaluations in Tables 7 and 8 address potential evaluator-family bias, and we follow the [PICABench](https://arxiv.org/html/2510.17681v3#S4.SS1) and [RISEBench](https://arxiv.org/html/2504.02826v3#S2.SS2) scoring frameworks for comparable evaluation.
+**(1) PICABench specifies physical criteria for each editing example.** Its PICAEval protocol uses human-annotated regions and manually reviewed yes/no questions about physical consequences, such as whether object removal also removes its shadow. A vision-language model (VLM) answers these questions by inspecting the edited image, and accuracy measures exact agreement with predefined reference answers. Thus, the benchmark's task design and annotations specify the physical requirements, while the VLM checks their visible consequences ([PICABench, Section 3.3 and Appendix A.3](https://arxiv.org/html/2510.17681v3#S3.SS3)).
 
-Our user study provides complementary human evidence: 17 participants evaluate 100 randomly sampled image-instruction pairs and favor PhysFlow over five competing methods in physical plausibility. Our case studies also examine visible physical consequences, such as updating reflections after object replacement and deforming a pillow under a dog's weight.
-
-We clarify the evaluation scope and discuss physically grounded metrics as a valuable direction for future benchmarks in Appendix C.9. Together, the model-based evaluations and our human study support improved physical plausibility.
+**(2) Our human study provides complementary evidence.** We ask 17 participants to compare PhysFlow with five competing methods on 100 image-instruction pairs randomly sampled from PICABench and RISEBench. Participants favor PhysFlow in physical plausibility. This overall trend is consistent with our benchmark findings and provides human support for improved physical plausibility.
 <!-- reply:physical-evaluation:end -->
 
 ### Response 8: Positioning relative to earlier latent-reasoning methods
