@@ -433,8 +433,8 @@ Beyond this empirical comparison, we have also expanded the discussion in Sectio
 <!-- reply:general-editing:start -->
 Thank you for encouraging us to examine the category-level results more closely and explore why some categories decline despite broadly maintained overall general editing performance. Table 6 reports an overall ImgEdit-Bench score of 4.39 for PhysFlow and 4.41 for Qwen-Image-Edit-2511. PhysFlow scores higher in six of nine categories, while the largest declines occur in Hybrid (3.76 to 3.26) and Extract (4.16 to 3.91), with a smaller decrease in Add (4.45 to 4.26).
 
-We interpret the declines in Hybrid and Extract as task-dependent transfer from physical-process supervision. PhysTrace emphasizes causally connected state evolution within a physical process through textual rationales and intermediate visual states (Sections 3.2 to 3.4). Hybrid combines separately specified editing operations within one instruction, whereas Extract requires isolating a subject while preserving its identity and visual details. [ImgEdit, Sections 3.1 and 4.2](https://arxiv.org/html/2505.20275v1#S3.SS1).
+We interpret the declines in Hybrid and Extract as task-dependent transfer from physical-process supervision. PhysTrace emphasizes causally connected state evolution within a physical process through textual rationales and intermediate visual states (Sections 3.2 to 3.4). Hybrid combines separately specified editing operations within one instruction, whereas Extract requires isolating a subject while preserving its identity and visual details.
 
-We have revised Appendix C.1 to report these category-level declines alongside the improvements. The revised text describes similar aggregate performance with category-dependent trade-offs, replacing the original claim of general editing without compromise.
+We have revised Appendix C.1 to report these category-level declines alongside the improvements. The revised text describes broadly maintained overall performance while explicitly acknowledging the lower scores in Hybrid, Extract, and Add.
 <!-- reply:general-editing:end -->
 
