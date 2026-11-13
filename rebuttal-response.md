@@ -109,11 +109,11 @@ Thank you for requesting this controlled comparison. We agree that the original 
 
 Table 3's 54.26 row is the original Qwen-Image-Edit-2511 backbone with no PhysTrace fine-tuning; we clarify this in the caption. We add image-pair SFT on the same PhysTrace source-target pairs:
 
-| Configuration | PICABench-Superficial (%) |
-|---|---:|
-| Qwen-Image-Edit-2511 | 54.26 |
-| PhysTrace image-pair SFT | 55.12 |
-| PhysFlow | 56.32 |
+|Configuration|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall (%)|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+|Qwen-Image-Edit-2511|53.29|62.98|56.78|57.66|44.16|45.99|59.37|55.34|54.26|
+|PhysTrace image-pair SFT|55.07|65.16|57.96|56.67|42.71|45.30|63.23|53.81|55.12|
+|PhysFlow|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
 
 PhysFlow exceeds same-data SFT by 1.20 points. Both use rank-512 generator LoRA and 537 generator updates.
 <!-- reply:r2-sft-baseline:end -->
@@ -129,20 +129,20 @@ Thank you for pointing out that the dataset comparisons also involve differences
 
 All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superficial with Qwen2.5-VL-72B-Instruct and report gains in percentage points.
 
-| Training data | Training strategy | Overall (%) |
-|---|---|---:|
-| PICA100K | Image-pair SFT | 53.38 |
-| PhysTrace | Image-pair SFT | 55.12 |
-| PhysicTran38K | PhysFlow | 53.82 |
-| PhysTrace | PhysFlow | 56.32 |
+|Training data|Training strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall (%)|
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+|PICA100K|Image-pair SFT|55.52|60.30|57.69|53.04|41.46|45.91|59.13|52.12|53.38|
+|PhysTrace|Image-pair SFT|55.07|65.16|57.96|56.67|42.71|45.30|63.23|53.81|55.12|
+|PhysicTran38K|PhysFlow|54.14|62.16|54.55|57.60|44.03|45.19|61.26|52.20|53.82|
+|PhysTrace|PhysFlow|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
 
-**(a) Image-pair SFT: +1.74 points.** PhysTrace outperforms PICA100K with fewer examples and generator updates.
+(a) Image-pair SFT: +1.74 points. PhysTrace outperforms PICA100K with fewer examples and generator updates.
 
-**(b) PhysFlow training: +2.50 points.** PhysTrace outperforms PhysicTran38K with the same architecture and curriculum, again using fewer examples. The 53.82 row is PhysFlow trained on PhysicTran38K, not PhysicEdit.
+(b) PhysFlow training: +2.50 points. PhysTrace outperforms PhysicTran38K with the same architecture and curriculum, again using fewer examples. The 53.82 row is PhysFlow trained on PhysicTran38K, not PhysicEdit.
 
-**(c) Same-data framework comparison: +1.20 points.** PhysFlow outperforms image-pair SFT on identical PhysTrace pairs with matched generator LoRA and 537 generator updates (Response 1).
+(c) Same-data framework comparison: +1.20 points. PhysFlow outperforms image-pair SFT on identical PhysTrace pairs with matched generator LoRA and 537 generator updates (Response 1).
 
-**Training conditions.** PICA100K SFT uses 4,926 updates versus 537 for PhysTrace SFT; PhysFlow uses 4,632 on PhysicTran38K versus 1,790 on PhysTrace. These comparisons support PhysTrace's usefulness under both strategies but do not isolate dataset quality from training procedure or budget. PhysFlow also adds planner capacity and training. The terminal-only run scores 55.57 versus 56.32 for full PhysFlow, a 0.75-point training-configuration difference; the direct-compression control will address the curriculum separately. Tables 4 and 9 present these comparisons.
+Training conditions. PICA100K SFT uses 4,926 updates versus 537 for PhysTrace SFT; PhysFlow uses 4,632 on PhysicTran38K versus 1,790 on PhysTrace. These comparisons support PhysTrace's usefulness under both strategies but do not isolate dataset quality from training procedure or budget. PhysFlow also adds planner capacity and training. The terminal-only run scores 55.57 versus 56.32 for full PhysFlow, a 0.75-point training-configuration difference; the direct-compression control will address the curriculum separately. Tables 4 and 9 present these comparisons.
 <!-- reply:sft-dataset:end -->
 
 ### Response 3: Frame sampling, state count, and compression
@@ -156,37 +156,37 @@ Thank you for identifying these missing ablations. We have added a time-uniform 
 
 Change-uniform sampling selects four frames at equal cumulative visual-change intervals using normalized DINOv2, optical-flow, and pixel-change scores (Appendix A.2). We compare time-uniform sampling under the same PhysTrace settings on PICABench-Superficial:
 
-| Sampling | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
+|Sampling|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Time-uniform | 53.72 | 63.06 | 59.30 | 58.24 | 43.29 | 46.21 | 62.35 | 53.65 | 55.09 |
-| Change-uniform | 54.45 | 65.19 | 58.52 | 57.99 | 44.91 | 47.31 | 64.32 | 56.43 | 56.32 |
+|Time-uniform|53.72|63.06|59.30|58.24|43.29|46.21|62.35|53.65|55.09|
+|Change-uniform|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
 
-Change-uniform improves Overall by **1.23 points**, winning six categories; time-uniform wins reflection and refraction. This single-run result supports change-uniform sampling under the tested configuration (Appendix C.7).
+Change-uniform improves Overall by 1.23 points, winning six categories; time-uniform wins reflection and refraction. This single-run result supports change-uniform sampling under the tested configuration (Appendix C.7).
 
-**Draft: intermediate visual-token count (results pending).**
+Draft: intermediate visual-token count (results pending).
 
 We fix four intermediate states and compare 1, 2, or 4 tokens per state, retaining two textual tokens and a separate 16-token final visual block.
 
 PICABench-Superficial accuracy (%):
 
-| Tokens per state | Total intermediate tokens | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
+|Tokens per state|Total intermediate tokens|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1 (default) | 4 | | | | | | | | | |
-| 2 | 8 | | | | | | | | | |
-| 4 | 16 | | | | | | | | | |
+|1 (default)|4||||||||||
+|2|8||||||||||
+|4|16||||||||||
 
 [Result summary to be added.]
 
-**Draft: progressive versus direct compression (results pending).**
+Draft: progressive versus direct compression (results pending).
 
 Final token layout and training budgets: [to be filled from the completed runs].
 
 PICABench-Superficial accuracy (%):
 
-| Compression strategy | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
+|Compression strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Progressive compression | | | | | | | | | |
-| Direct compression | | | | | | | | | |
+|Progressive compression||||||||||
+|Direct compression||||||||||
 
 [Result summary to be added.]
 <!-- reply:sampling:end -->
@@ -216,29 +216,29 @@ In Stage I, each 16-token intermediate block aligns with its frame encoding from
 
 We appreciate your careful distinction between sensitivity to token order and evidence of physically meaningful representations. Following your suggestion, we have expanded Figure 7 with representation analyses and controlled intervention tasks.
 
-**(a) Token-role structure.** The original clustering visualization supports role-dependent representation structure after compression.
+(a) Token-role structure. The original clustering visualization supports role-dependent representation structure after compression.
 
-**(b) Physical-domain linear probe.** We fit and cross-validate on 212 PhysTrace videos and test on 212 independent videos. The six latent tokens yield 86.91% balanced accuracy across six domains (16.67% chance), versus 85.94% for the same-layout pretrained control and 86.79% for the low-level text token. These controls limit attribution to PhysFlow training.
+(b) Physical-domain linear probe. We fit and cross-validate on 212 PhysTrace videos and test on 212 independent videos. The six latent tokens yield 86.91% balanced accuracy across six domains (16.67% chance), versus 85.94% for the same-layout pretrained control and 86.79% for the low-level text token. These controls limit attribution to PhysFlow training.
 
-**(c) Physical-intervention prediction.** We freeze PhysFlow and fit linear ridge readouts on its four intermediate visual tokens, choosing pooling and regularization on validation data. Each synthetic source image receives two intervention instructions with opposite reference outcomes. Idealized rules define the labels; source images can display material or temperature cues. Each task uses 128 training, 32 validation, and 64 initial-test scene families. Each family supplies two source images and two instructions per image.
+(c) Physical-intervention prediction. We freeze PhysFlow and fit linear ridge readouts on its four intermediate visual tokens, choosing pooling and regularization on validation data. Each synthetic source image receives two intervention instructions with opposite reference outcomes. Idealized rules define the labels; source images can display material or temperature cues. Each task uses 128 training, 32 validation, and 64 initial-test scene families. Each family supplies two source images and two instructions per image.
 
 Pair accuracy requires both outcomes for the same image to be correct. Randomly assigning the two opposite outcomes gives 50% chance; independent binary guesses give 25%. Panel (c) displays the following seven tasks:
 
-| Task | Pair accuracy (%) | Test pairs / families | 95% CI (%) |
+|Task|Pair accuracy (%)|Test pairs / families|95% CI (%)|
 |---|---:|---:|---|
-| Support | 99.22 | 128 / 64 | 97.66 to 100.00 |
-| Torque | 100.00 | 128 / 64 | 100.00 to 100.00 |
-| Buoyancy | 99.22 | 128 / 64 | 97.66 to 100.00 |
-| Outflow | 96.09 | 128 / 64 | 92.19 to 99.22 |
-| Absorption | 99.22 | 128 / 64 | 97.66 to 100.00 |
-| Phase change (confirmation) | 100.00 | 256 / 128 | 100.00 to 100.00 |
-| Shape recovery (rubber/clay) | 91.41 | 128 / 64 | 86.72 to 96.09 |
+|Support|99.22|128 / 64|97.66 to 100.00|
+|Torque|100.00|128 / 64|100.00 to 100.00|
+|Buoyancy|99.22|128 / 64|97.66 to 100.00|
+|Outflow|96.09|128 / 64|92.19 to 99.22|
+|Absorption|99.22|128 / 64|97.66 to 100.00|
+|Phase change (confirmation)|100.00|256 / 128|100.00 to 100.00|
+|Shape recovery (rubber/clay)|91.41|128 / 64|86.72 to 96.09|
 
 Phase change uses 128 fresh confirmation families with the validation-selected probe fixed. Intervals use 5,000 family-bootstrap draws; perfect empirical scores yield degenerate intervals, leaving population accuracy uncertain.
 
 The seven displayed tasks form an illustrative subset of eleven exploratory tasks. The other pair accuracies are collision 50.00%, magnetic poles 28.91%, spring direction 31.25%, and foam recovery 68.75%. We retain all results and controls. This exploratory selection provides illustrative evidence with limited coverage of physical phenomena. Several tasks also reach 100% with textual latent probes or source-image probes using separate weights for each intervention condition. On phase-change confirmation, this source control reaches 91.80%, the source-and-instruction prefix reaches 92.19%, and both textual latent probes reach 100%.
 
-**(d) Visual-token perturbation.** On 64 PICABench-Superficial inputs, eight per category, Qwen2.5-VL-72B-Instruct gives mean accuracies of 57.36% for the original condition, 55.64% for masking, and 53.94% for both reversal and shuffling. Perturbations occur after planning, with textual and final-visual conditioning fixed. Reversal and shuffling each reduce accuracy by 3.42 percentage points, supporting order sensitivity.
+(d) Visual-token perturbation. On 64 PICABench-Superficial inputs, eight per category, Qwen2.5-VL-72B-Instruct gives mean accuracies of 57.36% for the original condition, 55.64% for masking, and 53.94% for both reversal and shuffling. Perturbations occur after planning, with textual and final-visual conditioning fixed. Reversal and shuffling each reduce accuracy by 3.42 percentage points, supporting order sensitivity.
 
 These results support physical-semantic and conditional-consequence readout and order-sensitive editing. The diagnostic scenes are synthetic; token-to-frame alignment, internal physical-law computation, and causal mediation through the generator remain unestablished.
 <!-- reply:latent-representation:end -->
@@ -256,23 +256,23 @@ Thank you for emphasizing the need to quantify uncertainty, particularly for the
 
 The main tables report increases of 2.06 percentage points on PICABench and 1.38 points on RISEBench over the backbone. These are point estimates under the reported evaluation settings. Their uncertainty across training runs and evaluation samples requires repeated runs and confidence intervals.
 
-**Draft: repeated training seeds (results pending).**
+Draft: repeated training seeds (results pending).
 
 Training seed IDs, number of completed runs, and fixed evaluation settings: [to be filled].
 
-| Method | Training runs | PICABench mean ± SD (%) | RISEBench mean ± SD (%) |
+|Method|Training runs|PICABench mean ± SD (%)|RISEBench mean ± SD (%)|
 |---|---:|---:|---:|
-| PhysTrace image-pair SFT | | | |
-| Full PhysFlow | | | |
+|PhysTrace image-pair SFT||||
+|Full PhysFlow||||
 
-**Draft: paired statistical comparison (results pending).**
+Draft: paired statistical comparison (results pending).
 
 Seed type, comparison baseline, and confidence-interval procedure: [to be filled].
 
-| Benchmark | Paired difference (pp) | 95% confidence interval |
+|Benchmark|Paired difference (pp)|95% confidence interval|
 |---|---:|---|
-| PICABench-Superficial | | |
-| RISEBench | | |
+|PICABench-Superficial|||
+|RISEBench|||
 
 [Result summary to be added.]
 <!-- reply:statistics:end -->
@@ -286,9 +286,9 @@ Seed type, comparison baseline, and confidence-interval procedure: [to be filled
 
 Thank you very much for raising this concern about objective physical correctness. We appreciate your emphasis on the physical basis of our evaluation.
 
-**(1) PICABench specifies physical criteria for each editing example.** Its PICAEval protocol uses human-annotated regions and manually reviewed yes/no questions about physical consequences, such as whether object removal also removes its shadow. A vision-language model (VLM) answers these questions by inspecting the edited image, and accuracy measures exact agreement with predefined reference answers. Thus, the benchmark's task design and annotations specify the physical requirements, while the VLM checks their visible consequences ([PICABench, Section 3.3 and Appendix A.3](https://arxiv.org/html/2510.17681v3#S3.SS3)).
+(1) PICABench specifies physical criteria for each editing example. Its PICAEval protocol uses human-annotated regions and manually reviewed yes/no questions about physical consequences, such as whether object removal also removes its shadow. A vision-language model (VLM) answers these questions by inspecting the edited image, and accuracy measures exact agreement with predefined reference answers. Thus, the benchmark's task design and annotations specify the physical requirements, while the VLM checks their visible consequences ([PICABench, Section 3.3 and Appendix A.3](https://arxiv.org/html/2510.17681v3#S3.SS3)).
 
-**(2) Our human study provides complementary evidence.** We ask 17 participants to compare PhysFlow with five competing methods on 100 image-instruction pairs randomly sampled from PICABench and RISEBench. Participants favor PhysFlow in physical plausibility. This overall trend is consistent with our benchmark findings and provides human support for improved physical plausibility.
+(2) Our human study provides complementary evidence. We ask 17 participants to compare PhysFlow with five competing methods on 100 image-instruction pairs randomly sampled from PICABench and RISEBench. Participants favor PhysFlow in physical plausibility. This overall trend is consistent with our benchmark findings and provides human support for improved physical plausibility.
 <!-- reply:physical-evaluation:end -->
 
 ### Response 8: Originality and positioning relative to closely related approaches
@@ -298,15 +298,15 @@ Thank you very much for raising this concern about objective physical correctnes
 <!-- reply:r2-method-contribution:start -->
 **Response 8: Originality and positioning relative to closely related approaches**
 
-Thank you very much for carefully examining the originality of our work. We acknowledge the inspiration from prior work on progressive chain-of-thought internalization, continuous latent reasoning, and visual feature prediction. **PhysFlow contributes a joint internalization framework that turns textual physical reasoning and visual state transitions into a continuous latent plan for image editing.** We clarify its motivation and methodological distinctions below.
+Thank you very much for carefully examining the originality of our work. We acknowledge the inspiration from prior work on progressive chain-of-thought internalization, continuous latent reasoning, and visual feature prediction. PhysFlow contributes a joint internalization framework that turns textual physical reasoning and visual state transitions into a continuous latent plan for image editing. We clarify its motivation and methodological distinctions below.
 
-**(1) Textual physical reasoning guides visual evolution.** Textual rationales describe physical relations and causal dependencies; intermediate visual states describe their consequences. PhysFlow progressively internalizes both into a continuous latent sequence in which textual latents guide subsequent visual latents before image generation (Sections 3.3 and 3.4).
+(1) Textual physical reasoning guides visual evolution. Textual rationales describe physical relations and causal dependencies; intermediate visual states describe their consequences. PhysFlow progressively internalizes both into a continuous latent sequence in which textual latents guide subsequent visual latents before image generation (Sections 3.3 and 3.4).
 
-**(2) Our internalization procedure differs from the closely related approaches.** [Monet](https://arxiv.org/html/2511.21395v2#S3) retains text-latent interleaved reasoning for textual answers. [EndoCoT](https://arxiv.org/html/2603.12252v1#S4.SS2) iteratively refines latent states and uses textual reasoning to align the terminal state. PhysFlow progressively replaces both explicit textual rationales and ordered intermediate visual blocks with latent tokens. As each intermediate visual block becomes a latent token, we remove its direct alignment loss and continue training through downstream visual and image-generation objectives. This curriculum teaches the planner to use compressed textual and visual information together. [PhysicEdit](https://arxiv.org/html/2602.21778v1#S3.SS3) retains explicit textual reasoning and updates its transition queries exclusively through its visual transition loss. In PhysFlow, the final-image generation loss also propagates through the frozen generator into the planner during internalization, directly training the latent plan for its use in editing (Section 3.4).
+(2) Our internalization procedure differs from the closely related approaches. [Monet](https://arxiv.org/html/2511.21395v2#S3) retains text-latent interleaved reasoning for textual answers. [EndoCoT](https://arxiv.org/html/2603.12252v1#S4.SS2) iteratively refines latent states and uses textual reasoning to align the terminal state. PhysFlow progressively replaces both explicit textual rationales and ordered intermediate visual blocks with latent tokens. As each intermediate visual block becomes a latent token, we remove its direct alignment loss and continue training through downstream visual and image-generation objectives. This curriculum teaches the planner to use compressed textual and visual information together. [PhysicEdit](https://arxiv.org/html/2602.21778v1#S3.SS3) retains explicit textual reasoning and updates its transition queries exclusively through its visual transition loss. In PhysFlow, the final-image generation loss also propagates through the frozen generator into the planner during internalization, directly training the latent plan for its use in editing (Section 3.4).
 
-**(3) PhysTrace supplies process supervision.** Its 11,448 synthetic trajectories pair hierarchical physical rationales, ordered intermediate visual states, and editing targets for this curriculum (Section 3.2).
+(3) PhysTrace supplies process supervision. Its 11,448 synthetic trajectories pair hierarchical physical rationales, ordered intermediate visual states, and editing targets for this curriculum (Section 3.2).
 
-**To our knowledge, PhysFlow is the first framework to jointly internalize textual physical reasoning and intermediate visual state transitions into a unified continuous latent plan for physics-aware image editing.**
+To our knowledge, PhysFlow is the first framework to jointly internalize textual physical reasoning and intermediate visual state transitions into a unified continuous latent plan for physics-aware image editing.
 <!-- reply:r2-method-contribution:end -->
 
 ### Response 9: Training and evaluation data sources
@@ -332,14 +332,14 @@ Thank you for suggesting parameter-count and peak-memory comparisons in addition
 
 We count the parameters resident during inference, including reasoning modules, and report peak allocated GPU memory. Parameter counts and peak allocated memory describe the current implementations; the latency column reports separate timing measurements.
 
-| Method | Params (B) | Memory (GiB) | Latency (s) |
+|Method|Params (B)|Memory (GiB)|Latency (s)|
 |---|---:|---:|---:|
-| Qwen-Image-Edit | 28.85 | 58.06 | 44.34 |
-| PhysicEdit | 29.00 | 56.25 | 52.19 |
-| Step1X-Edit | 20.82 | 41.34 | 59.18 |
-| Qwen-Image-Edit + explicit reasoning | 28.85 | 58.06 | 60.12 |
-| ChronoEdit | 22.83 | 54.81 | 228.68 |
-| **PhysFlow (Ours)** | **28.87** | **58.11** | **49.39** |
+|Qwen-Image-Edit|28.85|58.06|44.34|
+|PhysicEdit|29.00|56.25|52.19|
+|Step1X-Edit|20.82|41.34|59.18|
+|Qwen-Image-Edit + explicit reasoning|28.85|58.06|60.12|
+|ChronoEdit|22.83|54.81|228.68|
+|PhysFlow (Ours)|28.87|58.11|49.39|
 
 PhysFlow uses 28.87 billion parameters and 58.11 GiB peak memory, compared with 28.85 billion parameters and 58.06 GiB for Qwen-Image-Edit. Its latency increases from 44.34 to 49.39 seconds per edit, an 11.4% overhead. The revised efficiency table includes this comparison.
 

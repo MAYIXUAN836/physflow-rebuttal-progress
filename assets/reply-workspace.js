@@ -129,7 +129,7 @@
       if (addedHeading) text = `**${item.subject}**\n\n${text}`;
       return { item, text, sourceText, addedHeading };
     });
-    const heading = (block, index, total) => reviewer === data.overview ? '' :
+    const heading = (block, index, total) => reviewer === data.overview || reviewer.code === '62MG' ? '' :
       `**Response to Reviewer ${reviewer.code}: Part ${index + 1}/${total}${block.title ? '. ' + block.title : ''}**\n\n`;
     const compose = (block, index, total) => {
       return heading(block, index, total) + block.entries.map(entry => entry.text).join('\n\n');
