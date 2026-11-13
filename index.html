@@ -161,7 +161,7 @@
         </div>
         <nav id="reviewer-nav" aria-label="审稿人"></nav>
         <p class="sidebar-note">所有访客查看同一份进度。展开“设置与完成标准”查看实验细节。</p>
-        <p class="sidebar-note">最近发布：2026-11-13 04:04 PST。刷新页面查看最新发布的进度与回复。</p>
+        <p class="sidebar-note">最近发布：2026-11-13 09:07 PST。刷新页面查看最新发布的进度与回复。</p>
       </aside>
       <main>
         <noscript>请启用 JavaScript，以显示进度清单；英文回复正文仍可直接阅读。</noscript>
@@ -203,9 +203,9 @@
           </header>
 <article class="reply-block" id="reply-r1"><h3>8uwk · 完整首轮回复</h3><div class="reply-prose" lang="en"><p>Thank you for highlighting PhysicEdit. We appreciate its use of video-derived transition priors to guide physical image editing without rendering intermediate videos at inference. We agree that our original discussion should have made this connection explicit, and we have expanded the related-work discussion accordingly.</p>
 <p><strong>Our contribution is the progressive internalization of textual and visual process supervision into a continuous latent plan.</strong> PhysicEdit combines an explicit textual reasoning trace at inference with video-supervised transition queries. PhysFlow progressively compresses high-level physical rationales, low-level transition descriptions, and ordered intermediate visual blocks into six latent tokens. These tokens condition the image generator together with a separate 16-token final visual block. This design internalizes the textual reasoning as well as the visual process, so inference uses the compact latent plan without decoding a textual reasoning trace. We clarify this distinction in Sections 2 and 3. <a href="https://arxiv.org/html/2602.21778v2#S3.SS3">PhysicEdit, Section 3.3</a>.</p>
-<p><strong>The added method-level comparison reports 56.32 for PhysFlow and 52.35 for PhysicEdit.</strong> We evaluate PICABench-Superficial with Qwen2.5-VL-72B-Instruct and report both backbones below. We report scores on a 0 to 100 scale and gains in percentage points.</p>
-<div class="reply-table"><table><thead><tr><th scope="col">Method</th><th scope="col">Backbone</th><th scope="col">Overall</th><th scope="col">Gain over own backbone</th></tr></thead><tbody><tr><td>Qwen-Image-Edit-2509</td><td>Qwen-Image-Edit-2509</td><td>49.71</td><td>N/A</td></tr><tr><td>PhysicEdit</td><td>Qwen-Image-Edit-2509</td><td>52.35</td><td>+2.64</td></tr><tr><td>Qwen-Image-Edit-2511</td><td>Qwen-Image-Edit-2511</td><td>54.26</td><td>N/A</td></tr><tr><td><strong>PhysFlow (Ours)</strong></td><td>Qwen-Image-Edit-2511</td><td><strong>56.32</strong></td><td><strong>+2.06</strong></td></tr></tbody></table></div>
-<p>PhysFlow achieves a 3.97-point higher overall score and higher scores in all eight categories. Both methods improve on their respective backbones. The different backbones make this a comparison of complete systems; isolating the contribution of each method requires a matched-backbone control. We also clarify that the existing 53.82 entry in Tables 4 and 9 refers to PhysFlow trained on PhysicTran38K; the new 52.35 entry evaluates PhysicEdit itself.</p>
+<p><strong>With the same Qwen-Image-Edit-2509 backbone, PhysFlow scores 54.12 and PhysicEdit scores 52.35.</strong> We evaluate PICABench-Superficial with Qwen2.5-VL-72B-Instruct and report both backbones below. We report scores on a 0 to 100 scale and gains in percentage points.</p>
+<div class="reply-table"><table><thead><tr><th scope="col">Method</th><th scope="col">Backbone</th><th scope="col">Overall</th><th scope="col">Gain over own backbone</th></tr></thead><tbody><tr><td>Qwen-Image-Edit-2509</td><td>Qwen-Image-Edit-2509</td><td>49.71</td><td>N/A</td></tr><tr><td>PhysicEdit</td><td>Qwen-Image-Edit-2509</td><td>52.35</td><td>+2.64</td></tr><tr><td>PhysFlow (2509)</td><td>Qwen-Image-Edit-2509</td><td>54.12</td><td><strong>+4.41</strong></td></tr><tr><td>Qwen-Image-Edit-2511</td><td>Qwen-Image-Edit-2511</td><td>54.26</td><td>N/A</td></tr><tr><td><strong>PhysFlow (Ours)</strong></td><td>Qwen-Image-Edit-2511</td><td><strong>56.32</strong></td><td>+2.06</td></tr></tbody></table></div>
+<p>PhysFlow (2509) exceeds PhysicEdit by 1.77 points with the same backbone, scoring higher in seven of eight categories. PhysFlow (2511) scores 56.32 overall and leads all eight categories. Both methods improve on their respective backbones. We also clarify that the existing 53.82 entry in Tables 4 and 9 refers to PhysFlow trained on PhysicTran38K; the new 52.35 entry evaluates PhysicEdit itself.</p>
 <p><strong>PhysFlow also has lower latency in the reported cost comparison.</strong></p>
 <div class="reply-table"><table><thead><tr><th scope="col">Method</th><th scope="col">Params (B)</th><th scope="col">Memory (GiB)</th><th scope="col">Latency (s)</th></tr></thead><tbody><tr><td>PhysicEdit</td><td>29.00</td><td>56.25</td><td>52.19</td></tr><tr><td><strong>PhysFlow (Ours)</strong></td><td><strong>28.87</strong></td><td><strong>58.11</strong></td><td><strong>49.39</strong></td></tr></tbody></table></div>
 <p>The resource and timing measurements come from separate runs. In these reported results, PhysFlow takes 2.80 fewer seconds per edit, a 5.4% latency reduction, while using 1.86 GiB more peak memory. These measurements show a latency advantage with a memory trade-off. The revised manuscript includes the method-level results and cost comparison.</p></div></article>
@@ -419,7 +419,7 @@
     ];
 
     const progressNotes = {
-      'physicedit-score': ['3 号 · 已完成并接入回复', 'R1 回复新增 PhysicEdit 与 PhysFlow 的两行 PICABench-Superficial 分项表，列齐八类及 Overall（52.35 vs. 56.32），评测器为 Qwen2.5-VL-72B-Instruct。PhysFlow 在八类均取得更高分数；回复说明我们使用 Qwen-Image-Edit-2511。', '#reply-r1'],
+      'physicedit-score': ['3 号 · 已完成并接入回复', 'R1 与 R3 的 PICABench 分项表均已加入 PhysFlow（2509）54.12；同骨干超过 PhysicEdit 52.35 共 1.77 个百分点，七类更高。保留 PhysFlow（2511）56.32 与原始 2509 基线 49.71，最高分加粗。', '#reply-r1'],
       'physicedit-discussion': ['已完成 · 8uwk 首轮回复已形成', '以感谢、承认讨论遗漏及肯定 PhysicEdit 设计开篇；解释六个 token 的训练角色与独立 final visual block，补入 Figure 7 的角色结构、领域探针、干预预测、顺序扰动四组分析及对应控制范围；保留 PICABench 分项表并引用论文 Tables 1、5。待作者最终审阅及论文合稿。', '#reply-r1'],
       'same-data-sft': ['1 号 · PICABench 已完成并接入回复', '11 月 8 日 18:42 PST 核验：537 更新、900 张生成和 4,112 QA 评分完成，准确率 55.12；完整方法 56.32，高 1.20 pp。双方生成器预算一致，完整方法总计 1,790 更新。wrapper 因 15 个官方空 mask 的合理 PSNR 不适用项退出 1，独立核验确认评分产物完整；保留原始诊断。RISE 由 15 号追加。', '#reply-sft-dataset'],
       'frame-sampling': ['已完成 · PICABench 55.05', '采用作者提供的重跑结果，确认与 change-uniform 使用相同数据集设置。Overall 55.05 vs. 56.32，差 1.27 个百分点；time-uniform 在 Reflection 上更高。完整类别结果已按作者 2026-11-13 更正接入 R2.3；论文 Appendix C.7 待同步这次数值更正。', ''],
@@ -574,7 +574,7 @@
     updateProgress();
   </script>
   <script src="assets/vendor/markdown-it.min.js?v=38c70a1e7ca9"></script>
-  <script src="assets/reply-data.js?v=1b009c0dcaee"></script>
+  <script src="assets/reply-data.js?v=b03af50121de"></script>
   <script src="assets/vendor/diff3.js?v=a08aa76a79bd"></script>
   <script src="assets/reply-merge.js?v=9fae3be99cd4"></script>
   <script src="assets/reply-sync.js?v=e428eb993d3e"></script>

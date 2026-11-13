@@ -6,7 +6,7 @@
 - 中文引用块为内部状态，提交时只复制英文回复及对应表格。论文修订和 OpenReview 提交另行完成。
 - 其余英文模块沿用 11 月 6 日文字素材，仍按下方标注等待实验或核验。
 
-> 进度更新（2026-11-12）：time-uniform 采用作者按相同数据集设置重跑的最新结果，Overall 55.05，与 change-uniform 56.32 相差 1.27 个百分点，已接入回复；共 10/16 项任务完成。作者确认 full 与新增对照使用同一版训练数据。中间视觉 token 数量、直接压缩、2509 骨干对照与多 seed 结果已预留回复表格，待回填。16 个逐点回复另行对应到论文修改；回复点与任务项不是同一计数。
+> 进度更新（2026-11-12）：time-uniform 采用作者按相同数据集设置重跑的最新结果，Overall 55.05，与 change-uniform 56.32 相差 1.27 个百分点，已接入回复；共 10/16 项任务完成。作者确认 full 与新增对照使用同一版训练数据。PhysFlow（2509）结果已回填，Overall 54.12；中间视觉 token 数量与多 seed 结果仍待回填。16 个逐点回复另行对应到论文修改；回复点与任务项不是同一计数。
 
 ## 修改总览：给所有审稿人和 AC
 
@@ -65,15 +65,15 @@ Our specific focus, however, is to progressively internalize the text-to-visual 
 
 To provide empirical support for our latent reasoning design, we have expanded the representation analyses in Figure 7. Visualizations reveal role-dependent structure, while probing studies recover physical-domain information and reveal outcome-predictive information on several controlled intervention tasks. Token-order perturbations also show that editing performance is sensitive to the ordering of intermediate visual latents. Together, these analyses help explain the physical content and functional role of our compressed plan; the appendix provides detailed results and controls.
 
-Following your helpful suggestion, we have also added an experimental comparison with PhysicEdit on PICABench-Superficial. We use Qwen2.5-VL-72B-Instruct for evaluation. The reported PhysFlow results use Qwen-Image-Edit-2511; results with Qwen-Image-Edit-2509 are pending.
+Following your helpful suggestion, we have also added an experimental comparison with PhysicEdit on PICABench-Superficial. We use Qwen2.5-VL-72B-Instruct for evaluation. With the same 2509 backbone, PhysFlow scores 54.12% versus 52.35% for PhysicEdit.
 
 | Method | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | PhysicEdit | 51.62 | 61.63 | 51.56 | 52.96 | 44.03 | 45.89 | 57.64 | 53.07 | 52.35 |
-| PhysFlow (2509; pending) | | | | | | | | | |
+| PhysFlow (2509) | 52.01 | 62.82 | 57.02 | 53.14 | 43.32 | 46.81 | 61.42 | 53.16 | 54.12 |
 | PhysFlow (2511) | **54.45** | **65.19** | **58.52** | **57.99** | **44.91** | **47.31** | **64.32** | **56.43** | **56.32** |
 
-PhysFlow (2511) scores higher across all eight categories (Table 1). We also compare inference latency in Table 5:
+PhysFlow (2509) exceeds PhysicEdit by 1.77 points; PhysFlow (2511) leads all eight categories. We also compare inference latency in Table 5:
 
 | Method | Latency (s) |
 |---|---:|
@@ -369,20 +369,20 @@ Full PhysFlow improves overall accuracy by 0.75 percentage points over terminal-
 
 ### R3-Q4: PhysicEdit comparison
 
-> 状态：已针对 Reviewer 3 单独组织回复；PhysFlow（2509）正在运行，结果与比较结论待补。
+> 状态：已针对 Reviewer 3 单独组织回复；PhysFlow（2509）结果已由作者提供并填入：Overall 54.12，同骨干超过 PhysicEdit 1.77 个百分点。
 
 <!-- reply:r3-physicedit:start -->
 We appreciate your comment that our comparison using PhysicTran38K does not constitute a direct comparison with PhysicEdit. The score of 53.82 in Tables 4 and 9 corresponds to PhysFlow trained on PhysicTran38K, rather than PhysicEdit itself.
 
-To address this concern, we have added a direct comparison with PhysicEdit on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct. The table includes our results with Qwen-Image-Edit-2511.
+To address this concern, we have added a direct comparison with PhysicEdit on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct. The table includes PhysFlow with both Qwen-Image-Edit-2509 and Qwen-Image-Edit-2511.
 
 | Method | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | PhysicEdit | 51.62 | 61.63 | 51.56 | 52.96 | 44.03 | 45.89 | 57.64 | 53.07 | 52.35 |
-| PhysFlow (2509; pending) | | | | | | | | | |
+| PhysFlow (2509) | 52.01 | 62.82 | 57.02 | 53.14 | 43.32 | 46.81 | 61.42 | 53.16 | 54.12 |
 | PhysFlow (2511) | **54.45** | **65.19** | **58.52** | **57.99** | **44.91** | **47.31** | **64.32** | **56.43** | **56.32** |
 
-PhysFlow (2511) achieves 56.32% overall accuracy, exceeding PhysicEdit by 3.97 percentage points with higher scores in all eight categories.
+With the same Qwen-Image-Edit-2509 backbone, PhysFlow achieves 54.12%, exceeding PhysicEdit by 1.77 percentage points with higher scores in seven of eight categories. PhysFlow (2511) reaches 56.32%.
 
 Beyond this empirical comparison, we have also expanded the discussion in Section 2.2 to clarify the methodological differences. PhysicEdit learns latent visual transition priors from videos and combines them with explicit textual reasoning to guide image editing. PhysFlow couples textual physical reasoning with visual evolution in a continuous latent plan. Text-derived latent states guide subsequent visual transitions, while downstream visual supervision and editing losses train these text-derived latent states to retain information useful for image generation. Our progressive compression curriculum internalizes explicit physical rationales and intermediate visual states into this coupled reasoning process. The resulting plan connects physical explanations to their visual consequences and guides image editing without decoding textual rationales or intermediate images at inference.
 <!-- reply:r3-physicedit:end -->
