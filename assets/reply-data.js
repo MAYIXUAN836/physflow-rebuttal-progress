@@ -396,30 +396,9 @@ window.PHYSFLOW_REPLIES = {
           "revision": "3c05a54c51617f87"
         },
         {
-          "id": "direct-compression",
-          "title": "渐进压缩与直接压缩的比较",
-          "subject": "Response 5: Progressive versus direct compression",
-          "comments": [
-            {
-              "label": "Weakness 3 · compression curriculum",
-              "text": "Furthermore, the textual, visual, and joint reasoning ablations support the complementarity of the two modalities, but do not establish whether the progressive compression curriculum is more effective than learning latent conditioning with terminal supervision alone."
-            }
-          ],
-          "analysis": "独立比较渐进与直接压缩，保留相同最终 token 布局。表格报告直接压缩 54.52 与论文渐进模型 56.32，相差 1.80 个百分点；保留单次运行说明。",
-          "source": {
-            "block": "r3-direct-compression"
-          },
-          "status": "回复已成稿",
-          "pending": false,
-          "syncKey": "block:r3-direct-compression",
-          "syncMarkdown": "Both use two textual and four intermediate latent tokens plus a 16-token final visual block. The progressive row is the paper's full model.\n\nPICABench-Superficial accuracy (%):\n\n|Compression strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|\n|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n|Direct compression|52.84|63.83|55.68|56.31|42.54|46.85|62.40|53.96|54.52|\n|Progressive compression (paper)|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|\n\nThe reported progressive model scores 1.80 points higher; these are single-run results.",
-          "markdown": "Both use two textual and four intermediate latent tokens plus a 16-token final visual block. The progressive row is the paper's full model.\n\nPICABench-Superficial accuracy (%):\n\n|Compression strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|\n|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n|Direct compression|52.84|63.83|55.68|56.31|42.54|46.85|62.40|53.96|54.52|\n|Progressive compression (paper)|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|\n\nThe reported progressive model scores 1.80 points higher; these are single-run results.",
-          "revision": "d552881896fd29c2"
-        },
-        {
           "id": "general-editing",
           "title": "一般编辑能力：总体保持与类别权衡",
-          "subject": "Response 6: Further analysis of general editing performance",
+          "subject": "Response 5: Further analysis of general editing performance",
           "comments": [
             {
               "label": "Weakness 4",
@@ -453,7 +432,6 @@ window.PHYSFLOW_REPLIES = {
         {
           "items": [
             "terminal",
-            "direct-compression",
             "general-editing"
           ]
         }

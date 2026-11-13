@@ -395,20 +395,6 @@ Editing accuracy (%) on PICABench-Superficial.
 Full PhysFlow improves overall accuracy by 0.75 percentage points and outperforms terminal-only supervision in seven of eight categories. These results support the value of supervising the physical transformation through textual rationales and intermediate visual states when learning the latent plan.
 <!-- reply:terminal-only:end -->
 
-### Response 5: Progressive versus direct compression
-
-<!-- reply:r3-direct-compression:start -->
-Both use two textual and four intermediate latent tokens plus a 16-token final visual block. The progressive row is the paper's full model.
-
-PICABench-Superficial accuracy (%):
-
-|Compression strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|Direct compression|52.84|63.83|55.68|56.31|42.54|46.85|62.40|53.96|54.52|
-|Progressive compression (paper)|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
-
-The reported progressive model scores 1.80 points higher; these are single-run results.
-<!-- reply:r3-direct-compression:end -->
 
 ### R3-Q4: PhysicEdit comparison
 
