@@ -73,7 +73,7 @@ Following your helpful suggestion, we have also added an experimental comparison
 | PhysFlow (2509) | 52.01 | 62.82 | 57.02 | 53.14 | 43.32 | 46.81 | 61.42 | 53.16 | 54.12 |
 | PhysFlow (2511) | **54.45** | **65.19** | **58.52** | **57.99** | **44.91** | **47.31** | **64.32** | **56.43** | **56.32** |
 
-PhysFlow (2509) exceeds PhysicEdit by 1.77 points; PhysFlow (2511) leads all eight categories. We also compare inference latency in Table 5:
+PhysFlow (2509) exceeds PhysicEdit by 1.77 points overall, with higher scores in seven categories and lower DFM. PhysFlow (2511) leads all eight. Latency (Table 5):
 
 | Method | Latency (s) |
 |---|---:|
@@ -382,7 +382,7 @@ To address this concern, we have added a direct comparison with PhysicEdit on PI
 | PhysFlow (2509) | 52.01 | 62.82 | 57.02 | 53.14 | 43.32 | 46.81 | 61.42 | 53.16 | 54.12 |
 | PhysFlow (2511) | **54.45** | **65.19** | **58.52** | **57.99** | **44.91** | **47.31** | **64.32** | **56.43** | **56.32** |
 
-With the same Qwen-Image-Edit-2509 backbone, PhysFlow achieves 54.12%, exceeding PhysicEdit by 1.77 percentage points with higher scores in seven of eight categories. PhysFlow (2511) reaches 56.32%.
+With the same Qwen-Image-Edit-2509 backbone, PhysFlow achieves 54.12% versus 52.35% for PhysicEdit, a gain of 1.77 percentage points. It scores higher in seven of eight categories, with DFM lower (43.32% vs. 44.03%). PhysFlow (2511) reaches 56.32%, 2.20 points above PhysFlow (2509). PhysFlow's advantage over PhysicEdit thus persists with the same backbone.
 
 Beyond this empirical comparison, we have also expanded the discussion in Section 2.2 to clarify the methodological differences. PhysicEdit learns latent visual transition priors from videos and combines them with explicit textual reasoning to guide image editing. PhysFlow couples textual physical reasoning with visual evolution in a continuous latent plan. Text-derived latent states guide subsequent visual transitions, while downstream visual supervision and editing losses train these text-derived latent states to retain information useful for image generation. Our progressive compression curriculum internalizes explicit physical rationales and intermediate visual states into this coupled reasoning process. The resulting plan connects physical explanations to their visual consequences and guides image editing without decoding textual rationales or intermediate images at inference.
 <!-- reply:r3-physicedit:end -->
