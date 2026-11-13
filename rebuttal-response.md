@@ -71,7 +71,7 @@ Following your helpful suggestion, we have also added an experimental comparison
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | PhysicEdit | 51.62 | 61.63 | 51.56 | 52.96 | 44.03 | 45.89 | 57.64 | 53.07 | 52.35 |
 | PhysFlow (2509; pending) | | | | | | | | | |
-| PhysFlow (2511) | 54.45 | 65.19 | 58.52 | 57.99 | 44.91 | 47.31 | 64.32 | 56.43 | 56.32 |
+| PhysFlow (2511) | **54.45** | **65.19** | **58.52** | **57.99** | **44.91** | **47.31** | **64.32** | **56.43** | **56.32** |
 
 PhysFlow (2511) scores higher across all eight categories (Table 1). We also compare inference latency in Table 5:
 
@@ -84,8 +84,8 @@ We also include an ImgEdit-Bench comparison to assess general image editing (Tab
 
 | Method | Add | Adjust | Extract | Replace | Remove | BackG | Style | Hybrid | Action | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| PhysicEdit | 4.31 | 4.17 | 2.34 | 4.45 | 4.44 | 4.03 | 4.74 | 3.36 | 4.85 | 4.05 |
-| PhysFlow (Ours) | 4.26 | 4.33 | 3.91 | 4.66 | 4.66 | 4.25 | 4.85 | 3.26 | 4.85 | 4.39 |
+| PhysicEdit | **4.31** | 4.17 | 2.34 | 4.45 | 4.44 | 4.03 | 4.74 | **3.36** | **4.85** | 4.05 |
+| PhysFlow (Ours) | 4.26 | **4.33** | **3.91** | **4.66** | **4.66** | **4.25** | **4.85** | 3.26 | **4.85** | **4.39** |
 
 PhysFlow achieves an overall score of 4.39, compared with 4.05 for PhysicEdit. It scores higher in six of nine categories, ties in Action, and scores lower in Add and Hybrid.
 
@@ -110,8 +110,8 @@ Thank you for requesting this controlled comparison. We agree that the original 
 |Configuration|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall (%)|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 |Qwen-Image-Edit-2511|53.29|62.98|56.78|57.66|44.16|45.99|59.37|55.34|54.26|
-|PhysTrace image-pair SFT|55.07|65.16|57.96|56.67|42.71|45.30|63.23|53.81|55.12|
-|PhysFlow|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
+|PhysTrace image-pair SFT|**55.07**|65.16|57.96|56.67|42.71|45.30|63.23|53.81|55.12|
+|PhysFlow|54.45|**65.19**|**58.52**|**57.99**|**44.91**|**47.31**|**64.32**|**56.43**|**56.32**|
 
 PhysFlow exceeds same-data SFT by 1.20 points. Both use rank-512 generator LoRA and 537 generator updates. Our latent reasoning framework thus improves editing performance beyond same-data image-pair fine-tuning.
 <!-- reply:r2-sft-baseline:end -->
@@ -129,10 +129,10 @@ All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superfic
 
 |Training data|Training strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall (%)|
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|PICA100K|Image-pair SFT|55.52|60.30|57.69|53.04|41.46|45.91|59.13|52.12|53.38|
+|PICA100K|Image-pair SFT|**55.52**|60.30|57.69|53.04|41.46|45.91|59.13|52.12|53.38|
 |PhysTrace|Image-pair SFT|55.07|65.16|57.96|56.67|42.71|45.30|63.23|53.81|55.12|
 |PhysicTran38K|PhysFlow|54.14|62.16|54.55|57.60|44.03|45.19|61.26|52.20|53.82|
-|PhysTrace|PhysFlow|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
+|PhysTrace|PhysFlow|54.45|**65.19**|**58.52**|**57.99**|**44.91**|**47.31**|**64.32**|**56.43**|**56.32**|
 
 (a) PhysTrace improves SFT by 1.74 points over PICA100K with fewer examples and updates. (b) Under the same PhysFlow architecture and curriculum, PhysTrace gains 2.50 points over PhysicTran38K using fewer examples. (c) On identical PhysTrace pairs, PhysFlow exceeds SFT by 1.20 points with matched generator adaptation. Together, these comparisons and the compression ablation (Response 3) demonstrate the effectiveness of our PhysTrace dataset, our latent reasoning framework, and our progressive training curriculum.
 <!-- reply:sft-dataset:end -->
@@ -150,8 +150,8 @@ Thank you for these helpful suggestions. We have added ablations on frame sampli
 
 |Sampling|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|Time-uniform|53.72|63.06|59.30|57.64|43.29|46.21|62.35|53.65|55.05|
-|Change-uniform|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
+|Time-uniform|53.72|63.06|**59.30**|57.64|43.29|46.21|62.35|53.65|55.05|
+|Change-uniform|**54.45**|**65.19**|58.52|**57.99**|**44.91**|**47.31**|**64.32**|**56.43**|**56.32**|
 
 Change-uniform improves overall accuracy by 1.27 points, demonstrating the effectiveness of our sampling strategy (Appendix C.7).
 
@@ -168,7 +168,7 @@ Change-uniform improves overall accuracy by 1.27 points, demonstrating the effec
 |Compression strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 |Direct compression|52.84|63.83|55.68|56.31|42.54|46.85|62.40|53.96|54.52|
-|Progressive compression (paper)|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
+|Progressive compression (paper)|**54.45**|**65.19**|**58.52**|**57.99**|**44.91**|**47.31**|**64.32**|**56.43**|**56.32**|
 
 The reported progressive model scores 1.80 points higher; these are single-run results.
 <!-- reply:sampling:end -->
@@ -331,8 +331,8 @@ We agree that a same-data fine-tuning baseline is needed to assess the benefit o
 |Configuration|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall (%)|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 |Qwen-Image-Edit-2511|53.29|62.98|56.78|57.66|44.16|45.99|59.37|55.34|54.26|
-|PhysTrace image-pair SFT|55.07|65.16|57.96|56.67|42.71|45.30|63.23|53.81|55.12|
-|PhysFlow|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
+|PhysTrace image-pair SFT|**55.07**|65.16|57.96|56.67|42.71|45.30|63.23|53.81|55.12|
+|PhysFlow|54.45|**65.19**|**58.52**|**57.99**|**44.91**|**47.31**|**64.32**|**56.43**|**56.32**|
 
 Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow exceeds this adapted baseline by 1.20 points. Both use the same rank-512 generator LoRA configuration and 537 generator updates.
 
@@ -350,8 +350,8 @@ Editing accuracy (%) on PICABench-Superficial.
 
 | Training strategy | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Terminal-only supervision | 53.84 | 64.48 | 57.73 | 59.18 | 42.57 | 46.68 | 63.59 | 55.71 | 55.57 |
-| Full PhysFlow | 54.45 | 65.19 | 58.52 | 57.99 | 44.91 | 47.31 | 64.32 | 56.43 | 56.32 |
+| Terminal-only supervision | 53.84 | 64.48 | 57.73 | **59.18** | 42.57 | 46.68 | 63.59 | 55.71 | 55.57 |
+| Full PhysFlow | **54.45** | **65.19** | **58.52** | 57.99 | **44.91** | **47.31** | **64.32** | **56.43** | **56.32** |
 
 Full PhysFlow improves overall accuracy by 0.75 percentage points over terminal-only supervision. This comparison demonstrates the benefit of our training strategy: textual rationales and intermediate visual states provide process supervision that improves physical editing accuracy beyond terminal supervision alone.
 <!-- reply:terminal-only:end -->
@@ -370,7 +370,7 @@ To address this concern, we have added a direct comparison with PhysicEdit on PI
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | PhysicEdit | 51.62 | 61.63 | 51.56 | 52.96 | 44.03 | 45.89 | 57.64 | 53.07 | 52.35 |
 | PhysFlow (2509; pending) | | | | | | | | | |
-| PhysFlow (2511) | 54.45 | 65.19 | 58.52 | 57.99 | 44.91 | 47.31 | 64.32 | 56.43 | 56.32 |
+| PhysFlow (2511) | **54.45** | **65.19** | **58.52** | **57.99** | **44.91** | **47.31** | **64.32** | **56.43** | **56.32** |
 
 PhysFlow (2511) achieves 56.32% overall accuracy, exceeding PhysicEdit by 3.97 percentage points with higher scores in all eight categories.
 
