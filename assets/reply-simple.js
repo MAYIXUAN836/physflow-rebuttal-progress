@@ -31,10 +31,24 @@
       return old === null ? null : converter.turndown(old);
     } catch { return null; }
   }
-  // The preview is script-free and cannot access the parent or load remote resources.
+  // Scripts and remote resources remain blocked; same-origin access lets us measure the preview.
   function documentHTML(html) {
     return '<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; img-src data:; form-action \'none\'; base-uri \'none\'"><style>' + style + '</style></head><body>' + html + '</body></html>';
   }
+  function fitBlock(section) {
+    const editor = section.querySelector('[data-role="editor"]');
+    const preview = section.querySelector('[data-role="preview"]');
+    editor.style.height = '0px';
+    const editorHeight = editor.scrollHeight;
+    const body = preview.contentDocument?.body;
+    const previewHeight = body ? Math.ceil(body.getBoundingClientRect().height) + 48 : 0;
+    const height = Math.max(editorHeight, previewHeight);
+    editor.style.height = `${height}px`;
+    preview.style.height = `${height}px`;
+  }
+  window.addEventListener('resize', () => {
+    document.querySelectorAll('.reply-block').forEach(fitBlock);
+  });
   function select(index) {
     const group = groups[index];
     document.querySelector('#title').textContent = index ? `Reviewer ${index} · ${group.code}` : 'General';
@@ -54,10 +68,17 @@
       editor.value = drafts[index][block];
       status.textContent = edited[index][block] ? '当前为本地修改 · 不回写共享主稿' : '已加载最新发布主稿 · 本地备份未覆盖主稿';
       restore.hidden = backup(group, block) === null;
+      preview.addEventListener('load', () => {
+        fitBlock(section);
+        preview.contentDocument.querySelectorAll('img').forEach(img => {
+          img.addEventListener('load', () => fitBlock(section), { once: true });
+        });
+      });
       function render() {
         preview.srcdoc = documentHTML(md.render(editor.value));
         field('count').textContent = `${editor.value.length.toLocaleString()} / 5000 字符`;
         field('count').style.color = editor.value.length > 5000 ? '#c62828' : '';
+        fitBlock(section);
       }
       editor.addEventListener('input', () => {
         drafts[index][block] = editor.value;
