@@ -6,7 +6,7 @@
 - 中文引用块为内部状态，提交时只复制英文回复及对应表格。论文修订和 OpenReview 提交另行完成。
 - 其余英文模块沿用 11 月 6 日文字素材，仍按下方标注等待实验或核验。
 
-> 进度更新（2026-11-12）：time-uniform 采用作者按相同数据集设置重跑的最新结果，Overall 55.09，与 change-uniform 56.32 相差 1.23 个百分点，已接入回复；共 10/16 项任务完成。作者确认 full 与新增对照使用同一版训练数据。中间视觉 token 数量、直接压缩、2509 骨干对照与多 seed 结果已预留回复表格，待回填。16 个逐点回复另行对应到论文修改；回复点与任务项不是同一计数。
+> 进度更新（2026-11-12）：time-uniform 采用作者按相同数据集设置重跑的最新结果，Overall 55.05，与 change-uniform 56.32 相差 1.27 个百分点，已接入回复；共 10/16 项任务完成。作者确认 full 与新增对照使用同一版训练数据。中间视觉 token 数量、直接压缩、2509 骨干对照与多 seed 结果已预留回复表格，待回填。16 个逐点回复另行对应到论文修改；回复点与任务项不是同一计数。
 
 ## 修改总览：给所有审稿人和 AC
 
@@ -139,7 +139,7 @@ All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superfic
 
 ### Response 3: Further ablations on frame sampling methods, visual token counts, and compression strategies
 
-> time-uniform 采用作者提供的重跑结果：作者确认与 change-uniform 使用相同数据集设置，Overall 55.09 vs. 56.32，差 1.23 个百分点；完整类别数据见下表。固定四个中间状态，比较每状态 1、2、4 个视觉 token；token 消融结果先留空；直接压缩已核验为 54.52，完整分项已填入，与论文渐进压缩模型 56.32 对比。
+> time-uniform 采用作者提供的重跑结果：作者确认与 change-uniform 使用相同数据集设置，Overall 55.05 vs. 56.32，差 1.27 个百分点；完整类别数据见下表。固定四个中间状态，比较每状态 1、2、4 个视觉 token；token 消融结果先留空；直接压缩已核验为 54.52，完整分项已填入，与论文渐进压缩模型 56.32 对比。
 
 <!-- reply:sampling:start -->
 **Response 3: Further ablations on frame sampling methods, visual token counts, and compression strategies**
@@ -150,10 +150,10 @@ Thank you for these helpful suggestions. We have added ablations on frame sampli
 
 |Sampling|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|Time-uniform|53.72|63.06|59.30|58.24|43.29|46.21|62.35|53.65|55.09|
+|Time-uniform|53.72|63.06|59.30|57.64|43.29|46.21|62.35|53.65|55.05|
 |Change-uniform|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
 
-Change-uniform improves overall accuracy by 1.23 points, demonstrating the effectiveness of our sampling strategy (Appendix C.7).
+Change-uniform improves overall accuracy by 1.27 points, demonstrating the effectiveness of our sampling strategy (Appendix C.7).
 
 (2) Alternative token counts (results pending): We test 1, 2, or 4 tokens for each of the four intermediate visual states, keeping the textual and final visual blocks fixed.
 
