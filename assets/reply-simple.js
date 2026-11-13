@@ -1,6 +1,16 @@
 (() => {
   const data = window.PHYSFLOW_REPLIES;
   const groups = [data.overview, ...data.reviewers].map(group => {
+    if (group.code === '62MG' && group.submissionBlocks) {
+      return { ...group, items: group.submissionBlocks.map(block => ({
+        id: block.items.join('+'),
+        subject: block.title,
+        markdown: block.items.map(id => {
+          const item = group.items.find(item => item.id === id);
+          return item.markdown.includes(`**${item.subject}**`) ? item.markdown : `**${item.subject}**\n\n${item.markdown}`;
+        }).join('\n\n')
+      })) };
+    }
     const blocks = [];
     group.items.forEach(item => {
       const text = group === data.overview || item.markdown.includes(`**${item.subject}**`)
