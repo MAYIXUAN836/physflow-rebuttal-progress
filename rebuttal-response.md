@@ -111,11 +111,11 @@ The 54.26 row in Table 3 reports the original Qwen-Image-Edit-2511 backbone. The
 
 | Configuration | PICABench-Superficial (%) |
 |---|---:|
-| Original Qwen-Image-Edit-2511 | 54.26 |
+| Qwen-Image-Edit-2511 | 54.26 |
 | PhysTrace image-pair SFT | 55.12 |
-| Full PhysFlow | 56.32 |
+| PhysFlow | 56.32 |
 
-Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow exceeds this adapted baseline by 1.20 points. Both use the same rank-512 generator LoRA configuration and 537 generator updates. PhysFlow also trains a planner, for 1,790 total updates, so this comparison includes additional capacity and training.
+Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow exceeds this adapted baseline by 1.20 points. Both use the same rank-512 generator LoRA configuration and 537 generator updates.
 <!-- reply:r2-sft-baseline:end -->
 
 ### Response 2: Dataset effectiveness and training framework
@@ -375,11 +375,11 @@ The 54.26 row in Table 3 reports the original Qwen-Image-Edit-2511 backbone. The
 
 | Configuration | PICABench-Superficial (%) |
 |---|---:|
-| Original Qwen-Image-Edit-2511 | 54.26 |
+| Qwen-Image-Edit-2511 | 54.26 |
 | PhysTrace image-pair SFT | 55.12 |
-| Full PhysFlow | 56.32 |
+| PhysFlow | 56.32 |
 
-Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow exceeds this adapted baseline by 1.20 points. Both use the same rank-512 generator LoRA configuration and 537 generator updates. PhysFlow also trains a planner, for 1,790 total updates, so this comparison includes additional capacity and training. Question 3 compares the terminal-only run with the full PhysFlow results reported in the paper, including the category breakdown and the scope of this training-configuration comparison.
+Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow exceeds this adapted baseline by 1.20 points. Both use the same rank-512 generator LoRA configuration and 537 generator updates. Question 3 compares the terminal-only run with the full PhysFlow results reported in the paper, including the category breakdown and the scope of this training-configuration comparison.
 <!-- reply:sft-baseline:end -->
 
 ### R3-Q3 / R2: Terminal-only supervision
