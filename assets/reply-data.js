@@ -308,7 +308,7 @@ window.PHYSFLOW_REPLIES = {
         {
           "id": "positioning",
           "title": "相对 EndoCoT 和 Monet 的核心贡献",
-          "subject": "Central contribution relative to EndoCoT and Monet",
+          "subject": "Response 1: Central contribution relative to EndoCoT and Monet",
           "comments": [
             {
               "label": "Weakness 1",
@@ -333,7 +333,7 @@ window.PHYSFLOW_REPLIES = {
         {
           "id": "physicedit",
           "title": "补 PhysicEdit 的方法级比较",
-          "subject": "PhysicEdit method-level comparison",
+          "subject": "Response 2: PhysicEdit method-level comparison",
           "comments": [
             {
               "label": "Weakness 2",
@@ -358,7 +358,7 @@ window.PHYSFLOW_REPLIES = {
         {
           "id": "same-data",
           "title": "Table 3 的 no-reasoning 到底是什么？",
-          "subject": "Identity of the no-reasoning baseline",
+          "subject": "Response 3: Identity of the no-reasoning baseline",
           "comments": [
             {
               "label": "Weakness 3 · data adaptation",
@@ -383,7 +383,7 @@ window.PHYSFLOW_REPLIES = {
         {
           "id": "terminal",
           "title": "同结构只用终态监督，表现如何？",
-          "subject": "Terminal-only supervision with the same structure",
+          "subject": "Response 4: Terminal-only supervision with the same structure",
           "comments": [
             {
               "label": "Weakness 3 · terminal supervision",
@@ -408,7 +408,7 @@ window.PHYSFLOW_REPLIES = {
         {
           "id": "general-editing",
           "title": "一般编辑能力：总体保持与类别权衡",
-          "subject": "General editing performance and category trade-offs",
+          "subject": "Response 5: General editing performance and category trade-offs",
           "comments": [
             {
               "label": "Weakness 4",
