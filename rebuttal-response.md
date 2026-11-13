@@ -105,9 +105,7 @@ Thank you very much for your careful reading and detailed, constructive feedback
 
 **Response 1: Same-data image-pair fine-tuning baseline**
 
-Thank you for requesting this controlled comparison. We agree that the original backbone baseline alone could not distinguish gains from PhysTrace adaptation and latent reasoning.
-
-The no-reasoning configuration in Table 3 (first row, 54.26%) is the original Qwen-Image-Edit-2511 backbone without PhysTrace fine-tuning. Following your suggestion, we add image-pair SFT on the same PhysTrace source-target pairs:
+Thank you for requesting this controlled comparison. We agree that the original backbone baseline alone could not distinguish gains from PhysTrace adaptation and latent reasoning. The no-reasoning configuration in Table 3 (first row, 54.26%) is the original Qwen-Image-Edit-2511 backbone without PhysTrace fine-tuning. Following your suggestion, we add image-pair SFT on the same PhysTrace source-target pairs:
 
 |Configuration|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall (%)|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
