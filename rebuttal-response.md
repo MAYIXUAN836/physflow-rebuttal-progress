@@ -107,7 +107,7 @@ Thank you very much for your careful reading and detailed, constructive feedback
 
 Thank you for requesting this controlled comparison. We agree that the original backbone baseline alone could not distinguish gains from PhysTrace adaptation and latent reasoning.
 
-Table 3's 54.26 row is the original Qwen-Image-Edit-2511 backbone with no PhysTrace fine-tuning; we clarify this in the caption. We add image-pair SFT on the same PhysTrace source-target pairs:
+The no-reasoning configuration in Table 3 (first row, 54.26%) is the original Qwen-Image-Edit-2511 backbone without PhysTrace fine-tuning. Following your suggestion, we add image-pair SFT on the same PhysTrace source-target pairs:
 
 |Configuration|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall (%)|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -365,7 +365,7 @@ Relative to Monet, we train the latent plan through the image transformation it 
 > 状态：已接入 1 号 PICABench 同数据 SFT 结果；RISE 补测由 15 号追加。完整方法与 SFT 的生成器配置及更新数一致，总训练量不同。
 
 <!-- reply:sft-baseline:start -->
-We agree that a same-data fine-tuning baseline is needed to assess the benefit of our framework beyond dataset adaptation. The 54.26 row in Table 3 reports the original Qwen-Image-Edit-2511 backbone. The revised caption explicitly identifies it as “Original backbone” and states that it has no PhysTrace fine-tuning. We have now added a baseline fine-tuned on the same PhysTrace source-target pairs. The table reports PICABench-Superficial accuracy (%):
+We agree that a same-data fine-tuning baseline is needed to assess the benefit of our framework beyond dataset adaptation. The no-reasoning configuration in Table 3 (first row, 54.26%) is the original Qwen-Image-Edit-2511 backbone without PhysTrace fine-tuning. Following your suggestion, we have added an image-pair SFT baseline trained on the same PhysTrace source-target pairs. The table below reports PICABench-Superficial accuracy (%):
 
 |Configuration|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall (%)|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
