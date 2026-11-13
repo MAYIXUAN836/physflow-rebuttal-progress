@@ -55,23 +55,23 @@ Thank you very much for pointing out the missing discussion of PhysicEdit. We ap
 
 At inference, [PhysicEdit](https://arxiv.org/html/2602.21778v2#S3.SS3) combines an explicit textual reasoning trace with latent visual representations produced by learned transition queries. We find this design particularly compelling because it connects explicit physical constraints with video-derived transition priors without requiring intermediate-video generation. We share the motivation behind this design: textual explanations and visual trajectories provide complementary forms of intermediate reasoning, with text explaining physical principles and causal relationships, and visual trajectories describing how the scene changes.
 
-**Our specific focus, however, is to progressively internalize the text-to-visual reasoning process into an ordered latent plan:**
+Our specific focus, however, is to progressively internalize the text-to-visual reasoning process into an ordered latent plan:
 
-1. **Textual physical reasoning guides visual evolution through causal dependencies within the latent sequence.** The planner first predicts textual latent states for high-level physical rules and causal dependencies, followed by low-level transition steps. These continuous textual states guide the generation of subsequent visual latents through causal dependencies within the latent sequence. Each visual latent also builds on preceding visual latents, linking physical reasoning to successive stages of visual evolution.
+1. Textual physical reasoning guides visual evolution through causal dependencies within the latent sequence. The planner first predicts textual latent states for high-level physical rules and causal dependencies, followed by low-level transition steps. These continuous textual states guide the generation of subsequent visual latents through causal dependencies within the latent sequence. Each visual latent also builds on preceding visual latents, linking physical reasoning to successive stages of visual evolution.
 
-2. **Visual supervision shapes the reasoning states.** During planner training, downstream visual prediction and editing losses propagate through the continuous latent sequence to train earlier states. This encourages the text-derived states to retain information useful for the intended visual changes.
+2. Visual supervision shapes the reasoning states. During planner training, downstream visual prediction and editing losses propagate through the continuous latent sequence to train earlier states. This encourages the text-derived states to retain information useful for the intended visual changes.
 
-3. **Our training curriculum progressively internalizes textual and visual reasoning.** PhysicEdit trains transition queries against video-derived visual features while keeping its reasoning MLLM frozen. PhysFlow first trains the planner with explicit textual rationales and intermediate visual states. We then progressively replace high-level physical rationales, low-level transition descriptions, and successive intermediate visual blocks with latent tokens. Finally, we freeze the planner and adapt the image generator to the learned continuous latent sequence. By jointly internalizing textual physical reasoning and visual evolution, this curriculum equips PhysFlow with a unified latent reasoning process that guides image editing without decoding textual rationales or intermediate images at inference.
+3. Our training curriculum progressively internalizes textual and visual reasoning. PhysicEdit trains transition queries against video-derived visual features while keeping its reasoning MLLM frozen. PhysFlow first trains the planner with explicit textual rationales and intermediate visual states. We then progressively replace high-level physical rationales, low-level transition descriptions, and successive intermediate visual blocks with latent tokens. Finally, we freeze the planner and adapt the image generator to the learned continuous latent sequence. By jointly internalizing textual physical reasoning and visual evolution, this curriculum equips PhysFlow with a unified latent reasoning process that guides image editing without decoding textual rationales or intermediate images at inference.
 
-**To provide empirical support for our latent reasoning design, we have expanded the representation analyses in Figure 7.** Visualizations reveal role-dependent structure, while probing studies recover physical-domain information and reveal outcome-predictive information on several controlled intervention tasks. Token-order perturbations also show that editing performance is sensitive to the ordering of intermediate visual latents. Together, these analyses help explain the physical content and functional role of our compressed plan; the appendix provides detailed results and controls.
+To provide empirical support for our latent reasoning design, we have expanded the representation analyses in Figure 7. Visualizations reveal role-dependent structure, while probing studies recover physical-domain information and reveal outcome-predictive information on several controlled intervention tasks. Token-order perturbations also show that editing performance is sensitive to the ordering of intermediate visual latents. Together, these analyses help explain the physical content and functional role of our compressed plan; the appendix provides detailed results and controls.
 
-**Following your helpful suggestion, we have also added an experimental comparison with PhysicEdit on PICABench-Superficial.** We use Qwen2.5-VL-72B-Instruct for evaluation. The reported PhysFlow results use Qwen-Image-Edit-2511; results with Qwen-Image-Edit-2509 are pending.
+Following your helpful suggestion, we have also added an experimental comparison with PhysicEdit on PICABench-Superficial. We use Qwen2.5-VL-72B-Instruct for evaluation. The reported PhysFlow results use Qwen-Image-Edit-2511; results with Qwen-Image-Edit-2509 are pending.
 
 | Method | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | PhysicEdit | 51.62 | 61.63 | 51.56 | 52.96 | 44.03 | 45.89 | 57.64 | 53.07 | 52.35 |
 | PhysFlow (2509; pending) | | | | | | | | | |
-| **PhysFlow (2511)** | **54.45** | **65.19** | **58.52** | **57.99** | **44.91** | **47.31** | **64.32** | **56.43** | **56.32** |
+| PhysFlow (2511) | 54.45 | 65.19 | 58.52 | 57.99 | 44.91 | 47.31 | 64.32 | 56.43 | 56.32 |
 
 PhysFlow (2511) scores higher across all eight categories (Table 1). We also compare inference latency in Table 5:
 
@@ -80,14 +80,14 @@ PhysFlow (2511) scores higher across all eight categories (Table 1). We also com
 | PhysicEdit | 52.19 |
 | PhysFlow (Ours) | 49.39 |
 
-**We also include an ImgEdit-Bench comparison to assess general image editing (Table 6).**
+We also include an ImgEdit-Bench comparison to assess general image editing (Table 6).
 
 | Method | Add | Adjust | Extract | Replace | Remove | BackG | Style | Hybrid | Action | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| PhysicEdit | **4.31** | 4.17 | 2.34 | 4.45 | 4.44 | 4.03 | 4.74 | **3.36** | **4.85** | 4.05 |
-| **PhysFlow (Ours)** | 4.26 | **4.33** | **3.91** | **4.66** | **4.66** | **4.25** | **4.85** | 3.26 | **4.85** | **4.39** |
+| PhysicEdit | 4.31 | 4.17 | 2.34 | 4.45 | 4.44 | 4.03 | 4.74 | 3.36 | 4.85 | 4.05 |
+| PhysFlow (Ours) | 4.26 | 4.33 | 3.91 | 4.66 | 4.66 | 4.25 | 4.85 | 3.26 | 4.85 | 4.39 |
 
-PhysFlow achieves an overall score of **4.39**, compared with **4.05** for PhysicEdit. It scores higher in six of nine categories, ties in Action, and scores lower in Add and Hybrid.
+PhysFlow achieves an overall score of 4.39, compared with 4.05 for PhysicEdit. It scores higher in six of nine categories, ties in Action, and scores lower in Add and Hybrid.
 
 We sincerely appreciate your suggestion, which helped us present the relationship to PhysicEdit and the evidence for our latent representation more clearly.
 <!-- reply:r1:end -->
