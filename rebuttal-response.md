@@ -115,9 +115,7 @@ The no-reasoning configuration in Table 3 (first row, 54.26%) is the original Qw
 |PhysTrace image-pair SFT|55.07|65.16|57.96|56.67|42.71|45.30|63.23|53.81|55.12|
 |PhysFlow|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
 
-PhysFlow exceeds same-data SFT by 1.20 points. Both use rank-512 generator LoRA and 537 generator updates.
-
-These results support the added value of PhysFlow's latent reasoning framework beyond image-pair fine-tuning on the same data.
+PhysFlow exceeds same-data SFT by 1.20 points. Both use rank-512 generator LoRA and 537 generator updates. Our latent reasoning framework thus improves editing performance beyond same-data image-pair fine-tuning.
 <!-- reply:r2-sft-baseline:end -->
 
 ### Response 2: Dataset effectiveness and training framework
