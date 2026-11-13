@@ -159,7 +159,7 @@ Change-uniform improves overall accuracy by 1.27 points, demonstrating the effec
 
 |Tokens per state|Total intermediate tokens|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|1 (default)|4||||||||||
+|1|4||||||||||
 |2|8||||||||||
 |4|16||||||||||
 
