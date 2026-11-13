@@ -218,21 +218,15 @@ We appreciate your careful distinction between sensitivity to token order and ev
 
 (b) Physical-domain linear probe. To test whether the latents retain physical-domain information, we use PhysTrace's original taxonomy, which groups 26 subcategories into six domains: optics and lighting, rigid-body motion, deformation and fracture, fluid dynamics, state change, and environment and aerodynamics. We fit and cross-validate a linear probe on 212 PhysTrace videos and test on 212 independent videos. The six latent tokens yield 86.91% balanced accuracy (mean recall across the six domains); uniform random guessing gives 1/6 = 16.67%. The same-layout pretrained control scores 85.94%, and the low-level text token scores 86.79%. These controls limit attribution to PhysFlow training.
 
-(c) Physical-intervention prediction. We freeze PhysFlow and fit linear ridge readouts on its four intermediate visual tokens, choosing pooling and regularization on validation data. Each synthetic source image receives two intervention instructions with opposite reference outcomes. Idealized rules define the labels; source images can display material or temperature cues. Each task uses 128 training, 32 validation, and 64 initial-test scene families. Each family supplies two source images and two instructions per image.
+(c) Physical-intervention prediction. We test whether the visual latents distinguish different physical consequences when the instruction changes but the source image stays the same. For example, removing the block supporting a ball should make it fall, whereas removing the other block should leave it at rest. These are synthetic scenes with reference outcomes defined by idealized physical rules; some include material or temperature cues.
 
-Pair accuracy requires both outcomes for the same image to be correct. Randomly assigning the two opposite outcomes gives 50% chance; independent binary guesses give 25%. Panel (c) displays the following seven tasks:
+With PhysFlow frozen, we train a linear probe on its four intermediate visual tokens to predict each intervention's outcome, selecting the probe settings on validation data. A pair counts as correct only when the probe predicts both outcomes correctly. Figure 7(c) reports the following seven tasks:
 
-|Task|Pair accuracy (%)|Test pairs / families|95% CI (%)|
-|---|---:|---:|---|
-|Support|99.22|128 / 64|97.66 to 100.00|
-|Torque|100.00|128 / 64|100.00 to 100.00|
-|Buoyancy|99.22|128 / 64|97.66 to 100.00|
-|Outflow|96.09|128 / 64|92.19 to 99.22|
-|Absorption|99.22|128 / 64|97.66 to 100.00|
-|Phase change (confirmation)|100.00|256 / 128|100.00 to 100.00|
-|Shape recovery (rubber/clay)|91.41|128 / 64|86.72 to 96.09|
+|Task|Support|Torque|Buoyancy|Outflow|Absorption|Phase change|Shape recovery|
+|---|---:|---:|---:|---:|---:|---:|---:|
+|Pair accuracy (%)|99.22|100.00|99.22|96.09|99.22|100.00|91.41|
 
-Phase change uses 128 fresh confirmation families with the validation-selected probe fixed. Intervals use 5,000 family-bootstrap draws; perfect empirical scores yield degenerate intervals, leaving population accuracy uncertain.
+Phase change uses 128 fresh confirmation scene families with the validation-selected probe fixed. Shape recovery tests rubber versus clay.
 
 The seven displayed tasks form an illustrative subset of eleven exploratory tasks. The other pair accuracies are collision 50.00%, magnetic poles 28.91%, spring direction 31.25%, and foam recovery 68.75%. We retain all results and controls. This exploratory selection provides illustrative evidence with limited coverage of physical phenomena. Several tasks also reach 100% with textual latent probes or source-image probes using separate weights for each intervention condition. On phase-change confirmation, this source control reaches 91.80%, the source-and-instruction prefix reaches 92.19%, and both textual latent probes reach 100%.
 
