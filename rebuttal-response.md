@@ -353,6 +353,12 @@ Thank you again for the time and care you have devoted to our work. Your detaile
 > 状态：EndoCoT / Monet 的 discussion 已成稿并接入 HTML。1 号同数据 SFT 与 2 号终态监督结果已接入；2 号已补完整分项表并区分新跑结果与论文报告值，11 号直接压缩结果待接入。
 
 <!-- reply:method-contribution:start -->
+Dear Reviewer xuAm,
+
+Thank you for your careful reading and constructive feedback. Your requests for additional experiments, direct method comparisons, and methodological clarifications have helped us strengthen the experimental evidence and improve the clarity and quality of the manuscript. We address your comments point by point below.
+
+**Response 1: Central contribution relative to EndoCoT and Monet**
+
 Thank you for asking us to clarify the contribution. PhysFlow internalizes the connection between physical explanations and visual evolution into a latent plan for image editing. Textual rationales explain the physical rules and transition steps; intermediate visual states supervise how those steps change the scene. Our curriculum progressively compresses both into a continuous plan that conditions image generation (Sections 3.3 and 3.4).
 
 Relative to EndoCoT, our distinction lies in how explicit process supervision becomes a latent plan. EndoCoT trains recurrent thought states with intermediate image-generation losses and terminal textual grounding, then shifts optimization to the terminal step. [EndoCoT, Section 4.2](https://arxiv.org/html/2603.12252v1#S4.SS2). PhysFlow first learns explicit textual rationales and visual trajectories, then progressively replaces their textual and visual blocks with latent tokens. Text-derived states precede and condition subsequent visual states, while downstream visual and editing losses train the compressed sequence. This curriculum teaches the planner to carry physical explanations forward into visual evolution as explicit reasoning disappears.
