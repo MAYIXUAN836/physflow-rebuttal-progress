@@ -53,7 +53,7 @@ The Authors
 <!-- reply:r1:start -->
 Thank you very much for pointing out the missing discussion of PhysicEdit. We apologize for this omission and have added the discussion to Section 2.2, “Visual Transition Modeling for Image Editing,” in Related Work.
 
-At inference, [PhysicEdit](https://arxiv.org/html/2602.21778v2#S3.SS3) combines an explicit textual reasoning trace with latent visual representations produced by learned transition queries. We find this design particularly compelling because it connects explicit physical constraints with video-derived transition priors without requiring intermediate-video generation. We share the motivation behind this design: textual explanations and visual trajectories provide complementary forms of intermediate reasoning, with text explaining physical principles and causal relationships, and visual trajectories describing how the scene changes.
+At inference, PhysicEdit combines an explicit textual reasoning trace with latent visual representations produced by learned transition queries. We find this design particularly compelling because it connects explicit physical constraints with video-derived transition priors without requiring intermediate-video generation. We share the motivation behind this design: textual explanations and visual trajectories provide complementary forms of intermediate reasoning, with text explaining physical principles and causal relationships, and visual trajectories describing how the scene changes.
 
 Our specific focus, however, is to progressively internalize the text-to-visual reasoning process into an ordered latent plan:
 
