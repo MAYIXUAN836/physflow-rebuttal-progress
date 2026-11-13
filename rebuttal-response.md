@@ -22,20 +22,21 @@ We summarize the main revisions below.
 **In the main paper:**
 
 1. Expanded the discussion of PhysicEdit, EndoCoT, and Monet to clarify their relationship with our method.
-2. Clarified the roles of the latent tokens, their supervision during compression, and the separate final visual block.
-3. Added experiments comparing PhysFlow with a direct fine-tuning baseline using the same PhysTrace source-target image pairs.
-4. Added controlled experiments to better separate the benefits of dataset adaptation from those of structured latent reasoning.
-5. Added experiments comparing PhysFlow with PhysicEdit on PICABench and evaluating computational costs.
-6. Clarified the sources and roles of PICA-100K training data and the 900 PICABench evaluation examples.
+2. Added experiments comparing PhysFlow with a direct fine-tuning baseline using the same PhysTrace source-target image pairs.
+3. Added controlled experiments to better separate the benefits of dataset adaptation from those of structured latent reasoning.
+4. Added experiments comparing PhysFlow with PhysicEdit on PICABench and evaluating computational costs.
+5. Clarified the sources and roles of PICA-100K training data and the 900 PICABench evaluation examples.
 
 **In the appendix:**
 
 1. Added experiments with terminal-only supervision.
 2. Added experiments comparing time-uniform and change-uniform frame sampling.
-3. Expanded the latent-representation analysis with physical domain linear probes, controlled intervention tasks, and token-order perturbations, together with their controls and limitations.
-4. Explained the ImgEdit-Bench results, including category-level declines and broadly maintained aggregate performance.
-5. Addressed concerns about reliance on multimodal-model judgments by explaining how both model-based evaluations and our human study support improved physical plausibility.
-6. Clarified the uncertainty of single-run results and the remaining questions about state count and the compression curriculum.
+3. Added ablations varying the number of intermediate visual tokens.
+4. Added ablations comparing progressive compression with direct compression.
+5. Expanded the latent-representation analysis with physical domain linear probes, controlled intervention tasks, and token-order perturbations, together with their controls and limitations.
+6. Explained the ImgEdit-Bench results, including category-level declines and broadly maintained aggregate performance.
+7. Addressed concerns about reliance on multimodal-model judgments by explaining how both model-based evaluations and our human study support improved physical plausibility.
+8. Clarified the uncertainty of single-run results.
 
 We provide detailed responses to each reviewer's comments below. Thank you very much again for your time and helpful suggestions.
 
