@@ -144,7 +144,7 @@ All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superfic
 <!-- reply:sampling:start -->
 **Response 3: Further ablations on frame sampling methods, visual token counts, and compression strategies**
 
-Thank you for these helpful suggestions. In response, we have expanded our ablation study to cover all three aspects: frame sampling methods, visual token counts, and compression strategies. Visual inspection showed that time-uniform sampling can leave most changes concentrated between a few sampled frames. We therefore use change-uniform sampling in PhysTrace construction to capture richer visual dynamics (Figure 5(d); Appendix A.2). Following your suggestion, we compare both methods under the same PhysTrace settings. All results report PICABench-Superficial accuracy (%):
+Thank you for these helpful suggestions. We have added ablations on frame sampling, visual token counts, and compression strategies. Visual inspection showed that time-uniform sampling can leave most changes concentrated between a few sampled frames. We therefore use change-uniform sampling in PhysTrace construction to capture richer visual dynamics (Figure 5(d); Appendix A.2). Following your suggestion, we compare both methods under the same PhysTrace settings. All results report PICABench-Superficial accuracy (%):
 
 |Sampling|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -153,9 +153,7 @@ Thank you for these helpful suggestions. In response, we have expanded our ablat
 
 Change-uniform improves overall accuracy by 1.23 points, demonstrating the effectiveness of our sampling strategy (Appendix C.7).
 
-Draft: intermediate visual-token count (results pending).
-
-We fix four intermediate states and vary tokens per state (1, 2, 4), retaining 2 textual and 16 final visual tokens.
+Alternative token counts (results pending). We test 1, 2, or 4 tokens for each of the four intermediate visual states, keeping the textual and final visual blocks fixed.
 
 |Tokens per state|Total intermediate tokens|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -163,9 +161,7 @@ We fix four intermediate states and vary tokens per state (1, 2, 4), retaining 2
 |2|8||||||||||
 |4|16||||||||||
 
-Progressive versus direct compression.
-
-Both use 2 textual and 4 intermediate latents plus 16 final visual tokens; the progressive row is the paper's model.
+Progressive compression sequence versus direct compression. After explicit warm-up, we replace textual rationales and intermediate visual blocks with latent tokens either progressively or all at once, using the same final latent layout.
 
 |Compression strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
