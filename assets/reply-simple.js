@@ -6,20 +6,21 @@
   const preview = document.querySelector('#preview');
   const status = document.querySelector('#status');
   const style = 'body{font:16px/1.8 Georgia,serif;color:#252b32;margin:24px;overflow-wrap:anywhere}p{margin:0 0 16px}table{border-collapse:collapse;font:13px/1.5 system-ui;width:100%;display:block;overflow:auto}th,td{border:1px solid #ddd;padding:7px 10px;text-align:left}th{background:#f5f6f7}img{max-width:100%}pre{white-space:pre-wrap}';
-  const key = group => 'physflow-simple-markdown-v1:' + group.code;
+  const key = group => 'physflow-simple-markdown-v1:' + group.code + (group.items.length > 1 ? ':' + group.items[block].id : '');
   const converter = new TurndownService({ headingStyle: 'atx', codeBlockStyle: 'fenced' });
   converter.use(turndownPluginGfm.gfm);
   let active = 0;
+  let block = 0;
   const drafts = groups.map(group => group.items.map(item => {
     const text = item.markdown;
     return group === data.overview || text.includes(`**${item.subject}**`) ? text : `**${item.subject}**\n\n${text}`;
-  }).join('\n\n'));
-  const edited = groups.map(() => false);
+  }));
+  const edited = groups.map(group => group.items.map(() => false));
   function backup(group) {
     try {
       const saved = localStorage.getItem(key(group));
       if (saved !== null) return saved;
-      const old = localStorage.getItem('physflow-simple-html-v1:' + group.code);
+      const old = group.items.length > 1 ? null : localStorage.getItem('physflow-simple-html-v1:' + group.code);
       return old === null ? null : converter.turndown(old);
     } catch { return null; }
   }
@@ -34,12 +35,23 @@
     counter.textContent = `${count.toLocaleString()} / 5000 字符`;
     counter.style.color = count > 5000 ? '#c62828' : '';
   }
-  function select(index) {
+  function select(index, blockIndex = 0) {
     active = index;
-    editor.value = drafts[index];
+    block = blockIndex;
+    editor.value = drafts[index][block];
+    const blocks = document.querySelector('#blocks');
+    blocks.replaceChildren();
+    groups[index].items.forEach((item, i) => {
+      const button = document.createElement('button');
+      button.textContent = `Block ${i + 1} · ${item.subject}`;
+      button.setAttribute('aria-selected', String(i === block));
+      button.onclick = () => select(index, i);
+      blocks.append(button);
+    });
+    blocks.hidden = groups[index].items.length < 2;
     document.querySelector('#title').textContent = index ? `Reviewer ${index} · ${groups[index].code}` : 'General';
     document.querySelectorAll('nav button').forEach((button, i) => button.setAttribute('aria-selected', String(i === index)));
-    status.textContent = edited[index] ? '当前为本地修改 · 不回写共享主稿' : '已加载最新发布主稿 · 本地备份未覆盖主稿';
+    status.textContent = edited[index][block] ? '当前为本地修改 · 不回写共享主稿' : '已加载最新发布主稿 · 本地备份未覆盖主稿';
     document.querySelector('#restore').hidden = backup(groups[index]) === null;
     render();
   }
@@ -51,8 +63,8 @@
     document.querySelector('nav').append(button);
   });
   editor.addEventListener('input', () => {
-    drafts[active] = editor.value;
-    edited[active] = true;
+    drafts[active][block] = editor.value;
+    edited[active][block] = true;
     try {
       localStorage.setItem(key(groups[active]), editor.value);
       document.querySelector('#restore').hidden = false;
@@ -63,15 +75,15 @@
   document.querySelector('#restore').onclick = () => {
     const saved = backup(groups[active]);
     if (saved === null) return;
-    drafts[active] = saved;
-    edited[active] = true;
-    select(active);
+    drafts[active][block] = saved;
+    edited[active][block] = true;
+    select(active, block);
     status.textContent = '已恢复本地备份 · 刷新页面将重新加载主稿';
   };
   document.querySelector('#download').onclick = () => {
     const url = URL.createObjectURL(new Blob([editor.value], { type: 'text/markdown;charset=utf-8' }));
     const link = document.createElement('a');
-    link.href = url; link.download = `rebuttal-${active ? 'reviewer-' + active : 'general'}.md`;
+    link.href = url; link.download = `rebuttal-${active ? 'reviewer-' + active : 'general'}-block-${block + 1}.md`;
     link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
   select(0);
