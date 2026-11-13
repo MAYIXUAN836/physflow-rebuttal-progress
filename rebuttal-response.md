@@ -360,7 +360,7 @@ Relative to EndoCoT, our distinction lies in how explicit process supervision be
 Relative to Monet, we train the latent plan through the image transformation it guides. Monet distills auxiliary visual information into latent embeddings within text-latent interleaved reasoning for textual answers. [Monet, Section 3](https://arxiv.org/html/2511.21395v2#S3). PhysFlow jointly compresses textual rationales and visual trajectories, and propagates the image-generation loss through the generator to train the plan. The plan therefore receives supervision from both the physical process and the edited outcome. Responses 3 and 4 report the same-data SFT and terminal-only controls.
 <!-- reply:method-contribution:end -->
 
-### R3-Q2: Baseline clarification and same-data source-target fine-tuning
+### R3-Q2: Identity of the no-reasoning baseline and same-data source-target fine-tuning
 
 > 状态：已接入 1 号 PICABench 同数据 SFT 结果；RISE 补测由 15 号追加。完整方法与 SFT 的生成器配置及更新数一致，总训练量不同。
 

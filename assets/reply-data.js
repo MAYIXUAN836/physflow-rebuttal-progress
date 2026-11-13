@@ -348,7 +348,7 @@ window.PHYSFLOW_REPLIES = {
         {
           "id": "same-data",
           "title": "Table 3 的 no-reasoning 到底是什么？",
-          "subject": "Response 3: Baseline clarification and same-data source-target fine-tuning",
+          "subject": "Response 3: Identity of the no-reasoning baseline and same-data source-target fine-tuning",
           "comments": [
             {
               "label": "Weakness 3 · data adaptation",
