@@ -385,7 +385,7 @@ Together, these results support PhysTrace as an effective training dataset and s
 <!-- reply:terminal-only:start -->
 Following your suggestion, we retain the same recurrent latent tokens, final visual block, and trainable modules, but train using only terminal visual supervision and the generation loss. This control uses 1,253 planner updates and 537 generator updates. The table compares this new run with the full PhysFlow results reported in the paper.
 
-Editing accuracy (%) on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct; higher is better.
+Editing accuracy (%) on PICABench-Superficial.
 
 | Training strategy | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
