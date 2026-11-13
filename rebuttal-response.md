@@ -142,12 +142,12 @@ All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superfic
 
 (c) Same-data framework comparison: +1.20 points. PhysFlow outperforms image-pair SFT on identical PhysTrace pairs with matched generator LoRA and 537 generator updates (Response 1).
 
-Training conditions. PICA100K SFT uses 4,926 updates versus 537 for PhysTrace SFT; PhysFlow uses 4,632 on PhysicTran38K versus 1,790 on PhysTrace. These comparisons support PhysTrace's usefulness under both strategies but do not isolate dataset quality from training procedure or budget. PhysFlow also adds planner capacity and training. The terminal-only run scores 55.57 versus 56.32 for full PhysFlow, a 0.75-point training-configuration difference; the direct-compression control will address the curriculum separately. Tables 4 and 9 present these comparisons.
+Training conditions (Tables 4 and 9). PICA100K SFT uses 4,926 updates versus 537 for PhysTrace SFT; PhysFlow uses 4,632 on PhysicTran38K versus 1,790 on PhysTrace. These comparisons support PhysTrace's usefulness under both strategies but do not isolate dataset quality from training procedure or budget. PhysFlow also adds planner capacity and training.
 <!-- reply:sft-dataset:end -->
 
 ### Response 3: Frame sampling, state count, and compression
 
-> time-uniform 采用作者提供的重跑结果：作者确认与 change-uniform 使用相同数据集设置，Overall 55.09 vs. 56.32，差 1.23 个百分点；完整类别数据见下表。固定四个中间状态，比较每状态 1、2、4 个视觉 token；token 消融和直接压缩的结果与结论先留空。
+> time-uniform 采用作者提供的重跑结果：作者确认与 change-uniform 使用相同数据集设置，Overall 55.09 vs. 56.32，差 1.23 个百分点；完整类别数据见下表。固定四个中间状态，比较每状态 1、2、4 个视觉 token；token 消融结果先留空；直接压缩已核验为 54.52，完整分项已填入，与论文渐进压缩模型 56.32 对比。
 
 <!-- reply:sampling:start -->
 **Response 3: Frame sampling, token count, and compression**
@@ -177,18 +177,18 @@ PICABench-Superficial accuracy (%):
 
 [Result summary to be added.]
 
-Draft: progressive versus direct compression (results pending).
+Progressive versus direct compression.
 
-Final token layout and training budgets: [to be filled from the completed runs].
+Both use two textual and four intermediate latent tokens plus a 16-token final visual block. The progressive row is the paper's full model.
 
 PICABench-Superficial accuracy (%):
 
 |Compression strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|Progressive compression||||||||||
-|Direct compression||||||||||
+|Direct compression|52.84|63.83|55.68|56.31|42.54|46.85|62.40|53.96|54.52|
+|Progressive compression (paper)|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
 
-[Result summary to be added.]
+The reported progressive model scores 1.80 points higher; these are single-run results.
 <!-- reply:sampling:end -->
 
 ### Response 4: Latent-token roles and supervision
@@ -378,7 +378,7 @@ Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow ex
 
 ### R3-Q3 / R2: Terminal-only supervision
 
-> 2026-11-08 22:35 PST：2 号最终结果已独立核验，Overall 55.57；900 张与 4,112 QA 完整。该对照保留六个 recurrent latent tokens、16-token final visual block 和可训练模块，使用 planner 1,253 与 generator 537 更新。分项表对比本轮 55.57 与论文完整模型报告值 56.32；差 0.75 pp。实验与回复保持完成；作者已确认完整模型与本轮对照使用同一版训练数据；11 号直接压缩仍待结果。详见 最终结果记录及 独立核验。
+> 2026-11-08 22:35 PST：2 号最终结果已独立核验，Overall 55.57；900 张与 4,112 QA 完整。该对照保留六个 recurrent latent tokens、16-token final visual block 和可训练模块，使用 planner 1,253 与 generator 537 更新。分项表对比本轮 55.57 与论文完整模型报告值 56.32；差 0.75 pp。实验与回复保持完成；作者已确认完整模型与本轮对照使用同一版训练数据；11 号直接压缩已完成核验，54.52；下表与论文主模型 56.32 比较，并非共用初始化的新配对复训。详见 最终结果记录及 独立核验。
 
 <!-- reply:terminal-only:start -->
 Following your suggestion, we retain the six recurrent latent tokens, the 16-token final visual block, and the trainable modules. We train the terminal-only control using terminal visual supervision and the generation loss, without textual or intermediate-frame supervision. This control uses 1,253 planner updates and 537 generator updates. The table compares this new run with the full PhysFlow results reported in the paper.
@@ -392,18 +392,18 @@ Editing accuracy (%) on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Ins
 
 Full PhysFlow achieves 0.75 percentage points higher overall accuracy. Terminal-only scores higher on refraction (59.18 versus 57.99). These single-run scores compare training configurations as a whole; isolating contributions from individual supervision terms and the compression curriculum requires further controls.
 
-Draft: progressive versus direct compression (results pending).
+Progressive versus direct compression.
 
-Final token layout and training budgets: [to be filled from the completed runs].
+Both use two textual and four intermediate latent tokens plus a 16-token final visual block. The progressive row is the paper's full model.
 
 PICABench-Superficial accuracy (%):
 
-| Compression strategy | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
+|Compression strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Progressive compression | | | | | | | | | |
-| Direct compression | | | | | | | | | |
+|Direct compression|52.84|63.83|55.68|56.31|42.54|46.85|62.40|53.96|54.52|
+|Progressive compression (paper)|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
 
-[Result summary to be added.]
+The reported progressive model scores 1.80 points higher; these are single-run results.
 <!-- reply:terminal-only:end -->
 
 ### R3-Q4: PhysicEdit comparison
