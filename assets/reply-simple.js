@@ -17,7 +17,7 @@
     return { ...group, items: blocks };
   });
   const md = window.markdownit({ html: false });
-  const style = 'body{font:16px/1.8 Georgia,serif;color:#252b32;margin:24px;overflow-wrap:anywhere}p{margin:0 0 16px}table{border-collapse:collapse;font:13px/1.5 system-ui;width:100%;display:block;overflow:auto}th,td{border:1px solid #ddd;padding:7px 10px;text-align:left}th{background:#f5f6f7}img{max-width:100%}pre{white-space:pre-wrap}';
+  const style = 'body{font:16px/1.8 Georgia,serif;color:#252b32;margin:24px;overflow-wrap:anywhere}p{margin:0 0 16px}table{border-collapse:collapse;font:13px/1.5 system-ui;width:100%;table-layout:fixed}th,td{border:1px solid #ddd;padding:7px 4px;text-align:left;overflow-wrap:anywhere}th{background:#f5f6f7}img{max-width:100%}pre{white-space:pre-wrap}';
   const key = (group, block) => 'physflow-simple-markdown-v1:' + group.code + (group.items.length > 1 ? ':' + group.items[block].id : '');
   const converter = new TurndownService({ headingStyle: 'atx', codeBlockStyle: 'fenced' });
   converter.use(turndownPluginGfm.gfm);
