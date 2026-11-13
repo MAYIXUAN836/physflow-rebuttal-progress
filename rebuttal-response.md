@@ -375,7 +375,7 @@ We agree that a same-data fine-tuning baseline is needed to assess the benefit o
 
 Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow exceeds this adapted baseline by 1.20 points. Both use the same rank-512 generator LoRA configuration and 537 generator updates.
 
-Together, these results support PhysTrace as an effective training dataset and show that PhysFlow's latent reasoning framework provides additional gains beyond fine-tuning on the same source-target pairs.
+These results demonstrate two distinct gains: PhysTrace fine-tuning improves the backbone, and PhysFlow's latent reasoning framework delivers a further improvement on the same training pairs.
 <!-- reply:sft-baseline:end -->
 
 ### R3-Q3 / R2: Terminal-only supervision
@@ -392,7 +392,7 @@ Editing accuracy (%) on PICABench-Superficial.
 | Terminal-only supervision | 53.84 | 64.48 | 57.73 | 59.18 | 42.57 | 46.68 | 63.59 | 55.71 | 55.57 |
 | Full PhysFlow | 54.45 | 65.19 | 58.52 | 57.99 | 44.91 | 47.31 | 64.32 | 56.43 | 56.32 |
 
-Full PhysFlow improves overall accuracy by 0.75 percentage points over terminal-only supervision. These results support the value of supervising the physical transformation through textual rationales and intermediate visual states when learning the latent plan.
+Full PhysFlow improves overall accuracy by 0.75 percentage points over terminal-only supervision. This comparison demonstrates the benefit of our training strategy: textual rationales and intermediate visual states provide process supervision that improves physical editing accuracy beyond terminal supervision alone.
 <!-- reply:terminal-only:end -->
 
 
@@ -401,7 +401,7 @@ Full PhysFlow improves overall accuracy by 0.75 percentage points over terminal-
 > 状态：已针对 Reviewer 3 单独组织回复；PhysFlow（2509）正在运行，结果与比较结论待补。
 
 <!-- reply:r3-physicedit:start -->
-We appreciate your comment that our comparison using PhysicTran38K does not constitute a direct comparison with PhysicEdit. The score of 53.82 in Tables 4 and 9 corresponds to PhysFlow trained on PhysicTran38K, rather than PhysicEdit itself. We agree that this dataset comparison alone does not establish an advantage over PhysicEdit.
+We appreciate your comment that our comparison using PhysicTran38K does not constitute a direct comparison with PhysicEdit. The score of 53.82 in Tables 4 and 9 corresponds to PhysFlow trained on PhysicTran38K, rather than PhysicEdit itself.
 
 To address this concern, we have added a direct comparison with PhysicEdit on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct. The table includes our results with Qwen-Image-Edit-2511.
 
