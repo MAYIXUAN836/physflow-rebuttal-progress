@@ -10,23 +10,19 @@
   const converter = new TurndownService({ headingStyle: 'atx', codeBlockStyle: 'fenced' });
   converter.use(turndownPluginGfm.gfm);
   let active = 0;
-  const drafts = groups.map(group => {
-    const initial = group.items.map(item => {
-      const text = item.markdown;
-      return group === data.overview || text.includes(`**${item.subject}**`) ? text : `**${item.subject}**\n\n${text}`;
-    }).join('\n\n');
+  const drafts = groups.map(group => group.items.map(item => {
+    const text = item.markdown;
+    return group === data.overview || text.includes(`**${item.subject}**`) ? text : `**${item.subject}**\n\n${text}`;
+  }).join('\n\n'));
+  const edited = groups.map(() => false);
+  function backup(group) {
     try {
       const saved = localStorage.getItem(key(group));
       if (saved !== null) return saved;
       const old = localStorage.getItem('physflow-simple-html-v1:' + group.code);
-      if (old !== null) {
-        const migrated = converter.turndown(old);
-        localStorage.setItem(key(group), migrated);
-        return migrated; // Keep the original HTML backup untouched.
-      }
-    } catch {}
-    return initial;
-  });
+      return old === null ? null : converter.turndown(old);
+    } catch { return null; }
+  }
   // The preview is script-free and cannot access the parent or load remote resources.
   function documentHTML(html) {
     return '<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; img-src data:; form-action \'none\'; base-uri \'none\'"><style>' + style + '</style></head><body>' + html + '</body></html>';
@@ -43,7 +39,8 @@
     editor.value = drafts[index];
     document.querySelector('#title').textContent = index ? `Reviewer ${index} · ${groups[index].code}` : 'General';
     document.querySelectorAll('nav button').forEach((button, i) => button.setAttribute('aria-selected', String(i === index)));
-    status.textContent = '自动保存到当前浏览器 · 不回写共享主稿';
+    status.textContent = edited[index] ? '当前为本地修改 · 不回写共享主稿' : '已加载最新发布主稿 · 本地备份未覆盖主稿';
+    document.querySelector('#restore').hidden = backup(groups[index]) === null;
     render();
   }
   groups.forEach((group, index) => {
@@ -55,12 +52,22 @@
   });
   editor.addEventListener('input', () => {
     drafts[active] = editor.value;
+    edited[active] = true;
     try {
       localStorage.setItem(key(groups[active]), editor.value);
+      document.querySelector('#restore').hidden = false;
       status.textContent = '已保存到当前浏览器 · ' + new Date().toLocaleTimeString();
     } catch { status.textContent = '浏览器保存失败，请使用“导出 Markdown”保存修改'; }
     render();
   });
+  document.querySelector('#restore').onclick = () => {
+    const saved = backup(groups[active]);
+    if (saved === null) return;
+    drafts[active] = saved;
+    edited[active] = true;
+    select(active);
+    status.textContent = '已恢复本地备份 · 刷新页面将重新加载主稿';
+  };
   document.querySelector('#download').onclick = () => {
     const url = URL.createObjectURL(new Blob([editor.value], { type: 'text/markdown;charset=utf-8' }));
     const link = document.createElement('a');
