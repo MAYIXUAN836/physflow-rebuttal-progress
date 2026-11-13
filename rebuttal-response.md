@@ -101,7 +101,7 @@ We sincerely appreciate your suggestion, which helped us present the relationshi
 <!-- reply:r2-sft-baseline:start -->
 Dear Reviewer 62MG,
 
-Thank you very much for your careful reading and detailed, constructive feedback. We sincerely appreciate your recognition of the motivation, the framework, and the empirical improvements. Your questions have helped us identify where the original manuscript needed clearer explanations and stronger supporting evidence. We have carefully considered every concern and suggestion. We organize our response into nine points below, covering your concerns and questions.
+Thank you very much for your careful reading and detailed, constructive feedback. We sincerely appreciate your recognition of the motivation, the framework, and the empirical improvements. Your questions helped us clarify the method and strengthen the evidence. We address your concerns in nine responses below.
 
 **Response 1: Same-data image-pair fine-tuning baseline**
 
@@ -184,13 +184,13 @@ The reported progressive model scores 1.80 points higher; these are single-run r
 <!-- reply:latent-representation:start -->
 **Response 4: Physical information in the latent representations**
 
-We appreciate your distinction between token-order sensitivity and evidence of physically meaningful representations. We examine the information these tokens retain through the representation analyses and controlled interventions in Figure 7.
+We appreciate your distinction between token-order sensitivity and evidence of physically meaningful representations. Figure 7 presents representation analyses and controlled interventions.
 
 (a) Token-role structure. The original clustering visualization supports role-dependent representation structure after compression.
 
-(b) Physical-domain linear probe. We test physical-domain information using PhysTrace's taxonomy, which groups 26 subcategories into six domains: optics and lighting, rigid-body motion, deformation and fracture, fluid dynamics, state change, and environment and aerodynamics. We fit and cross-validate a linear probe on 212 PhysTrace videos and test on 212 independent videos. The six latent tokens yield 86.91% balanced accuracy (mean recall across the six domains); uniform random guessing gives 1/6 = 16.67%. The same-layout pretrained control scores 85.94%, and the low-level text token scores 86.79%. These controls limit attribution to PhysFlow training.
+(b) Physical-domain linear probe. We probe six physical domains in PhysTrace's taxonomy of 26 subcategories: optics and lighting, rigid-body motion, deformation and fracture, fluid dynamics, state change, and environment and aerodynamics. We fit and cross-validate a linear probe on 212 PhysTrace videos and test on 212 independent videos. The six latent tokens yield 86.91% balanced accuracy (mean recall across the six domains); uniform random guessing gives 1/6 = 16.67%. The same-layout pretrained control scores 85.94%, and the low-level text token scores 86.79%. These controls limit attribution to PhysFlow training.
 
-(c) Physical-intervention prediction. We test whether visual latents predict different outcomes for two instructions applied to the same source image. Removing a ball's supporting block should make it fall; removing the other block should leave it at rest. Reference outcomes follow idealized physical rules in synthetic scenes.
+(c) Physical-intervention prediction. We test visual latents on two instructions for the same source image. Removing a ball's supporting block should make it fall; removing the other block should leave it at rest. Reference outcomes follow idealized physical rules in synthetic scenes.
 
 We freeze PhysFlow and train a linear probe on its four intermediate visual tokens to predict intervention outcomes, selecting settings on validation data. Pair accuracy requires both outcomes to be predicted correctly. Figure 7(c) shows seven tasks:
 
@@ -234,16 +234,18 @@ Inference seeds: 42, 215, and 3407, with model checkpoints fixed.
 
 ### Response 6: Multimodal-model evaluation and human evidence
 
-> 状态：按作者确认的两点组织：PICABench 预设物理检查问题和参考答案，VLM 检查可见结果；17 人、100 对样本的 human study 从整体结果提供支持。未声称逐样本人机一致率或对物理规律的完备验证。13 号实验安排与完成状态不变。
+> 状态：按作者确认的三点组织：PICABench 预设物理检查问题和参考答案；17 人、100 对样本的 human study；Figure 3（PICABench）与 Figure 6（RISEBench）中的困难物理任务及比较性失败分析。定性分析归纳跨区域光学一致性、接触形变和随时间发生的表面变化。未声称逐样本人机一致率或对物理规律的完备验证。13 号实验安排与完成状态不变。
 
 <!-- reply:physical-evaluation:start -->
 **Response 6: Multimodal-model evaluation and human evidence**
 
-Thank you very much for raising this concern about objective physical correctness. We appreciate your emphasis on the physical basis of our evaluation, which is essential for reliably assessing physics-aware image editing.
+Thank you very much for emphasizing objective physical correctness. We present the evaluation criteria alongside human and qualitative evidence.
 
-(1) PICABench specifies physical criteria for each editing example. Its PICAEval protocol uses human-annotated regions and manually reviewed yes/no questions about physical consequences, such as whether object removal also removes its shadow. A vision-language model (VLM) answers these questions by inspecting the edited image, and accuracy measures exact agreement with predefined reference answers. Thus, the benchmark's task design and annotations specify the physical requirements, while the VLM checks their visible consequences (PICABench, Section 3.3 and Appendix A.3).
+(1) PICABench specifies physical criteria through human-annotated regions and manually reviewed yes/no questions, such as whether object removal also removes its shadow. PICAEval uses a vision-language model (VLM) to inspect edited images and answer these questions, scoring exact agreement with predefined reference answers (PICABench, Section 3.3 and Appendix A.3).
 
-(2) Our human study also provides complementary evidence. We ask 17 participants to compare PhysFlow with five competing methods on 100 image-instruction pairs randomly sampled from PICABench and RISEBench. Participants favor PhysFlow in physical plausibility. This overall trend is consistent with our benchmark findings and provides human support for improved physical plausibility.
+(2) Our human study provides complementary evidence. We ask 17 participants to compare PhysFlow with five competing methods on 100 image-instruction pairs randomly sampled from PICABench and RISEBench. Their preference for PhysFlow's physical plausibility agrees with the overall benchmark trend.
+
+(3) Difficult physical cases (Figures 3 and 6). PICABench examples require optical consistency across regions and deformation at contact; RISEBench examples require changes to object surfaces over time. Several baselines follow the local edit but leave mismatched reflections, residual lighting, little deformation, or limited surface changes. PhysFlow depicts the corresponding optical, mechanical, and temporal changes more consistently in these examples, providing qualitative support for physical consistency.
 <!-- reply:physical-evaluation:end -->
 
 ### Response 7: Originality and positioning relative to closely related approaches
