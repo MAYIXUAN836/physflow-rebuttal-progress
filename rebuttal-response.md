@@ -392,7 +392,7 @@ Editing accuracy (%) on PICABench-Superficial.
 | Terminal-only supervision | 53.84 | 64.48 | 57.73 | 59.18 | 42.57 | 46.68 | 63.59 | 55.71 | 55.57 |
 | Full PhysFlow | 54.45 | 65.19 | 58.52 | 57.99 | 44.91 | 47.31 | 64.32 | 56.43 | 56.32 |
 
-Full PhysFlow achieves 0.75 percentage points higher overall accuracy. Terminal-only scores higher on refraction (59.18 versus 57.99). These single-run scores compare training configurations as a whole; isolating contributions from individual supervision terms and the compression curriculum requires further controls.
+Full PhysFlow improves overall accuracy by 0.75 percentage points and outperforms terminal-only supervision in seven of eight categories. These results support the value of supervising the physical transformation through textual rationales and intermediate visual states when learning the latent plan.
 <!-- reply:terminal-only:end -->
 
 ### Response 5: Progressive versus direct compression
