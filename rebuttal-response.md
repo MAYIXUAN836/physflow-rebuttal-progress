@@ -31,8 +31,8 @@ We summarize the main revisions below.
 
 1. Added experiments with terminal-only supervision.
 2. Added experiments comparing time-uniform and change-uniform frame sampling.
-3. Added ablations varying the number of intermediate visual tokens.
-4. Added ablations comparing progressive compression with direct compression.
+3. Added ablations comparing the choice of four intermediate visual states with alternative token counts.
+4. Added ablations comparing the proposed progressive compression sequence with direct compression strategies.
 5. Expanded the latent-representation analysis with physical domain linear probes, controlled intervention tasks, and token-order perturbations, together with their controls and limitations.
 6. Explained the ImgEdit-Bench results, including category-level declines and broadly maintained aggregate performance.
 7. Addressed concerns about reliance on multimodal-model judgments by explaining how both model-based evaluations and our human study support improved physical plausibility.
