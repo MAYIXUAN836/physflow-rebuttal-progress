@@ -9,11 +9,13 @@
 <main>
 <header><h1>Rebuttal</h1><a href="index.html">完整面板 ↗</a></header>
 <nav aria-label="回复分组" role="tablist"></nav>
-<div class="bar"><strong id="title"></strong><output id="count" aria-live="polite"></output><button id="download">导出 HTML</button></div>
-<div class="columns"><div class="column"><div class="label">HTML · 可编辑</div><textarea id="editor" aria-label="HTML 回复正文" spellcheck="false"></textarea></div><div class="column"><div class="label">实时预览</div><iframe id="preview" title="回复预览" sandbox=""></iframe></div></div>
-<footer><span id="status" role="status"></span><span>字数不含 HTML 标签 · 草稿仅保存在当前浏览器</span></footer>
+<div class="bar"><strong id="title"></strong><output id="count" aria-live="polite"></output><button id="download">导出 Markdown</button></div>
+<div class="columns"><div class="column"><div class="label">Markdown · 可编辑</div><textarea id="editor" aria-label="Markdown 回复正文" spellcheck="false"></textarea></div><div class="column"><div class="label">实时预览</div><iframe id="preview" title="回复预览" sandbox=""></iframe></div></div>
+<footer><span id="status" role="status"></span><span>字符数包含 Markdown 标记与换行 · 草稿仅保存在当前浏览器</span></footer>
 </main>
 <script src="assets/vendor/markdown-it.min.js"></script>
+<script src="assets/vendor/turndown.js"></script>
+<script src="assets/vendor/turndown-plugin-gfm.js"></script>
 <script src="assets/reply-data.js?v=72bc298c58d9"></script>
-<script src="assets/reply-simple.js?v=7c40fce95a38"></script>
+<script src="assets/reply-simple.js?v=162a8db22919"></script>
 </html>
