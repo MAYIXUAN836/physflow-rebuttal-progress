@@ -355,7 +355,7 @@ Thank you again for the time and care you have devoted to our work. Your detaile
 <!-- reply:method-contribution:start -->
 Dear Reviewer xuAm,
 
-Thank you for your careful reading and constructive feedback. Your requests for additional experiments, direct method comparisons, and methodological clarifications have helped us strengthen the experimental evidence and improve the clarity and quality of the manuscript. We address your comments point by point below.
+We sincerely thank you for the time and effort you devoted to reviewing our manuscript and for your detailed, constructive feedback. We especially appreciate your suggestions for additional experiments, direct method comparisons, and clearer explanations of our approach. Your comments have helped us recognize where the original manuscript needed fuller explanations and stronger evidence, and have guided us in improving its clarity and quality. We have carefully considered each of your concerns and respond point by point below.
 
 **Response 1: Central contribution relative to EndoCoT and Monet**
 
