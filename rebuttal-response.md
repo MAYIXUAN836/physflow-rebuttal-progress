@@ -25,7 +25,7 @@ We summarize the main revisions below.
 2. Added experiments comparing PhysFlow with a direct fine-tuning baseline using the same PhysTrace source-target image pairs.
 3. Added controlled experiments to better separate the benefits of dataset adaptation from those of structured latent reasoning.
 4. Added experiments comparing PhysFlow with PhysicEdit on PICABench and evaluating computational costs.
-5. Clarified the sources and roles of PICA-100K training data and the 900 PICABench evaluation examples.
+5. Clarified the sources and roles of PICA-100K training data and the 900 PICABench evaluation examples to address concerns about potential overlap between training and evaluation data.
 
 **In the appendix:**
 
