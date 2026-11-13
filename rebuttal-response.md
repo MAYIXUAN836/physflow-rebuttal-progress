@@ -365,15 +365,15 @@ Relative to Monet, we train the latent plan through the image transformation it 
 > 状态：已接入 1 号 PICABench 同数据 SFT 结果；RISE 补测由 15 号追加。完整方法与 SFT 的生成器配置及更新数一致，总训练量不同。
 
 <!-- reply:sft-baseline:start -->
-The 54.26 row in Table 3 reports the original Qwen-Image-Edit-2511 backbone. The revised caption explicitly identifies it as “Original backbone” and states that it has no PhysTrace fine-tuning. We have now added a baseline fine-tuned on the same PhysTrace source-target pairs:
+The 54.26 row in Table 3 reports the original Qwen-Image-Edit-2511 backbone. The revised caption explicitly identifies it as “Original backbone” and states that it has no PhysTrace fine-tuning. We have now added a baseline fine-tuned on the same PhysTrace source-target pairs. The table reports PICABench-Superficial accuracy (%):
 
-| Configuration | PICABench-Superficial (%) |
-|---|---:|
-| Qwen-Image-Edit-2511 | 54.26 |
-| PhysTrace image-pair SFT | 55.12 |
-| PhysFlow | 56.32 |
+|Configuration|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall (%)|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+|Qwen-Image-Edit-2511|53.29|62.98|56.78|57.66|44.16|45.99|59.37|55.34|54.26|
+|PhysTrace image-pair SFT|55.07|65.16|57.96|56.67|42.71|45.30|63.23|53.81|55.12|
+|PhysFlow|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
 
-Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow exceeds this adapted baseline by 1.20 points. Both use the same rank-512 generator LoRA configuration and 537 generator updates. Question 3 compares the terminal-only run with the full PhysFlow results reported in the paper, including the category breakdown and the scope of this training-configuration comparison.
+Image-pair SFT improves on the original backbone by 0.86 points, and PhysFlow exceeds this adapted baseline by 1.20 points. Both use the same rank-512 generator LoRA configuration and 537 generator updates.
 <!-- reply:sft-baseline:end -->
 
 ### R3-Q3 / R2: Terminal-only supervision
