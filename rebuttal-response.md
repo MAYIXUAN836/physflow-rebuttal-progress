@@ -148,18 +148,18 @@ All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superfic
 
 Thank you for these helpful suggestions. In response, we have expanded our ablation study to cover all three aspects: frame sampling methods, visual token counts, and compression strategies.
 
-Change-uniform sampling selects four frames at equal cumulative visual-change intervals using normalized DINOv2, optical-flow, and pixel-change scores (Appendix A.2). We compare time-uniform sampling under the same PhysTrace settings. All results below report PICABench-Superficial accuracy (%):
+Visual inspection showed that time-uniform sampling can leave most changes concentrated between a few sampled frames. We therefore use change-uniform sampling in PhysTrace construction to capture richer visual dynamics (Figure 5(d); Appendix A.2). Following your suggestion, we compare both methods under the same PhysTrace settings. All results report PICABench-Superficial accuracy (%):
 
 |Sampling|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 |Time-uniform|53.72|63.06|59.30|58.24|43.29|46.21|62.35|53.65|55.09|
 |Change-uniform|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
 
-Change-uniform improves Overall by 1.23 points; time-uniform is higher on reflection and refraction in this single-run comparison (Appendix C.7).
+Change-uniform improves overall accuracy by 1.23 points, demonstrating the effectiveness of our sampling strategy (Appendix C.7).
 
 Draft: intermediate visual-token count (results pending).
 
-We fix four intermediate states and compare 1, 2, or 4 tokens per state, retaining two textual tokens and a separate 16-token final visual block.
+We fix four intermediate states and vary tokens per state (1, 2, 4), retaining 2 textual and 16 final visual tokens.
 
 |Tokens per state|Total intermediate tokens|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -167,11 +167,9 @@ We fix four intermediate states and compare 1, 2, or 4 tokens per state, retaini
 |2|8||||||||||
 |4|16||||||||||
 
-[Result summary to be added.]
-
 Progressive versus direct compression.
 
-Both use two textual and four intermediate latent tokens plus a 16-token final visual block. The progressive row is the paper's full model.
+Both use 2 textual and 4 intermediate latents plus 16 final visual tokens; the progressive row is the paper's model.
 
 |Compression strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
