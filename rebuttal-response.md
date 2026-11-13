@@ -184,7 +184,7 @@ The reported progressive model scores 1.80 points higher; these are single-run r
 <!-- reply:latent-representation:start -->
 **Response 4: Physical information in the latent representations**
 
-We appreciate your distinction between token-order sensitivity and evidence of physically meaningful representations. Our six-token plan contains text tokens for high-level physical rationales and low-level transition descriptions, plus four intermediate visual tokens. Stage II compresses frame-aligned intermediate blocks into single tokens and removes their direct alignment losses. Later uncompressed blocks and the separate final visual block retain alignment supervision, alongside flow matching (Section 3.4). We examine the information these tokens retain through the representation analyses and controlled interventions in Figure 7.
+We appreciate your distinction between token-order sensitivity and evidence of physically meaningful representations. We examine the information these tokens retain through the representation analyses and controlled interventions in Figure 7.
 
 (a) Token-role structure. The original clustering visualization supports role-dependent representation structure after compression.
 
