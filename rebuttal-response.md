@@ -6,7 +6,7 @@
 - 中文引用块为内部状态，提交时只复制英文回复及对应表格。论文修订和 OpenReview 提交另行完成。
 - 其余英文模块沿用 11 月 6 日文字素材，仍按下方标注等待实验或核验。
 
-> 进度更新（2026-11-10）：time-uniform 采用作者按相同数据集设置重跑的最新结果，Overall 55.09，与 change-uniform 56.32 相差 1.23 个百分点，已接入回复；共 10/16 项任务完成。作者确认 full 与新增对照使用同一版训练数据。K2/K6 状态数、直接压缩和多 seed 统计仍待结果。16 个逐点回复另行对应到论文修改；回复点与任务项不是同一计数。
+> 进度更新（2026-11-12）：time-uniform 采用作者按相同数据集设置重跑的最新结果，Overall 55.09，与 change-uniform 56.32 相差 1.23 个百分点，已接入回复；共 10/16 项任务完成。作者确认 full 与新增对照使用同一版训练数据。中间视觉 token 数量、直接压缩、2509 骨干对照与多 seed 结果已预留回复表格，待回填。16 个逐点回复另行对应到论文修改；回复点与任务项不是同一计数。
 
 ## 修改总览：给所有审稿人和 AC
 
@@ -84,12 +84,22 @@ In this evaluation, PhysFlow achieves an overall score of **56.32**, compared wi
 
 PhysFlow achieves an overall score of **4.39**, compared with **4.05** for PhysicEdit. It scores higher in six of nine categories, ties in Action, and scores lower in Add and Hybrid.
 
+**Draft: Qwen-Image-Edit-2509 comparison (results pending).**
+
+| Method (2509 backbone) | PICABench Overall (%) |
+|---|---:|
+| Original backbone | |
+| PhysicEdit | |
+| PhysFlow + PhysTrace | |
+
+[Result summary to be added.]
+
 We sincerely appreciate your suggestion, which helped us present the relationship to PhysicEdit and the evidence for our latent representation more clearly.
 <!-- reply:r1:end -->
 
 ## Reviewer 62MG
 
-> 编辑说明：十个回复点采用固定编号 Response 1–Response 10；按主题暂合并为四条评论。完整分组与字符计数见 output/reviewer2-general-2026-11-10/README.md。Response 3、Response 6 的待补结果按各点状态保留，后续逐点修改后重新计数。
+> 编辑说明：十个回复点采用固定编号 Response 1–Response 10；加入待补实验表格后按主题分为六条评论，Response 3 与 Response 6 各自单列。完整分组与实时字符计数见网页回复面板；表格空白不表示实验已完成。
 
 ### Response 1: Same-data image-pair fine-tuning baseline
 
@@ -142,10 +152,10 @@ All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superfic
 
 ### Response 3: Frame sampling, state count, and compression
 
-> time-uniform 采用作者提供的重跑结果：作者确认与 change-uniform 使用相同数据集设置，Overall 55.09 vs. 56.32，差 1.23 个百分点；完整类别数据见下表。状态数 K2/K6 和直接压缩仍待结果。
+> time-uniform 采用作者提供的重跑结果：作者确认与 change-uniform 使用相同数据集设置，Overall 55.09 vs. 56.32，差 1.23 个百分点；完整类别数据见下表。固定四个中间状态，比较每状态 1、2、4 个视觉 token；token 消融和直接压缩的结果与结论先留空。
 
 <!-- reply:sampling:start -->
-**Response 3. Frame sampling, state count, and compression**
+**Response 3. Frame sampling, token count, and compression**
 
 Thank you for identifying these missing ablations. We have added a time-uniform sampling comparison.
 
@@ -160,7 +170,32 @@ We reran time-uniform sampling with the same PhysTrace dataset settings as chang
 
 Change-uniform improves Overall by **1.23 percentage points** and scores higher in six of eight categories; time-uniform scores higher on reflection and refraction. This single-run comparison supports change-uniform sampling under the tested configuration (Appendix C.7).
 
-We use four intermediate states as a fixed design choice. State-count and direct-compression ablations remain pending; this comparison does not establish the best state count or isolate the compression curriculum.
+**Draft: intermediate visual-token count (results pending).**
+
+The number of intermediate states is fixed at four. The configurations below use one, two, or four tokens per intermediate state, with two textual latent tokens and a separate 16-token final visual block.
+
+PICABench-Superficial accuracy (%):
+
+| Tokens per state | Total intermediate tokens | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 (default) | 4 | | | | | | | | | |
+| 2 | 8 | | | | | | | | | |
+| 4 | 16 | | | | | | | | | |
+
+[Result summary to be added.]
+
+**Draft: progressive versus direct compression (results pending).**
+
+Final token layout and training budgets: [to be filled from the completed runs].
+
+PICABench-Superficial accuracy (%):
+
+| Compression strategy | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Progressive compression | | | | | | | | | |
+| Direct compression | | | | | | | | | |
+
+[Result summary to be added.]
 <!-- reply:sampling:end -->
 
 ### Response 4: Latent-token roles and supervision
@@ -229,6 +264,26 @@ Together, these results support physical-semantic and conditional-consequence re
 Thank you for emphasizing the need to quantify uncertainty, particularly for the modest absolute gains on RISEBench.
 
 The main tables report increases of 2.06 percentage points on PICABench and 1.38 points on RISEBench over the backbone. These are point estimates under the reported evaluation settings. Their uncertainty across training runs and evaluation samples requires repeated runs and confidence intervals.
+
+**Draft: repeated training seeds (results pending).**
+
+Training seed IDs, number of completed runs, and fixed evaluation settings: [to be filled].
+
+| Method | Training runs | PICABench mean ± SD (%) | RISEBench mean ± SD (%) |
+|---|---:|---:|---:|
+| PhysTrace image-pair SFT | | | |
+| Full PhysFlow | | | |
+
+**Draft: paired statistical comparison (results pending).**
+
+Seed type, comparison baseline, and confidence-interval procedure: [to be filled].
+
+| Benchmark | Paired difference (pp) | 95% confidence interval |
+|---|---:|---|
+| PICABench-Superficial | | |
+| RISEBench | | |
+
+[Result summary to be added.]
 <!-- reply:statistics:end -->
 
 ### Response 7: Multimodal-model evaluation and human evidence
@@ -347,6 +402,19 @@ Editing accuracy (%) on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Ins
 | Full PhysFlow | **54.45** | **65.19** | **58.52** | 57.99 | **44.91** | **47.31** | **64.32** | **56.43** | **56.32** |
 
 Full PhysFlow achieves 0.75 percentage points higher overall accuracy. Terminal-only scores higher on refraction (59.18 versus 57.99). These single-run scores compare training configurations as a whole; isolating contributions from individual supervision terms and the compression curriculum requires further controls.
+
+**Draft: progressive versus direct compression (results pending).**
+
+Final token layout and training budgets: [to be filled from the completed runs].
+
+PICABench-Superficial accuracy (%):
+
+| Compression strategy | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Progressive compression | | | | | | | | | |
+| Direct compression | | | | | | | | | |
+
+[Result summary to be added.]
 <!-- reply:terminal-only:end -->
 
 ### R3-Q4: PhysicEdit comparison
