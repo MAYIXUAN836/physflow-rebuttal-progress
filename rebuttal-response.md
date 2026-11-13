@@ -94,7 +94,7 @@ We sincerely appreciate your suggestion, which helped us present the relationshi
 
 ## Reviewer 62MG
 
-> 编辑说明：九个回复点采用固定编号 Response 1–Response 9，按 (1–3)、(4)、(5–7)、(8–9) 分为四条评论，每条不超过 5,000 字符。完整分组与实时字符计数见网页回复面板；表格空白不表示实验已完成。
+> 编辑说明：九个回复点采用固定编号 Response 1–Response 9，按 (1–3)、(4–6)、(7–9) 分为三条评论，每条不超过 5,000 字符。完整分组与实时字符计数见网页回复面板；表格空白不表示实验已完成。
 
 ### Response 1: Same-data image-pair fine-tuning baseline
 
@@ -188,11 +188,11 @@ We appreciate your distinction between token-order sensitivity and evidence of p
 
 (a) Token-role structure. The original clustering visualization supports role-dependent representation structure after compression.
 
-(b) Physical-domain linear probe. To test whether the latents retain physical-domain information, we use PhysTrace's original taxonomy, which groups 26 subcategories into six domains: optics and lighting, rigid-body motion, deformation and fracture, fluid dynamics, state change, and environment and aerodynamics. We fit and cross-validate a linear probe on 212 PhysTrace videos and test on 212 independent videos. The six latent tokens yield 86.91% balanced accuracy (mean recall across the six domains); uniform random guessing gives 1/6 = 16.67%. The same-layout pretrained control scores 85.94%, and the low-level text token scores 86.79%. These controls limit attribution to PhysFlow training.
+(b) Physical-domain linear probe. We test physical-domain information using PhysTrace's taxonomy, which groups 26 subcategories into six domains: optics and lighting, rigid-body motion, deformation and fracture, fluid dynamics, state change, and environment and aerodynamics. We fit and cross-validate a linear probe on 212 PhysTrace videos and test on 212 independent videos. The six latent tokens yield 86.91% balanced accuracy (mean recall across the six domains); uniform random guessing gives 1/6 = 16.67%. The same-layout pretrained control scores 85.94%, and the low-level text token scores 86.79%. These controls limit attribution to PhysFlow training.
 
-(c) Physical-intervention prediction. We test whether the visual latents distinguish different physical consequences when the instruction changes but the source image stays the same. For example, removing the block supporting a ball should make it fall, whereas removing the other block should leave it at rest. These are synthetic scenes with reference outcomes defined by idealized physical rules.
+(c) Physical-intervention prediction. We test whether visual latents predict different outcomes for two instructions applied to the same source image. Removing a ball's supporting block should make it fall; removing the other block should leave it at rest. Reference outcomes follow idealized physical rules in synthetic scenes.
 
-With PhysFlow frozen, we train a linear probe on its four intermediate visual tokens to predict each intervention's outcome, selecting the probe settings on validation data. A pair counts as correct only when the probe predicts both outcomes correctly. Figure 7(c) reports the following seven tasks:
+We freeze PhysFlow and train a linear probe on its four intermediate visual tokens to predict intervention outcomes, selecting settings on validation data. Pair accuracy requires both outcomes to be predicted correctly. Figure 7(c) shows seven tasks:
 
 |Task|Support|Torque|Buoyancy|Outflow|Absorption|Phase change|Shape recovery|
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -200,7 +200,7 @@ With PhysFlow frozen, we train a linear probe on its four intermediate visual to
 
 Phase change uses 128 fresh confirmation scene families with the validation-selected probe fixed. Shape recovery tests rubber versus clay.
 
-Linear probes on our intermediate visual latents achieve 91.41%–100% pair accuracy on the seven illustrated tasks. These results demonstrate that the visual latents encode information useful for predicting the physical consequences of interventions (Appendix C.6).
+Across the seven illustrated tasks, 91.41%–100% pair accuracy demonstrates that our visual latents encode useful information for predicting physical intervention outcomes (Appendix C.6).
 
 (d) Visual-token perturbation. On 64 PICABench-Superficial inputs, eight per category, Qwen2.5-VL-72B-Instruct gives mean accuracies of 57.36% for the original condition, 55.64% for masking, and 53.94% for both reversal and shuffling. Perturbations occur after planning, with textual and final-visual conditioning fixed. Reversal and shuffling each reduce accuracy by 3.42 percentage points, supporting order sensitivity.
 
