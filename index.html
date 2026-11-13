@@ -161,7 +161,7 @@
         </div>
         <nav id="reviewer-nav" aria-label="审稿人"></nav>
         <p class="sidebar-note">所有访客查看同一份进度。展开“设置与完成标准”查看实验细节。</p>
-        <p class="sidebar-note">最近发布：2026-11-12 16:24 PST。刷新页面查看最新发布的进度与回复。</p>
+        <p class="sidebar-note">最近发布：2026-11-12 16:25 PST。刷新页面查看最新发布的进度与回复。</p>
       </aside>
       <main>
         <noscript>请启用 JavaScript，以显示进度清单；英文回复正文仍可直接阅读。</noscript>
@@ -423,12 +423,12 @@
       'physicedit-discussion': ['已完成 · 8uwk 首轮回复已形成', '以感谢、承认讨论遗漏及肯定 PhysicEdit 设计开篇；解释六个 token 的训练角色与独立 final visual block，补入 Figure 7 的角色结构、领域探针、干预预测、顺序扰动四组分析及对应控制范围；保留 PICABench 分项表并引用论文 Tables 1、5。待作者最终审阅及论文合稿。', '#reply-r1'],
       'same-data-sft': ['1 号 · PICABench 已完成并接入回复', '11 月 8 日 18:42 PST 核验：537 更新、900 张生成和 4,112 QA 评分完成，准确率 55.12；完整方法 56.32，高 1.20 pp。双方生成器预算一致，完整方法总计 1,790 更新。wrapper 因 15 个官方空 mask 的合理 PSNR 不适用项退出 1，独立核验确认评分产物完整；保留原始诊断。RISE 由 15 号追加。', '#reply-sft-dataset'],
       'frame-sampling': ['已完成 · PICABench 55.09', '采用作者提供的重跑结果，确认与 change-uniform 使用相同数据集设置。Overall 55.09 vs. 56.32，差 1.23 个百分点；time-uniform 在 Reflection、Refraction 上更高。完整类别结果已接入 R2.3 和本地论文 Appendix C.7。', ''],
-      'state-count': ['回复表格已预留 · 结果待回填', 'R2 Response 3 已预留每状态 1、2、4 个 token 的完整分项表；四个中间状态保持不变。分数及结论留空，不能把 token 数量消融写成状态数量消融。', '#reply-sampling'],
-      'direct-compression': ['11 号 · 回复表格已预留，结果待回填', 'R2 Response 3 与 R3 终态监督回复之后均已预留渐进／直接压缩分项表；最终 token 布局、训练预算、分数与结论待回填。终态监督结果不能代替直接压缩消融。', '#reply-terminal-status'],
+      'state-count': ['回复表格已预留 · 结果待回填', 'R2 Response 3 已预留每状态 1、2、4 个 token 的完整分项表；四个中间状态保持不变。分数及结论留空，不能把 token 数量消融写成状态数量消融。', '#response-62MG-sampling'],
+      'direct-compression': ['11 号 · 回复表格已预留，结果待回填', 'R2 Response 3 与 R3 终态监督回复之后均已预留渐进／直接压缩分项表；最终 token 布局、训练预算、分数与结论待回填。终态监督结果不能代替直接压缩消融。', '#response-xuAm-terminal'],
       'latent-alignment': ['6 号 · 最终四联图回复已同步', 'a 原聚类支持压缩后的角色组织；b 六领域平衡准确率 86.91%，随机 16.67%；c 七项配对读出为 Support 99.22、Torque 100、Buoyancy 99.22、Outflow 96.09、Absorption 99.22、Phase change 100、Shape recovery 91.41%。Phase change 为独立确认 256 对／128 新家族，其余六项各 128 对／64 家族。d 编辑顺序干预为 57.36→53.94。七项只是十一项探索的展示子集，其余四项和全部强对照保留；不归因于训练独有物理收益，逐帧对齐未确立。', '#reply-latent-representation'],
       'physics-evaluation': ['Discussion 已完成 · 客观测量未完成', '已独立回应评测边界：沿用 benchmark 任务与评分框架以便比较，并补充已有 17 人、100 对样本的 user study 和物理案例。未虚构人机一致率，也未把人工判断当成客观物理验证。物理指标列为未来 benchmark 方向；13 号真实测量和标注仍未完成。', '#reply-physical-evaluation'],
       'inference-statistics': ['4 号 · 生成任务已停止，统计未完成', '2026-11-10 按作者停机要求只读核查：原生成任务及调度器均不存在，退出记录为 143，开发机 A100 显存 0 MiB。上次记录 1,562/7,560 张，本轮未重新盘点图片；全量生成、72B 评分、均值／标准差与配对 CI 未完成。没有恢复任务。', ''],
-      'training-seeds': ['12 号 · 回复表格已预留，结果待回填', 'R2 Response 6 已预留完整方法与同数据 SFT 的重复训练均值／标准差表，以及配对统计表。实际 seeds、完成轮数、统计方法和数值待回填；生成 seed 不能代替训练稳定性证据。', '#reply-statistics'],
+      'training-seeds': ['12 号 · 回复表格已预留，结果待回填', 'R2 Response 6 已预留完整方法与同数据 SFT 的重复训练均值／标准差表，以及配对统计表。实际 seeds、完成轮数、统计方法和数值待回填；生成 seed 不能代替训练稳定性证据。', '#response-62MG-statistics'],
       'parameters-memory': ['5 号 · 已完成并接入回复', '六模型表逐项采用作者确认数据，PhysicEdit latency 保留 52.19 秒。62MG 的 cost 回复已写入 Markdown；8uwk 回复引用 PhysFlow/PhysicEdit 两行，准确描述约 5.4% 的延迟降低及 1.86 GiB 的显存增加。', '#reply-cost'],
       'data-split': ['14 号 · 回复已完成并接入', '已按 PICABench 原论文补入 PICA-100K 合成训练数据与 900 例评测 benchmark 的来源区别，按作者要求标记回复完成。合稿核验备注：11,448 条源图检查得到 1,094 条 dHash 候选，另有一例同源图视觉复核；候选数不是确认重叠数。原稿最终权重与本轮 +899 权重仍需各自对应训练清单；来源说明不代替跨集查重。', '#reply-data-split'],
       'dataset-comparison': ['已完成 · 三组比较已接入回复', '同为 SFT：PhysTrace 对 PICA100K +1.74 pp；同为 PhysFlow：PhysTrace 对 PhysicTran38K +2.50 pp；同一 PhysTrace：完整框架对 SFT +1.20 pp。前两组支持较小数据集的有效性，第三组支持完整框架收益。三列表聚焦数据、策略、成绩；预算差异及额外 planner 训练在表后交代。作者自行更新 Overleaf。', '#reply-sft-dataset'],
