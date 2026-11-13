@@ -57,7 +57,7 @@ At inference, [PhysicEdit](https://arxiv.org/html/2602.21778v2#S3.SS3) combines 
 
 **Our specific focus, however, is to progressively internalize the text-to-visual reasoning process into an ordered latent plan:**
 
-1. **Text-derived physical constraints guide visual prediction.** The planner first predicts latent states for physical principles and transition steps. It then predicts visual latents conditioned on these states and preceding visual latents, allowing physical reasoning to guide visual prediction within the planner.
+1. **Textual physical reasoning guides visual evolution through causal dependencies within the latent sequence.** The planner first predicts textual latent states for high-level physical rules and causal dependencies, followed by low-level transition steps. These continuous textual states guide the generation of subsequent visual latents through causal dependencies within the latent sequence. Each visual latent also builds on preceding visual latents, linking physical reasoning to successive stages of visual evolution.
 
 2. **Visual supervision shapes the reasoning states.** During planner training, downstream visual prediction and editing losses propagate through the continuous latent sequence to train earlier states. This encourages the text-derived states to retain information useful for the intended visual changes.
 
