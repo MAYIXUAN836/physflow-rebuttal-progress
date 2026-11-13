@@ -383,7 +383,7 @@ Together, these results support PhysTrace as an effective training dataset and s
 > 2026-11-08 22:35 PST：2 号最终结果已独立核验，Overall 55.57；900 张与 4,112 QA 完整。该对照保留六个 recurrent latent tokens、16-token final visual block 和可训练模块，使用 planner 1,253 与 generator 537 更新。分项表对比本轮 55.57 与论文完整模型报告值 56.32；差 0.75 pp。实验与回复保持完成；作者已确认完整模型与本轮对照使用同一版训练数据；11 号直接压缩已完成核验，54.52；下表与论文主模型 56.32 比较，并非共用初始化的新配对复训。详见 最终结果记录及 独立核验。
 
 <!-- reply:terminal-only:start -->
-Following your suggestion, we retain the six recurrent latent tokens, the 16-token final visual block, and the trainable modules. We train the terminal-only control using terminal visual supervision and the generation loss, without textual or intermediate-frame supervision. This control uses 1,253 planner updates and 537 generator updates. The table compares this new run with the full PhysFlow results reported in the paper.
+Following your suggestion, we retain the same recurrent latent tokens, final visual block, and trainable modules, but train using only terminal visual supervision and the generation loss. This control uses 1,253 planner updates and 537 generator updates. The table compares this new run with the full PhysFlow results reported in the paper.
 
 Editing accuracy (%) on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct; higher is better.
 
