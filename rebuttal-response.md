@@ -94,14 +94,14 @@ We sincerely appreciate your suggestion, which helped us present the relationshi
 
 ## Reviewer 62MG
 
-> 编辑说明：九个回复点采用固定编号 Response 1–Response 9，按 (1–3)、(4–6)、(7–9) 分为三条评论，每条不超过 5,000 字符。完整分组与实时字符计数见网页回复面板；表格空白不表示实验已完成。
+> 编辑说明：十个回复点采用固定编号 Response 1–Response 10，按 (1–3)、(4–7)、(8–10) 分为三条评论，每条不超过 5,000 字符。完整分组与实时字符计数见网页回复面板；表格空白不表示实验已完成。
 
 ### Response 1: Same-data image-pair fine-tuning baseline
 
 <!-- reply:r2-sft-baseline:start -->
 Dear Reviewer 62MG,
 
-Thank you very much for your careful reading and detailed, constructive feedback. We sincerely appreciate your recognition of the motivation, the framework, and the empirical improvements. Your questions helped us clarify the method and strengthen the evidence. We address your concerns in nine responses below.
+Thank you very much for your careful reading and detailed, constructive feedback. We sincerely appreciate your recognition of the motivation, the framework, and the empirical improvements. Your questions helped us clarify the method and strengthen the evidence. We address your concerns in ten responses below.
 
 **Response 1: Same-data image-pair fine-tuning baseline**
 
@@ -234,26 +234,34 @@ Inference seeds: 42, 215, and 3407, with model checkpoints fixed.
 
 ### Response 6: Multimodal-model evaluation and human evidence
 
-> 状态：按作者确认的三点组织：PICABench 预设物理检查问题和参考答案；17 人、100 对样本的 human study；Figure 3（PICABench）与 Figure 6（RISEBench）中的困难物理任务及比较性失败分析。定性分析归纳跨区域光学一致性、接触形变和随时间发生的表面变化。未声称逐样本人机一致率或对物理规律的完备验证。13 号实验安排与完成状态不变。
+> 状态：PICABench 的物理检查问题和参考答案，以及 17 人、100 对样本的 human study 提供评测与人工证据。困难案例和比较性失败分析单列为 Response 7。未声称逐样本人机一致率或对物理规律的完备验证。13 号实验安排与完成状态不变。
 
 <!-- reply:physical-evaluation:start -->
 **Response 6: Multimodal-model evaluation and human evidence**
 
-Thank you very much for emphasizing objective physical correctness. We present the evaluation criteria alongside human and qualitative evidence.
+Thank you very much for emphasizing objective physical correctness. We present the evaluation criteria alongside human evidence.
 
 (1) PICABench specifies physical criteria through human-annotated regions and manually reviewed yes/no questions, such as whether object removal also removes its shadow. PICAEval uses a vision-language model (VLM) to inspect edited images and answer these questions, scoring exact agreement with predefined reference answers (PICABench, Section 3.3 and Appendix A.3).
 
 (2) Our human study provides complementary evidence. We ask 17 participants to compare PhysFlow with five competing methods on 100 image-instruction pairs randomly sampled from PICABench and RISEBench. Their preference for PhysFlow's physical plausibility agrees with the overall benchmark trend.
-
-(3) Difficult physical cases (Figures 3 and 6). PICABench examples require optical consistency across regions and deformation at contact; RISEBench examples require changes to object surfaces over time. Several baselines follow the local edit but leave mismatched reflections, residual lighting, little deformation, or limited surface changes. PhysFlow depicts the corresponding optical, mechanical, and temporal changes more consistently in these examples, providing qualitative support for physical consistency.
 <!-- reply:physical-evaluation:end -->
 
-### Response 7: Originality and positioning relative to closely related approaches
+### Response 7: Difficult cases and failure analysis (Figures 3 and 6)
+
+> 状态：依据正文 Figure 3（PICABench）和附录 Figure 6（RISEBench），归纳跨区域光学一致性、接触形变和随时间发生的表面变化；比较图示案例中的物理后果，结论限于定性证据。
+
+<!-- reply:difficult-cases:start -->
+**Response 7: Difficult cases and failure analysis (Figures 3 and 6)**
+
+PICABench examples require optical consistency across regions and deformation at contact; RISEBench examples require changes to object surfaces over time. Several baselines follow the local edit but leave mismatched reflections, residual lighting, little deformation, or limited surface changes. PhysFlow depicts the corresponding optical, mechanical, and temporal changes more consistently in these examples, providing qualitative support for physical consistency.
+<!-- reply:difficult-cases:end -->
+
+### Response 8: Originality and positioning relative to closely related approaches
 
 > 作者已确认本版：说明文字物理约束与视觉状态的联合内化动机，比较 Monet、EndoCoT 和 PhysicEdit，说明 PhysTrace 的作用；首次主张限定为 physics-aware image editing 中的联合内化。直接压缩消融仍待结果。
 
 <!-- reply:r2-method-contribution:start -->
-**Response 7: Originality and positioning relative to closely related approaches**
+**Response 8: Originality and positioning relative to closely related approaches**
 
 Thank you very much for carefully examining the originality of our work. We acknowledge the inspiration from prior work on progressive chain-of-thought internalization, continuous latent reasoning, and visual feature prediction.
 
@@ -266,24 +274,24 @@ Thank you very much for carefully examining the originality of our work. We ackn
 Together, PhysFlow turns complementary textual and visual process supervision into a unified, compact latent plan trained directly for image editing.
 <!-- reply:r2-method-contribution:end -->
 
-### Response 8: Training and evaluation data sources
+### Response 9: Training and evaluation data sources
 
 > 状态：回复已完成并接入，按作者要求勾选 checklist 的 data-split 项。下段说明 PICA-100K 与 PICABench 的构建方式及用途。合稿核验备注：原稿最终版本与本轮 +899 补实验版本仍需分别对应实际训练清单、checkpoint 和检查记录；来源说明不等同于跨集近重复审计。
 
 <!-- reply:data-split:start -->
-**Response 8: Training and evaluation data sources**
+**Response 9: Training and evaluation data sources**
 
 Thank you for raising the question of training and evaluation data separation. We have clarified the construction sources and the respective roles of PICA-100K, PhysTrace, and PICABench in Section 3.2 and Appendix A.
 
 PICA-100K provides training data, while PICABench provides a separately curated evaluation set of 900 editing examples. The PICABench authors collect evaluation images from licensed and public sources and construct PICA-100K from generated source images and synthetic videos. We start constructing our PhysTrace training dataset with PICA-100K image-instruction pairs.
 <!-- reply:data-split:end -->
 
-### Response 9: Parameter count, peak memory, and latency
+### Response 10: Parameter count, peak memory, and latency
 
 > 状态：实验完成，已接入回复。对应 checklist：parameters-memory。全部数值采用作者本轮确认表格。
 
 <!-- reply:cost:start -->
-**Response 9: Parameter count, peak memory, and latency**
+**Response 10: Parameter count, peak memory, and latency**
 
 Thank you for suggesting parameter-count and peak-memory comparisons in addition to latency. We have added these measurements to Table 5 to give a fuller account of inference costs.
 
