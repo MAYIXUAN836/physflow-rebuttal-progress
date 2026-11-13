@@ -147,14 +147,14 @@ All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superfic
 (c) Same-data framework comparison: +1.20 points. PhysFlow outperforms image-pair SFT on identical PhysTrace pairs with matched generator LoRA and 537 generator updates (Response 1).
 <!-- reply:sft-dataset:end -->
 
-### Response 3: Frame sampling, state count, and compression
+### Response 3: Further ablations on frame sampling methods, visual token counts, and compression strategies
 
 > time-uniform 采用作者提供的重跑结果：作者确认与 change-uniform 使用相同数据集设置，Overall 55.09 vs. 56.32，差 1.23 个百分点；完整类别数据见下表。固定四个中间状态，比较每状态 1、2、4 个视觉 token；token 消融结果先留空；直接压缩已核验为 54.52，完整分项已填入，与论文渐进压缩模型 56.32 对比。
 
 <!-- reply:sampling:start -->
-**Response 3: Frame sampling, token count, and compression**
+**Response 3: Further ablations on frame sampling methods, visual token counts, and compression strategies**
 
-Thank you for identifying these missing ablations. We have added a time-uniform sampling comparison.
+Thank you for identifying these missing ablations.
 
 Change-uniform sampling selects four frames at equal cumulative visual-change intervals using normalized DINOv2, optical-flow, and pixel-change scores (Appendix A.2). We compare time-uniform sampling under the same PhysTrace settings on PICABench-Superficial:
 
