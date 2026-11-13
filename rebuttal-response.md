@@ -414,7 +414,22 @@ PICABench-Superficial accuracy (%):
 
 ### R3-Q4: PhysicEdit comparison
 
-> 方法级数据已到位，复用 R1 的质量表、骨干说明和设计差异；给 xuAm 的最终独立回复待与 Q1–Q3 一起组织。
+> 状态：已针对 Reviewer 3 单独组织回复；PhysFlow（2509）正在运行，结果与比较结论待补。
+
+<!-- reply:r3-physicedit:start -->
+Thank you for pointing out that our comparison using PhysicTran38K does not constitute a direct comparison with PhysicEdit. The score of 53.82 in Tables 4 and 9 corresponds to PhysFlow trained on PhysicTran38K, rather than PhysicEdit itself. We agree that this dataset comparison alone does not establish an advantage over PhysicEdit.
+
+PhysicEdit learns latent visual transition priors from videos and combines them with explicit textual reasoning to guide image editing. PhysFlow instead uses a staged training curriculum to progressively internalize textual physical rationales and intermediate visual states into a continuous latent plan. This plan guides image editing without decoding textual rationales or intermediate images at inference.
+
+Following your suggestion, we are conducting a direct comparison using Qwen-Image-Edit-2509 for both methods on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct. The PhysFlow run is in progress; its results are pending.
+
+| Method | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| PhysicEdit | 51.62 | 61.63 | 51.56 | 52.96 | 44.03 | 45.89 | 57.64 | 53.07 | 52.35 |
+| PhysFlow (2509; pending) | | | | | | | | | |
+
+[Comparison summary to be added after the PhysFlow (2509) evaluation completes.]
+<!-- reply:r3-physicedit:end -->
 
 ### R3: General-editing trade-offs
 
