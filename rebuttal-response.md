@@ -421,7 +421,7 @@ To address this concern, we have added a direct comparison with PhysicEdit on PI
 | PhysFlow (2509; pending) | | | | | | | | | |
 | PhysFlow (2511) | 54.45 | 65.19 | 58.52 | 57.99 | 44.91 | 47.31 | 64.32 | 56.43 | 56.32 |
 
-Beyond this empirical comparison, we have also expanded the discussion in Section 2.2 to clarify the methodological differences. PhysicEdit learns latent visual transition priors from videos and combines them with explicit textual reasoning to guide image editing. PhysFlow instead uses a staged training curriculum to progressively internalize textual physical rationales and intermediate visual states into a continuous latent plan. This plan guides image editing without decoding textual rationales or intermediate images at inference.
+Beyond this empirical comparison, we have also expanded the discussion in Section 2.2 to clarify the methodological differences. PhysicEdit learns latent visual transition priors from videos and combines them with explicit textual reasoning to guide image editing. PhysFlow couples textual physical reasoning with visual evolution in a continuous latent plan. Text-derived latent states guide subsequent visual transitions, while downstream visual supervision and editing losses shape these states to retain information useful for image generation. Our progressive compression curriculum internalizes explicit physical rationales and intermediate visual states into this coupled reasoning process. The resulting plan connects physical explanations to their visual consequences and guides image editing without decoding textual rationales or intermediate images at inference.
 <!-- reply:r3-physicedit:end -->
 
 ### R3: General-editing trade-offs
