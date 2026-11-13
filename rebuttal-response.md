@@ -303,7 +303,7 @@ To our knowledge, PhysFlow is the first framework to jointly internalize textual
 
 Thank you for raising the question of training and evaluation data separation. We have clarified the construction sources and the respective roles of PICA-100K, PhysTrace, and PICABench in Section 3.2 and Appendix A.
 
-PICA-100K provides training data, while PICABench provides a separately curated evaluation set of 900 editing examples (Pu et al., [Sections 3.1 and 3.2](https://arxiv.org/html/2510.17681v3#S3.SS2), and [Section 3.4](https://arxiv.org/html/2510.17681v3#S3.SS4)). The authors collect PICABench evaluation images from licensed and public sources and construct PICA-100K from generated source images and synthetic videos. We start constructing our PhysTrace training dataset with PICA-100K image-instruction pairs (Section 3.2 of our manuscript).
+PICA-100K provides training data, while PICABench provides a separately curated evaluation set of 900 editing examples (Pu et al., Sections 3.1 and 3.2, and Section 3.4). The authors collect PICABench evaluation images from licensed and public sources and construct PICA-100K from generated source images and synthetic videos. We start constructing our PhysTrace training dataset with PICA-100K image-instruction pairs (Section 3.2 of our manuscript).
 <!-- reply:data-split:end -->
 
 ### Response 10: Parameter count, peak memory, and latency
