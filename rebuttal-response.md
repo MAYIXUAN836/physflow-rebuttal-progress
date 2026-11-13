@@ -134,7 +134,7 @@ All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superfic
 |PhysicTran38K|PhysFlow|54.14|62.16|54.55|57.60|44.03|45.19|61.26|52.20|53.82|
 |PhysTrace|PhysFlow|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
 
-(a) PhysTrace improves SFT by 1.74 points over PICA100K with fewer examples and updates. (b) Under the same PhysFlow architecture and curriculum, PhysTrace gains 2.50 points over PhysicTran38K using fewer examples. (c) On identical PhysTrace pairs, PhysFlow exceeds SFT by 1.20 points with matched generator adaptation. These results demonstrate that PhysTrace improves both SFT and PhysFlow, our latent reasoning framework improves editing, and progressive compression outperforms direct compression (Response 3).
+(a) PhysTrace improves SFT by 1.74 points over PICA100K with fewer examples and updates. (b) Under the same PhysFlow architecture and curriculum, PhysTrace gains 2.50 points over PhysicTran38K using fewer examples. (c) On identical PhysTrace pairs, PhysFlow exceeds SFT by 1.20 points with matched generator adaptation. Together, these comparisons and the compression ablation (Response 3) demonstrate the effectiveness of our PhysTrace dataset, our latent reasoning framework, and our progressive training curriculum.
 <!-- reply:sft-dataset:end -->
 
 ### Response 3: Further ablations on frame sampling methods, visual token counts, and compression strategies
