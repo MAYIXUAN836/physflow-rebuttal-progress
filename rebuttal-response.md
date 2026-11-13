@@ -66,14 +66,15 @@ This progressive internalization yields a six-token latent plan, Z = [h, l, m₁
 
 **To characterize what this compact plan retains, we have expanded the representation analyses in Figure 7.** Visualizations reveal role-dependent structure, while probing studies recover physical-domain information and reveal outcome-predictive information on several controlled intervention tasks. Token-order perturbations also show that editing performance is sensitive to the ordering of intermediate visual latents. Together, these analyses help explain the physical content and functional role of our compressed plan; the appendix provides detailed results and controls.
 
-**Following your helpful suggestion, we have also added an experimental comparison with PhysicEdit on PICABench-Superficial.** We use Qwen2.5-VL-72B-Instruct for evaluation. Our PhysFlow implementation uses Qwen-Image-Edit-2511.
+**Following your helpful suggestion, we have also added an experimental comparison with PhysicEdit on PICABench-Superficial.** We use Qwen2.5-VL-72B-Instruct for evaluation. The reported PhysFlow results use Qwen-Image-Edit-2511; results with Qwen-Image-Edit-2509 are pending.
 
 | Method | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | PhysicEdit | 51.62 | 61.63 | 51.56 | 52.96 | 44.03 | 45.89 | 57.64 | 53.07 | 52.35 |
-| **PhysFlow (Ours)** | **54.45** | **65.19** | **58.52** | **57.99** | **44.91** | **47.31** | **64.32** | **56.43** | **56.32** |
+| PhysFlow (2509; pending) | | | | | | | | | |
+| **PhysFlow (2511)** | **54.45** | **65.19** | **58.52** | **57.99** | **44.91** | **47.31** | **64.32** | **56.43** | **56.32** |
 
-In this evaluation, PhysFlow achieves an overall score of **56.32**, compared with **52.35** for PhysicEdit, with higher scores across all eight categories. We have incorporated these results into Table 1 and added a computational-cost comparison in Table 5.
+In this evaluation, PhysFlow (2511) achieves an overall score of **56.32**, compared with **52.35** for PhysicEdit, with higher scores across all eight categories. We have incorporated these results into Table 1 and added a computational-cost comparison in Table 5.
 
 **We also include an ImgEdit-Bench comparison to assess general image editing (Table 6).**
 
@@ -83,16 +84,6 @@ In this evaluation, PhysFlow achieves an overall score of **56.32**, compared wi
 | **PhysFlow (Ours)** | 4.26 | **4.33** | **3.91** | **4.66** | **4.66** | **4.25** | **4.85** | 3.26 | **4.85** | **4.39** |
 
 PhysFlow achieves an overall score of **4.39**, compared with **4.05** for PhysicEdit. It scores higher in six of nine categories, ties in Action, and scores lower in Add and Hybrid.
-
-**Draft: Qwen-Image-Edit-2509 comparison (results pending).**
-
-| Method (2509 backbone) | PICABench Overall (%) |
-|---|---:|
-| Original backbone | |
-| PhysicEdit | |
-| PhysFlow + PhysTrace | |
-
-[Result summary to be added.]
 
 We sincerely appreciate your suggestion, which helped us present the relationship to PhysicEdit and the evidence for our latent representation more clearly.
 <!-- reply:r1:end -->
