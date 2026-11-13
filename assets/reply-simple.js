@@ -1,6 +1,21 @@
 (() => {
   const data = window.PHYSFLOW_REPLIES;
-  const groups = [data.overview, ...data.reviewers];
+  const groups = [data.overview, ...data.reviewers].map(group => {
+    const blocks = [];
+    group.items.forEach(item => {
+      const text = group === data.overview || item.markdown.includes(`**${item.subject}**`)
+        ? item.markdown : `**${item.subject}**\n\n${item.markdown}`;
+      const previous = blocks[blocks.length - 1];
+      if (previous && previous.markdown.length + 2 + text.length <= 5000) {
+        previous.markdown += '\n\n' + text;
+        previous.id += '+' + item.id;
+        previous.subject += ' / ' + item.subject;
+      } else {
+        blocks.push({ id: item.id, subject: item.subject, markdown: text });
+      }
+    });
+    return { ...group, items: blocks };
+  });
   const md = window.markdownit({ html: false });
   const editor = document.querySelector('#editor');
   const preview = document.querySelector('#preview');
@@ -11,10 +26,7 @@
   converter.use(turndownPluginGfm.gfm);
   let active = 0;
   let block = 0;
-  const drafts = groups.map(group => group.items.map(item => {
-    const text = item.markdown;
-    return group === data.overview || text.includes(`**${item.subject}**`) ? text : `**${item.subject}**\n\n${text}`;
-  }));
+  const drafts = groups.map(group => group.items.map(item => item.markdown));
   const edited = groups.map(group => group.items.map(() => false));
   function backup(group) {
     try {
