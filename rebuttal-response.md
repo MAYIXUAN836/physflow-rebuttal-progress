@@ -125,9 +125,7 @@ PhysFlow exceeds same-data SFT by 1.20 points. Both use rank-512 generator LoRA 
 <!-- reply:sft-dataset:start -->
 **Response 2: Dataset effectiveness and training framework**
 
-Thank you for pointing out that the dataset comparisons also involve differences in supervision and training procedure.
-
-Following your suggestion, we have added a PhysTrace image-pair SFT baseline to assess dataset effectiveness under the same training strategy and the additional benefit of PhysFlow on the same training data.
+Thank you for pointing out that the dataset comparisons also involve differences in supervision and training procedure. Following your suggestion, we have added a PhysTrace image-pair SFT baseline to assess dataset effectiveness under the same training strategy and the additional benefit of PhysFlow on the same training data.
 
 All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superficial with Qwen2.5-VL-72B-Instruct and report gains in percentage points.
 
