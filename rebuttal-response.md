@@ -353,11 +353,11 @@ Thank you again for the time and care you have devoted to our work. Your detaile
 > 状态：EndoCoT / Monet 的 discussion 已成稿并接入 HTML。1 号同数据 SFT 与 2 号终态监督结果已接入；2 号已补完整分项表并区分新跑结果与论文报告值，11 号直接压缩结果待接入。
 
 <!-- reply:method-contribution:start -->
-Thank you for asking us to clarify the contribution. **PhysFlow internalizes the connection between physical explanations and visual evolution into a latent plan for image editing.** Textual rationales explain the physical rules and transition steps; intermediate visual states supervise how those steps change the scene. Our curriculum progressively compresses both into a continuous plan that conditions image generation (Sections 3.3 and 3.4).
+Thank you for asking us to clarify the contribution. PhysFlow internalizes the connection between physical explanations and visual evolution into a latent plan for image editing. Textual rationales explain the physical rules and transition steps; intermediate visual states supervise how those steps change the scene. Our curriculum progressively compresses both into a continuous plan that conditions image generation (Sections 3.3 and 3.4).
 
-**Relative to EndoCoT, our distinction lies in how explicit process supervision becomes a latent plan.** EndoCoT trains recurrent thought states with intermediate image-generation losses and terminal textual grounding, then shifts optimization to the terminal step. [EndoCoT, Section 4.2](https://arxiv.org/html/2603.12252v1#S4.SS2). PhysFlow first learns explicit textual rationales and visual trajectories, then progressively replaces their textual and visual blocks with latent tokens. Text-derived states precede and condition subsequent visual states, while downstream visual and editing losses train the compressed sequence. This curriculum teaches the planner to carry physical explanations forward into visual evolution as explicit reasoning disappears.
+Relative to EndoCoT, our distinction lies in how explicit process supervision becomes a latent plan. EndoCoT trains recurrent thought states with intermediate image-generation losses and terminal textual grounding, then shifts optimization to the terminal step. [EndoCoT, Section 4.2](https://arxiv.org/html/2603.12252v1#S4.SS2). PhysFlow first learns explicit textual rationales and visual trajectories, then progressively replaces their textual and visual blocks with latent tokens. Text-derived states precede and condition subsequent visual states, while downstream visual and editing losses train the compressed sequence. This curriculum teaches the planner to carry physical explanations forward into visual evolution as explicit reasoning disappears.
 
-**Relative to Monet, we train the latent plan through the image transformation it guides.** Monet distills auxiliary visual information into latent embeddings within text-latent interleaved reasoning for textual answers. [Monet, Section 3](https://arxiv.org/html/2511.21395v2#S3). PhysFlow jointly compresses textual rationales and visual trajectories, and propagates the image-generation loss through the generator to train the plan. The plan therefore receives supervision from both the physical process and the edited outcome. Responses 3 and 4 report the same-data SFT and terminal-only controls.
+Relative to Monet, we train the latent plan through the image transformation it guides. Monet distills auxiliary visual information into latent embeddings within text-latent interleaved reasoning for textual answers. [Monet, Section 3](https://arxiv.org/html/2511.21395v2#S3). PhysFlow jointly compresses textual rationales and visual trajectories, and propagates the image-generation loss through the generator to train the plan. The plan therefore receives supervision from both the physical process and the edited outcome. Responses 3 and 4 report the same-data SFT and terminal-only controls.
 <!-- reply:method-contribution:end -->
 
 ### R3-Q2: Identity of the no-reasoning baseline
@@ -387,12 +387,12 @@ Editing accuracy (%) on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Ins
 
 | Training strategy | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Terminal-only supervision | 53.84 | 64.48 | 57.73 | **59.18** | 42.57 | 46.68 | 63.59 | 55.71 | 55.57 |
-| Full PhysFlow | **54.45** | **65.19** | **58.52** | 57.99 | **44.91** | **47.31** | **64.32** | **56.43** | **56.32** |
+| Terminal-only supervision | 53.84 | 64.48 | 57.73 | 59.18 | 42.57 | 46.68 | 63.59 | 55.71 | 55.57 |
+| Full PhysFlow | 54.45 | 65.19 | 58.52 | 57.99 | 44.91 | 47.31 | 64.32 | 56.43 | 56.32 |
 
 Full PhysFlow achieves 0.75 percentage points higher overall accuracy. Terminal-only scores higher on refraction (59.18 versus 57.99). These single-run scores compare training configurations as a whole; isolating contributions from individual supervision terms and the compression curriculum requires further controls.
 
-**Draft: progressive versus direct compression (results pending).**
+Draft: progressive versus direct compression (results pending).
 
 Final token layout and training budgets: [to be filled from the completed runs].
 
