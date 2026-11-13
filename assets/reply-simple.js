@@ -25,8 +25,10 @@
     doc.querySelectorAll('script,style,template,[hidden]').forEach(node => node.remove());
     doc.querySelectorAll('p,div,br,li,tr,td,th,h1,h2,h3,h4').forEach(node => node.append(' '));
     const text = (doc.body.textContent || '').replace(/\s+/g, ' ').trim();
-    const words = text.match(/[\p{Script=Han}]|[\p{L}\p{N}]+(?:[’'\-][\p{L}\p{N}]+)*/gu) || [];
-    document.querySelector('#count').textContent = `${words.length.toLocaleString()} 字 / words · ${Array.from(text).length.toLocaleString()} 字符`;
+    const count = Array.from(text).length;
+    const counter = document.querySelector('#count');
+    counter.textContent = `${count.toLocaleString()} / 5000 字符`;
+    counter.style.color = count > 5000 ? '#c62828' : '';
   }
   function select(index) {
     active = index;
