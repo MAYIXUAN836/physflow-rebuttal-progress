@@ -241,34 +241,25 @@ Together, these results demonstrate that PhysFlow's compact latent plan encodes 
 
 ### Response 6: Statistical uncertainty and repeated runs
 
-> 已有统计回复草稿。待生成 seeds、配对 CI 和训练 seeds；物理评测范围见下方独立回复。
+> 本条按 training seeds 与 inference seeds 两类重复试验汇报。训练种子为 43/44/45/46，仅完整 PhysFlow，推理 seed 固定为 42；推理种子为 42/215/3407，当前按 RISEBench 执行范围。表中均值和标准差待完整结果核验后填入。
 
 <!-- reply:statistics:start -->
 **Response 6: Statistical uncertainty and repeated runs**
 
-Thank you for emphasizing the need to quantify uncertainty, particularly for the modest absolute gains on RISEBench.
+Thank you for highlighting the importance of stability across random seeds. Following your suggestion, we assess stability through repeated runs with different training and inference seeds, reporting mean accuracy ± standard deviation.
 
-The main tables report increases of 2.06 percentage points on PICABench and 1.38 points on RISEBench over the backbone. These are point estimates under the reported evaluation settings. Their uncertainty across training runs and evaluation samples requires repeated runs and confidence intervals.
+Training seeds: 43, 44, 45, and 46, with inference seed fixed at 42.
 
-Draft: repeated training seeds (results pending).
+|Method|PICABench-Superficial mean ± SD (%)|RISEBench mean ± SD (%)|
+|---|---:|---:|
+|PhysFlow|Pending|Pending|
 
-Training seed IDs, number of completed runs, and fixed evaluation settings: [to be filled].
+Inference seeds: 42, 215, and 3407, with model checkpoints fixed.
 
-|Method|Training runs|PICABench mean ± SD (%)|RISEBench mean ± SD (%)|
-|---|---:|---:|---:|
-|PhysTrace image-pair SFT||||
-|Full PhysFlow||||
-
-Draft: paired statistical comparison (results pending).
-
-Seed type, comparison baseline, and confidence-interval procedure: [to be filled].
-
-|Benchmark|Paired difference (pp)|95% confidence interval|
-|---|---:|---|
-|PICABench-Superficial|||
-|RISEBench|||
-
-[Result summary to be added.]
+|Method|RISEBench mean ± SD (%)|
+|---|---:|
+|Qwen-Image-Edit-2511|Pending|
+|PhysFlow|Pending|
 <!-- reply:statistics:end -->
 
 ### Response 7: Multimodal-model evaluation and human evidence
