@@ -401,7 +401,7 @@ Full PhysFlow improves overall accuracy by 0.75 percentage points over terminal-
 > 状态：已针对 Reviewer 3 单独组织回复；PhysFlow（2509）正在运行，结果与比较结论待补。
 
 <!-- reply:r3-physicedit:start -->
-You are right that our comparison using PhysicTran38K does not constitute a direct comparison with PhysicEdit. The score of 53.82 in Tables 4 and 9 corresponds to PhysFlow trained on PhysicTran38K, rather than PhysicEdit itself. We agree that this dataset comparison alone does not establish an advantage over PhysicEdit.
+We appreciate your observation that our comparison using PhysicTran38K does not constitute a direct comparison with PhysicEdit. The score of 53.82 in Tables 4 and 9 corresponds to PhysFlow trained on PhysicTran38K, rather than PhysicEdit itself. We agree that this dataset comparison alone does not establish an advantage over PhysicEdit.
 
 To address this concern, we have added a direct comparison with PhysicEdit on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct. The table includes our results with Qwen-Image-Edit-2511.
 
