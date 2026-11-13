@@ -273,7 +273,7 @@ Together, PhysFlow turns complementary textual and visual process supervision in
 
 Thank you for raising the question of training and evaluation data separation. We have clarified the construction sources and the respective roles of PICA-100K, PhysTrace, and PICABench in Section 3.2 and Appendix A.
 
-PICA-100K provides training data, while PICABench provides a separately curated evaluation set of 900 editing examples (Pu et al., Sections 3.1 and 3.2, and Section 3.4). The authors collect PICABench evaluation images from licensed and public sources and construct PICA-100K from generated source images and synthetic videos. We start constructing our PhysTrace training dataset with PICA-100K image-instruction pairs (Section 3.2 of our manuscript).
+PICA-100K provides training data, while PICABench provides a separately curated evaluation set of 900 editing examples. The PICABench authors collect evaluation images from licensed and public sources and construct PICA-100K from generated source images and synthetic videos. We start constructing our PhysTrace training dataset with PICA-100K image-instruction pairs.
 <!-- reply:data-split:end -->
 
 ### Response 9: Parameter count, peak memory, and latency
