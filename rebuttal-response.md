@@ -393,9 +393,11 @@ Editing accuracy (%) on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Ins
 | Full PhysFlow | 54.45 | 65.19 | 58.52 | 57.99 | 44.91 | 47.31 | 64.32 | 56.43 | 56.32 |
 
 Full PhysFlow achieves 0.75 percentage points higher overall accuracy. Terminal-only scores higher on refraction (59.18 versus 57.99). These single-run scores compare training configurations as a whole; isolating contributions from individual supervision terms and the compression curriculum requires further controls.
+<!-- reply:terminal-only:end -->
 
-Progressive versus direct compression.
+### Response 5: Progressive versus direct compression
 
+<!-- reply:r3-direct-compression:start -->
 Both use two textual and four intermediate latent tokens plus a 16-token final visual block. The progressive row is the paper's full model.
 
 PICABench-Superficial accuracy (%):
@@ -406,7 +408,7 @@ PICABench-Superficial accuracy (%):
 |Progressive compression (paper)|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
 
 The reported progressive model scores 1.80 points higher; these are single-run results.
-<!-- reply:terminal-only:end -->
+<!-- reply:r3-direct-compression:end -->
 
 ### R3-Q4: PhysicEdit comparison
 

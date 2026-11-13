@@ -384,21 +384,42 @@ window.PHYSFLOW_REPLIES = {
               "text": "How does performance change when the same recurrent latent tokens, final visual block, and trainable modules are retained, but training uses only terminal visual supervision and the generation loss?"
             }
           ],
-          "analysis": "保留六个 recurrent tokens、16-token 终态块和可训练模块，使用终态视觉监督与生成损失。列出新跑 55.57 与论文报告值 56.32 的分项表。0.75 是配置差异，不能单独归因于课程；折射项终态对照更高。 论文对应：§4.3；Appendix C.7 / Table 10。同结构终态监督 55.57 及全部类别结果已写入。 在已完成的终态监督结果之后，另留渐进／直接压缩分项表，避免把终态监督对照当成直接压缩结果；新表分数、训练预算与结论均留空。",
+          "analysis": "保留六个 recurrent tokens、16-token 终态块和可训练模块，使用终态视觉监督与生成损失。列出新跑 55.57 与论文报告值 56.32 的分项表。0.75 是配置差异，不能单独归因于课程；折射项终态对照更高。 论文对应：§4.3；Appendix C.7 / Table 10。同结构终态监督 55.57 及全部类别结果已写入。",
           "source": {
             "block": "terminal-only"
           },
-          "status": "终态监督已成稿 · 直接压缩表待回填",
-          "pending": true,
+          "status": "终态监督回复已成稿",
+          "pending": false,
           "syncKey": "block:terminal-only",
-          "syncMarkdown": "Following your suggestion, we retain the same recurrent latent tokens, final visual block, and trainable modules, but train using only terminal visual supervision and the generation loss. This control uses 1,253 planner updates and 537 generator updates. The table compares this new run with the full PhysFlow results reported in the paper.\n\nEditing accuracy (%) on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct; higher is better.\n\n| Training strategy | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |\n|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n| Terminal-only supervision | 53.84 | 64.48 | 57.73 | 59.18 | 42.57 | 46.68 | 63.59 | 55.71 | 55.57 |\n| Full PhysFlow | 54.45 | 65.19 | 58.52 | 57.99 | 44.91 | 47.31 | 64.32 | 56.43 | 56.32 |\n\nFull PhysFlow achieves 0.75 percentage points higher overall accuracy. Terminal-only scores higher on refraction (59.18 versus 57.99). These single-run scores compare training configurations as a whole; isolating contributions from individual supervision terms and the compression curriculum requires further controls.\n\nProgressive versus direct compression.\n\nBoth use two textual and four intermediate latent tokens plus a 16-token final visual block. The progressive row is the paper's full model.\n\nPICABench-Superficial accuracy (%):\n\n|Compression strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|\n|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n|Direct compression|52.84|63.83|55.68|56.31|42.54|46.85|62.40|53.96|54.52|\n|Progressive compression (paper)|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|\n\nThe reported progressive model scores 1.80 points higher; these are single-run results.",
-          "markdown": "Following your suggestion, we retain the same recurrent latent tokens, final visual block, and trainable modules, but train using only terminal visual supervision and the generation loss. This control uses 1,253 planner updates and 537 generator updates. The table compares this new run with the full PhysFlow results reported in the paper.\n\nEditing accuracy (%) on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct; higher is better.\n\n| Training strategy | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |\n|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n| Terminal-only supervision | 53.84 | 64.48 | 57.73 | 59.18 | 42.57 | 46.68 | 63.59 | 55.71 | 55.57 |\n| Full PhysFlow | 54.45 | 65.19 | 58.52 | 57.99 | 44.91 | 47.31 | 64.32 | 56.43 | 56.32 |\n\nFull PhysFlow achieves 0.75 percentage points higher overall accuracy. Terminal-only scores higher on refraction (59.18 versus 57.99). These single-run scores compare training configurations as a whole; isolating contributions from individual supervision terms and the compression curriculum requires further controls.\n\nProgressive versus direct compression.\n\nBoth use two textual and four intermediate latent tokens plus a 16-token final visual block. The progressive row is the paper's full model.\n\nPICABench-Superficial accuracy (%):\n\n|Compression strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|\n|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n|Direct compression|52.84|63.83|55.68|56.31|42.54|46.85|62.40|53.96|54.52|\n|Progressive compression (paper)|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|\n\nThe reported progressive model scores 1.80 points higher; these are single-run results.",
-          "revision": "928480b77cfbe2ff"
+          "syncMarkdown": "Following your suggestion, we retain the same recurrent latent tokens, final visual block, and trainable modules, but train using only terminal visual supervision and the generation loss. This control uses 1,253 planner updates and 537 generator updates. The table compares this new run with the full PhysFlow results reported in the paper.\n\nEditing accuracy (%) on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct; higher is better.\n\n| Training strategy | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |\n|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n| Terminal-only supervision | 53.84 | 64.48 | 57.73 | 59.18 | 42.57 | 46.68 | 63.59 | 55.71 | 55.57 |\n| Full PhysFlow | 54.45 | 65.19 | 58.52 | 57.99 | 44.91 | 47.31 | 64.32 | 56.43 | 56.32 |\n\nFull PhysFlow achieves 0.75 percentage points higher overall accuracy. Terminal-only scores higher on refraction (59.18 versus 57.99). These single-run scores compare training configurations as a whole; isolating contributions from individual supervision terms and the compression curriculum requires further controls.",
+          "markdown": "Following your suggestion, we retain the same recurrent latent tokens, final visual block, and trainable modules, but train using only terminal visual supervision and the generation loss. This control uses 1,253 planner updates and 537 generator updates. The table compares this new run with the full PhysFlow results reported in the paper.\n\nEditing accuracy (%) on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct; higher is better.\n\n| Training strategy | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |\n|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n| Terminal-only supervision | 53.84 | 64.48 | 57.73 | 59.18 | 42.57 | 46.68 | 63.59 | 55.71 | 55.57 |\n| Full PhysFlow | 54.45 | 65.19 | 58.52 | 57.99 | 44.91 | 47.31 | 64.32 | 56.43 | 56.32 |\n\nFull PhysFlow achieves 0.75 percentage points higher overall accuracy. Terminal-only scores higher on refraction (59.18 versus 57.99). These single-run scores compare training configurations as a whole; isolating contributions from individual supervision terms and the compression curriculum requires further controls.",
+          "revision": "7a708dbbdcff450e"
+        },
+        {
+          "id": "direct-compression",
+          "title": "渐进压缩与直接压缩的比较",
+          "subject": "Response 5: Progressive versus direct compression",
+          "comments": [
+            {
+              "label": "Weakness 3 · compression curriculum",
+              "text": "Furthermore, the textual, visual, and joint reasoning ablations support the complementarity of the two modalities, but do not establish whether the progressive compression curriculum is more effective than learning latent conditioning with terminal supervision alone."
+            }
+          ],
+          "analysis": "独立比较渐进与直接压缩，保留相同最终 token 布局。表格报告直接压缩 54.52 与论文渐进模型 56.32，相差 1.80 个百分点；保留单次运行说明。",
+          "source": {
+            "block": "r3-direct-compression"
+          },
+          "status": "回复已成稿",
+          "pending": false,
+          "syncKey": "block:r3-direct-compression",
+          "syncMarkdown": "Both use two textual and four intermediate latent tokens plus a 16-token final visual block. The progressive row is the paper's full model.\n\nPICABench-Superficial accuracy (%):\n\n|Compression strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|\n|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n|Direct compression|52.84|63.83|55.68|56.31|42.54|46.85|62.40|53.96|54.52|\n|Progressive compression (paper)|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|\n\nThe reported progressive model scores 1.80 points higher; these are single-run results.",
+          "markdown": "Both use two textual and four intermediate latent tokens plus a 16-token final visual block. The progressive row is the paper's full model.\n\nPICABench-Superficial accuracy (%):\n\n|Compression strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|\n|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n|Direct compression|52.84|63.83|55.68|56.31|42.54|46.85|62.40|53.96|54.52|\n|Progressive compression (paper)|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|\n\nThe reported progressive model scores 1.80 points higher; these are single-run results.",
+          "revision": "d552881896fd29c2"
         },
         {
           "id": "general-editing",
           "title": "一般编辑能力：总体保持与类别权衡",
-          "subject": "Response 5: Further analysis of general editing performance",
+          "subject": "Response 6: Further analysis of general editing performance",
           "comments": [
             {
               "label": "Weakness 4",
@@ -432,6 +453,7 @@ window.PHYSFLOW_REPLIES = {
         {
           "items": [
             "terminal",
+            "direct-compression",
             "general-editing"
           ]
         }
