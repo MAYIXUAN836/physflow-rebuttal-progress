@@ -365,7 +365,7 @@ Relative to Monet, we train the latent plan through the image transformation it 
 > 状态：已接入 1 号 PICABench 同数据 SFT 结果；RISE 补测由 15 号追加。完整方法与 SFT 的生成器配置及更新数一致，总训练量不同。
 
 <!-- reply:sft-baseline:start -->
-The 54.26 row in Table 3 reports the original Qwen-Image-Edit-2511 backbone. The revised caption explicitly identifies it as “Original backbone” and states that it has no PhysTrace fine-tuning. We have now added a baseline fine-tuned on the same PhysTrace source-target pairs. The table reports PICABench-Superficial accuracy (%):
+We agree that a same-data fine-tuning baseline is needed to assess the benefit of our framework beyond dataset adaptation. The 54.26 row in Table 3 reports the original Qwen-Image-Edit-2511 backbone. The revised caption explicitly identifies it as “Original backbone” and states that it has no PhysTrace fine-tuning. We have now added a baseline fine-tuned on the same PhysTrace source-target pairs. The table reports PICABench-Superficial accuracy (%):
 
 |Configuration|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall (%)|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -383,7 +383,7 @@ Together, these results support PhysTrace as an effective training dataset and s
 > 2026-11-08 22:35 PST：2 号最终结果已独立核验，Overall 55.57；900 张与 4,112 QA 完整。该对照保留六个 recurrent latent tokens、16-token final visual block 和可训练模块，使用 planner 1,253 与 generator 537 更新。分项表对比本轮 55.57 与论文完整模型报告值 56.32；差 0.75 pp。实验与回复保持完成；作者已确认完整模型与本轮对照使用同一版训练数据；11 号直接压缩已完成核验，54.52；下表与论文主模型 56.32 比较，并非共用初始化的新配对复训。详见 最终结果记录及 独立核验。
 
 <!-- reply:terminal-only:start -->
-Following your suggestion, we retain the same recurrent latent tokens, final visual block, and trainable modules, but train using only terminal visual supervision and the generation loss. This control uses 1,253 planner updates and 537 generator updates. The table compares this new run with the full PhysFlow results reported in the paper.
+We appreciate your suggestion to evaluate terminal-only supervision under the same model structure. We retain the same recurrent latent tokens, final visual block, and trainable modules, but train using only terminal visual supervision and the generation loss. This control uses 1,253 planner updates and 537 generator updates. The table compares this new run with the full PhysFlow results reported in the paper.
 
 Editing accuracy (%) on PICABench-Superficial.
 
@@ -401,7 +401,7 @@ Full PhysFlow improves overall accuracy by 0.75 percentage points and outperform
 > 状态：已针对 Reviewer 3 单独组织回复；PhysFlow（2509）正在运行，结果与比较结论待补。
 
 <!-- reply:r3-physicedit:start -->
-Thank you for pointing out that our comparison using PhysicTran38K does not constitute a direct comparison with PhysicEdit. The score of 53.82 in Tables 4 and 9 corresponds to PhysFlow trained on PhysicTran38K, rather than PhysicEdit itself. We agree that this dataset comparison alone does not establish an advantage over PhysicEdit.
+You are right that our comparison using PhysicTran38K does not constitute a direct comparison with PhysicEdit. The score of 53.82 in Tables 4 and 9 corresponds to PhysFlow trained on PhysicTran38K, rather than PhysicEdit itself. We agree that this dataset comparison alone does not establish an advantage over PhysicEdit.
 
 To address this concern, we have added a direct comparison with PhysicEdit on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct. The table includes our results with Qwen-Image-Edit-2511.
 
@@ -419,7 +419,7 @@ Beyond this empirical comparison, we have also expanded the discussion in Sectio
 > 状态：回复及论文对应表述已完成并同步，checklist 已勾选。新增 Hybrid／Extract 任务要求与物理过程监督的区别，使用 “We interpret” 表明作者解释；Add 仅报告数值。候选案例与 Table 6 权重／逐样本评分尚未对应，不作为下降原因的证据。
 
 <!-- reply:general-editing:start -->
-Thank you for encouraging us to examine the category-level results more closely and explore why some categories decline despite broadly maintained overall general editing performance. Table 6 reports an overall ImgEdit-Bench score of 4.39 for PhysFlow and 4.41 for Qwen-Image-Edit-2511. PhysFlow scores higher in six of nine categories, while the largest declines occur in Hybrid (3.76 to 3.26) and Extract (4.16 to 3.91).
+We value your suggestion to examine the category-level results more closely and explore why some categories decline despite broadly maintained overall general editing performance. Table 6 reports an overall ImgEdit-Bench score of 4.39 for PhysFlow and 4.41 for Qwen-Image-Edit-2511. PhysFlow scores higher in six of nine categories, while the largest declines occur in Hybrid (3.76 to 3.26) and Extract (4.16 to 3.91).
 
 We attribute the declines in Hybrid and Extract to task-dependent transfer from physical-process supervision. PhysTrace emphasizes causally connected state evolution within a physical process through textual rationales and intermediate visual states (Sections 3.2 to 3.4). Hybrid combines separately specified editing operations within one instruction, whereas Extract requires isolating a subject while preserving its identity and visual details. This difference in task focus may help explain why improvements in physical-process editing do not transfer uniformly to Hybrid and Extract.
 
