@@ -269,7 +269,7 @@ Inference seeds: 42, 215, and 3407, with model checkpoints fixed.
 <!-- reply:physical-evaluation:start -->
 **Response 7: Multimodal-model evaluation and human evidence**
 
-Thank you very much for raising this concern about objective physical correctness. We appreciate your emphasis on the physical basis of our evaluation.
+Thank you very much for raising this concern about objective physical correctness. We appreciate your emphasis on the physical basis of our evaluation, which is essential for reliably assessing physics-aware image editing.
 
 (1) PICABench specifies physical criteria for each editing example. Its PICAEval protocol uses human-annotated regions and manually reviewed yes/no questions about physical consequences, such as whether object removal also removes its shadow. A vision-language model (VLM) answers these questions by inspecting the edited image, and accuracy measures exact agreement with predefined reference answers. Thus, the benchmark's task design and annotations specify the physical requirements, while the VLM checks their visible consequences ([PICABench, Section 3.3 and Appendix A.3](https://arxiv.org/html/2510.17681v3#S3.SS3)).
 
