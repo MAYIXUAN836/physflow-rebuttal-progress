@@ -144,7 +144,9 @@ All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superfic
 <!-- reply:sampling:start -->
 **Response 3: Further ablations on frame sampling methods, visual token counts, and compression strategies**
 
-Thank you for these helpful suggestions. We have added ablations on frame sampling, visual token counts, and compression strategies. Visual inspection showed that time-uniform sampling can leave most changes concentrated between a few sampled frames. We therefore use change-uniform sampling in PhysTrace construction to capture richer visual dynamics (Figure 5(d); Appendix A.2). Following your suggestion, we compare both methods under the same PhysTrace settings. All results report PICABench-Superficial accuracy (%):
+Thank you for these helpful suggestions. We have added ablations on frame sampling, visual token counts, and compression strategies.
+
+Visual inspection showed that time-uniform samples can leave changes concentrated between a few frames. We use change-uniform sampling to capture richer dynamics in PhysTrace (Figure 5(d); Appendix A.2). Our original manuscript lacked this quantitative comparison. Following your suggestion, we have now added it under the same PhysTrace settings. PICABench-Superficial accuracy (%):
 
 |Sampling|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
