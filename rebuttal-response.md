@@ -94,14 +94,14 @@ We sincerely appreciate your suggestion, which helped us present the relationshi
 
 ## Reviewer 62MG
 
-> 编辑说明：十个回复点采用固定编号 Response 1–Response 10，按 (1–3)、(4–5)、(6–8)、(9–10) 分为四条评论，每条不超过 5,000 字符。完整分组与实时字符计数见网页回复面板；表格空白不表示实验已完成。
+> 编辑说明：九个回复点采用固定编号 Response 1–Response 9，按 (1–3)、(4)、(5–7)、(8–9) 分为四条评论，每条不超过 5,000 字符。完整分组与实时字符计数见网页回复面板；表格空白不表示实验已完成。
 
 ### Response 1: Same-data image-pair fine-tuning baseline
 
 <!-- reply:r2-sft-baseline:start -->
 Dear Reviewer 62MG,
 
-Thank you very much for your careful reading and detailed, constructive feedback. We sincerely appreciate your recognition of the motivation, the framework, and the empirical improvements. Your questions have helped us identify where the original manuscript needed clearer explanations and stronger supporting evidence. We have carefully considered every concern and suggestion. We organize our response into ten points below, covering your concerns and questions.
+Thank you very much for your careful reading and detailed, constructive feedback. We sincerely appreciate your recognition of the motivation, the framework, and the empirical improvements. Your questions have helped us identify where the original manuscript needed clearer explanations and stronger supporting evidence. We have carefully considered every concern and suggestion. We organize our response into nine points below, covering your concerns and questions.
 
 **Response 1: Same-data image-pair fine-tuning baseline**
 
@@ -146,7 +146,7 @@ All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superfic
 
 Thank you for these helpful suggestions. We have added ablations on frame sampling, visual token counts, and compression strategies.
 
-Visual inspection showed that time-uniform samples can leave changes concentrated between a few frames. We use change-uniform sampling to capture richer dynamics in PhysTrace (Figure 5(d); Appendix A.2). Our original manuscript lacked this quantitative comparison. Following your suggestion, we have now added it under the same PhysTrace settings. PICABench-Superficial accuracy (%):
+(1) Frame sampling: Visual inspection showed that time-uniform samples can leave changes concentrated between a few frames. We use change-uniform sampling to capture richer dynamics in PhysTrace (Figure 5(d); Appendix A.2). Our original manuscript lacked this quantitative comparison. Following your suggestion, we have now added it under the same PhysTrace settings. PICABench-Superficial accuracy (%):
 
 |Sampling|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -155,7 +155,7 @@ Visual inspection showed that time-uniform samples can leave changes concentrate
 
 Change-uniform improves overall accuracy by 1.23 points, demonstrating the effectiveness of our sampling strategy (Appendix C.7).
 
-Alternative token counts (results pending). We test 1, 2, or 4 tokens for each of the four intermediate visual states, keeping the textual and final visual blocks fixed.
+(2) Alternative token counts (results pending): We test 1, 2, or 4 tokens for each of the four intermediate visual states, keeping the textual and final visual blocks fixed.
 
 |Tokens per state|Total intermediate tokens|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -163,7 +163,7 @@ Alternative token counts (results pending). We test 1, 2, or 4 tokens for each o
 |2|8||||||||||
 |4|16||||||||||
 
-Progressive compression sequence versus direct compression. After explicit warm-up, we replace textual rationales and intermediate visual blocks with latent tokens either progressively or all at once, using the same final latent layout.
+(3) Progressive versus direct compression: After explicit warm-up, we replace textual rationales and intermediate visual blocks with latent tokens either progressively or all at once, using the same final latent layout.
 
 |Compression strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -173,19 +173,7 @@ Progressive compression sequence versus direct compression. After explicit warm-
 The reported progressive model scores 1.80 points higher; these are single-run results.
 <!-- reply:sampling:end -->
 
-### Response 4: Latent-token roles and supervision
-
-<!-- reply:latent-definition:start -->
-**Response 4: Latent-token roles and supervision**
-
-Thank you for asking how the intermediate visual tokens relate to physical state transitions. We first clarify their intended roles and supervision; Response 5 then presents the representation analyses and controlled interventions.
-
-The six-token sequence Z = [h, l, m₁, m₂, m₃, m₄] assigns h and l to high-level physical rationales and low-level transition descriptions, and m₁ through m₄ to ordered intermediate visual states. A separate final visual block F contains 16 tokens.
-
-In Stage I, each 16-token intermediate block aligns with its frame encoding from a moving-average teacher. Stage II replaces these blocks sequentially with single latent tokens and removes each replaced block's direct alignment loss. Later uncompressed blocks, final-block alignment, and the flow-matching loss supervise the compressed states. After all replacements, final-block alignment and flow matching remain (Section 3.4). These objectives define intended roles; physical-state correspondence requires empirical evidence.
-<!-- reply:latent-definition:end -->
-
-### Response 5: Physical information in the latent representations
+### Response 4: Physical information in the latent representations
 
 > 2026-11-09：已同步最终 Figure 7 四联图。a：原角色聚类支持压缩后的角色组织；b：六领域线性探针平衡准确率 86.91%；c：十一项探索中的七项展示子集，统一报告配对准确率；Phase change 为固定读出器在 256 对／128 新家族上的独立确认，其余六项各 128 对／64 家族；d：保留 64 例编辑顺序干预。全部十一项、强对照、阴性结果和逐 token 对齐未成立的结论保留。v14 结果与对照快照、确认集审计。
 
@@ -194,9 +182,9 @@ In Stage I, each 16-token intermediate block aligns with its frame encoding from
 > 6 号新增物理类别与亮度分析，见 报告与三组图件。原始 taxonomy 为六领域、26 细类，另有八类 PICA 标签。六领域平衡准确率 86.91% vs 源图加指令 76.28%（配对增益名义 CI +4.10 至 +17.90 pp）；同布局预训练对照为 85.94%，与 PhysFlow 的差异未确立。82 个照明测试视频的亮度变化读出 R²=0.370，指令 TF-IDF 为 0.365，预训练为 0.402。可主张压缩 latent 保留了可读出的物理类别与视觉变化信息；训练获得额外物理规律、逐状态对齐与因果物理作用仍缺证据。所有结果属于探索性后续分析。
 
 <!-- reply:latent-representation:start -->
-**Response 5: Physical information in the latent representations**
+**Response 4: Physical information in the latent representations**
 
-We appreciate your careful distinction between sensitivity to token order and evidence of physically meaningful representations. Following your suggestion, we have conducted three additional experiments to analyze the latent representations and visualized their results in Figure 7.
+We appreciate your distinction between token-order sensitivity and evidence of physically meaningful representations. Our six-token plan contains text tokens for high-level physical rationales and low-level transition descriptions, plus four intermediate visual tokens. Stage II compresses frame-aligned intermediate blocks into single tokens and removes their direct alignment losses. Later uncompressed blocks and the separate final visual block retain alignment supervision, alongside flow matching (Section 3.4). We examine the information these tokens retain through the representation analyses and controlled interventions in Figure 7.
 
 (a) Token-role structure. The original clustering visualization supports role-dependent representation structure after compression.
 
@@ -221,12 +209,12 @@ The four analyses show that (a) the latent space is organized by token role; (b)
 
 附件（v15）：[Overleaf 替换包 ZIP](attachments/physflow-latent-appendix.zip) · [LaTeX 片段](attachments/latent-representation-analysis.tex) · [四联图 PDF](attachments/latent-analysis-four.pdf) · [单页附录预览 PDF](attachments/latent-appendix-preview.pdf)。
 
-### Response 6: Statistical uncertainty and repeated runs
+### Response 5: Statistical uncertainty and repeated runs
 
 > 本条按 training seeds 与 inference seeds 两类重复试验汇报。训练种子为 43/44/45/46，仅完整 PhysFlow，推理 seed 固定为 42；推理种子为 42/215/3407，当前按 RISEBench 执行范围。表中均值和标准差待完整结果核验后填入。
 
 <!-- reply:statistics:start -->
-**Response 6: Statistical uncertainty and repeated runs**
+**Response 5: Statistical uncertainty and repeated runs**
 
 Thank you for highlighting the importance of stability across random seeds. Following your suggestion, we assess stability through repeated runs with different training and inference seeds, reporting mean accuracy ± standard deviation.
 
@@ -244,12 +232,12 @@ Inference seeds: 42, 215, and 3407, with model checkpoints fixed.
 |PhysFlow|Pending|
 <!-- reply:statistics:end -->
 
-### Response 7: Multimodal-model evaluation and human evidence
+### Response 6: Multimodal-model evaluation and human evidence
 
 > 状态：按作者确认的两点组织：PICABench 预设物理检查问题和参考答案，VLM 检查可见结果；17 人、100 对样本的 human study 从整体结果提供支持。未声称逐样本人机一致率或对物理规律的完备验证。13 号实验安排与完成状态不变。
 
 <!-- reply:physical-evaluation:start -->
-**Response 7: Multimodal-model evaluation and human evidence**
+**Response 6: Multimodal-model evaluation and human evidence**
 
 Thank you very much for raising this concern about objective physical correctness. We appreciate your emphasis on the physical basis of our evaluation, which is essential for reliably assessing physics-aware image editing.
 
@@ -258,12 +246,12 @@ Thank you very much for raising this concern about objective physical correctnes
 (2) Our human study also provides complementary evidence. We ask 17 participants to compare PhysFlow with five competing methods on 100 image-instruction pairs randomly sampled from PICABench and RISEBench. Participants favor PhysFlow in physical plausibility. This overall trend is consistent with our benchmark findings and provides human support for improved physical plausibility.
 <!-- reply:physical-evaluation:end -->
 
-### Response 8: Originality and positioning relative to closely related approaches
+### Response 7: Originality and positioning relative to closely related approaches
 
 > 作者已确认本版：说明文字物理约束与视觉状态的联合内化动机，比较 Monet、EndoCoT 和 PhysicEdit，说明 PhysTrace 的作用；首次主张限定为 physics-aware image editing 中的联合内化。直接压缩消融仍待结果。
 
 <!-- reply:r2-method-contribution:start -->
-**Response 8: Originality and positioning relative to closely related approaches**
+**Response 7: Originality and positioning relative to closely related approaches**
 
 Thank you very much for carefully examining the originality of our work. We acknowledge the inspiration from prior work on progressive chain-of-thought internalization, continuous latent reasoning, and visual feature prediction.
 
@@ -276,24 +264,24 @@ Thank you very much for carefully examining the originality of our work. We ackn
 Together, PhysFlow turns complementary textual and visual process supervision into a unified, compact latent plan trained directly for image editing.
 <!-- reply:r2-method-contribution:end -->
 
-### Response 9: Training and evaluation data sources
+### Response 8: Training and evaluation data sources
 
 > 状态：回复已完成并接入，按作者要求勾选 checklist 的 data-split 项。下段说明 PICA-100K 与 PICABench 的构建方式及用途。合稿核验备注：原稿最终版本与本轮 +899 补实验版本仍需分别对应实际训练清单、checkpoint 和检查记录；来源说明不等同于跨集近重复审计。
 
 <!-- reply:data-split:start -->
-**Response 9: Training and evaluation data sources**
+**Response 8: Training and evaluation data sources**
 
 Thank you for raising the question of training and evaluation data separation. We have clarified the construction sources and the respective roles of PICA-100K, PhysTrace, and PICABench in Section 3.2 and Appendix A.
 
 PICA-100K provides training data, while PICABench provides a separately curated evaluation set of 900 editing examples (Pu et al., Sections 3.1 and 3.2, and Section 3.4). The authors collect PICABench evaluation images from licensed and public sources and construct PICA-100K from generated source images and synthetic videos. We start constructing our PhysTrace training dataset with PICA-100K image-instruction pairs (Section 3.2 of our manuscript).
 <!-- reply:data-split:end -->
 
-### Response 10: Parameter count, peak memory, and latency
+### Response 9: Parameter count, peak memory, and latency
 
 > 状态：实验完成，已接入回复。对应 checklist：parameters-memory。全部数值采用作者本轮确认表格。
 
 <!-- reply:cost:start -->
-**Response 10: Parameter count, peak memory, and latency**
+**Response 9: Parameter count, peak memory, and latency**
 
 Thank you for suggesting parameter-count and peak-memory comparisons in addition to latency. We have added these measurements to Table 5 to give a fuller account of inference costs.
 
