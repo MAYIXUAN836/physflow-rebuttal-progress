@@ -426,12 +426,12 @@ To address this concern, we have added a direct comparison with PhysicEdit on PI
 Beyond this empirical comparison, we have also expanded the discussion in Section 2.2 to clarify the methodological differences. PhysicEdit learns latent visual transition priors from videos and combines them with explicit textual reasoning to guide image editing. PhysFlow couples textual physical reasoning with visual evolution in a continuous latent plan. Text-derived latent states guide subsequent visual transitions, while downstream visual supervision and editing losses train these text-derived latent states to retain information useful for image generation. Our progressive compression curriculum internalizes explicit physical rationales and intermediate visual states into this coupled reasoning process. The resulting plan connects physical explanations to their visual consequences and guides image editing without decoding textual rationales or intermediate images at inference.
 <!-- reply:r3-physicedit:end -->
 
-### R3: General-editing trade-offs
+### R3: Further analysis of general editing performance
 
 > 状态：回复及论文对应表述已完成并同步，checklist 已勾选。新增 Hybrid／Extract 任务要求与物理过程监督的区别，使用 “We interpret” 表明作者解释；Add 仅报告数值。候选案例与 Table 6 权重／逐样本评分尚未对应，不作为下降原因的证据。
 
 <!-- reply:general-editing:start -->
-Thank you for pointing out the category-level declines. Table 6 reports an overall ImgEdit-Bench score of 4.39 for PhysFlow and 4.41 for Qwen-Image-Edit-2511. PhysFlow scores higher in six of nine categories, while the largest declines occur in Hybrid (3.76 to 3.26) and Extract (4.16 to 3.91), with a smaller decrease in Add (4.45 to 4.26).
+Thank you for encouraging us to examine the category-level results more closely and explore why some categories decline despite broadly maintained overall general editing performance. Table 6 reports an overall ImgEdit-Bench score of 4.39 for PhysFlow and 4.41 for Qwen-Image-Edit-2511. PhysFlow scores higher in six of nine categories, while the largest declines occur in Hybrid (3.76 to 3.26) and Extract (4.16 to 3.91), with a smaller decrease in Add (4.45 to 4.26).
 
 We interpret the declines in Hybrid and Extract as task-dependent transfer from physical-process supervision. PhysTrace emphasizes causally connected state evolution within a physical process through textual rationales and intermediate visual states (Sections 3.2 to 3.4). Hybrid combines separately specified editing operations within one instruction, whereas Extract requires isolating a subject while preserving its identity and visual details. [ImgEdit, Sections 3.1 and 4.2](https://arxiv.org/html/2505.20275v1#S3.SS1).
 
