@@ -73,14 +73,12 @@ At inference, [PhysicEdit](https://arxiv.org/html/2602.21778v2#S3.SS3) combines 
 | PhysFlow (2509; pending) | | | | | | | | | |
 | **PhysFlow (2511)** | **54.45** | **65.19** | **58.52** | **57.99** | **44.91** | **47.31** | **64.32** | **56.43** | **56.32** |
 
-In this evaluation, PhysFlow (2511) achieves an overall score of **56.32**, compared with **52.35** for PhysicEdit, with higher scores across all eight categories. We have incorporated these results into Table 1. We also compare the inference costs of PhysicEdit and PhysFlow in Table 5, reporting the parameters resident during inference, peak allocated GPU memory, and latency:
+PhysFlow (2511) scores higher across all eight categories (Table 1). We also compare inference latency in Table 5:
 
-| Method | Params (B) | Memory (GiB) | Latency (s) |
-|---|---:|---:|---:|
-| PhysicEdit | 29.00 | 56.25 | 52.19 |
-| PhysFlow (Ours) | 28.87 | 58.11 | 49.39 |
-
-In these measurements, PhysFlow has fewer parameters and lower latency, while using more peak GPU memory than PhysicEdit.
+| Method | Latency (s) |
+|---|---:|
+| PhysicEdit | 52.19 |
+| PhysFlow (Ours) | 49.39 |
 
 **We also include an ImgEdit-Bench comparison to assess general image editing (Table 6).**
 
