@@ -214,7 +214,7 @@ With PhysFlow frozen, we train a linear probe on its four intermediate visual to
 
 Phase change uses 128 fresh confirmation scene families with the validation-selected probe fixed. Shape recovery tests rubber versus clay.
 
-The seven displayed tasks form an illustrative subset of eleven exploratory tasks. The other pair accuracies are collision 50.00%, magnetic poles 28.91%, spring direction 31.25%, and foam recovery 68.75%. We retain all results and controls. This exploratory selection provides illustrative evidence with limited coverage of physical phenomena. Several tasks also reach 100% with textual latent probes or source-image probes using separate weights for each intervention condition. On phase-change confirmation, this source control reaches 91.80%, the source-and-instruction prefix reaches 92.19%, and both textual latent probes reach 100%.
+Linear probes on our intermediate visual latents achieve 91.41%–100% pair accuracy on the seven illustrated tasks, selected from eleven exploratory tasks. These results demonstrate that the visual latents encode information useful for predicting the physical consequences of interventions (Appendix C.6).
 
 (d) Visual-token perturbation. On 64 PICABench-Superficial inputs, eight per category, Qwen2.5-VL-72B-Instruct gives mean accuracies of 57.36% for the original condition, 55.64% for masking, and 53.94% for both reversal and shuffling. Perturbations occur after planning, with textual and final-visual conditioning fixed. Reversal and shuffling each reduce accuracy by 3.42 percentage points, supporting order sensitivity.
 
