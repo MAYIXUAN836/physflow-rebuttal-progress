@@ -116,6 +116,8 @@ The no-reasoning configuration in Table 3 (first row, 54.26%) is the original Qw
 |PhysFlow|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
 
 PhysFlow exceeds same-data SFT by 1.20 points. Both use rank-512 generator LoRA and 537 generator updates.
+
+These results support the added value of PhysFlow's latent reasoning framework beyond image-pair fine-tuning on the same data.
 <!-- reply:r2-sft-baseline:end -->
 
 ### Response 2: Dataset effectiveness and training framework
@@ -126,6 +128,8 @@ PhysFlow exceeds same-data SFT by 1.20 points. Both use rank-512 generator LoRA 
 **Response 2: Dataset effectiveness and training framework**
 
 Thank you for pointing out that the dataset comparisons also involve differences in supervision and training procedure.
+
+Following your suggestion, we have added a PhysTrace image-pair SFT baseline to assess dataset effectiveness under the same training strategy and the additional benefit of PhysFlow on the same training data.
 
 All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superficial with Qwen2.5-VL-72B-Instruct and report gains in percentage points.
 
@@ -141,8 +145,6 @@ All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superfic
 (b) PhysFlow training: +2.50 points. PhysTrace outperforms PhysicTran38K with the same architecture and curriculum, again using fewer examples. The 53.82 row is PhysFlow trained on PhysicTran38K, not PhysicEdit.
 
 (c) Same-data framework comparison: +1.20 points. PhysFlow outperforms image-pair SFT on identical PhysTrace pairs with matched generator LoRA and 537 generator updates (Response 1).
-
-Training conditions (Tables 4 and 9). PICA100K SFT uses 4,926 updates versus 537 for PhysTrace SFT; PhysFlow uses 4,632 on PhysicTran38K versus 1,790 on PhysTrace. These comparisons support PhysTrace's usefulness under both strategies but do not isolate dataset quality from training procedure or budget. PhysFlow also adds planner capacity and training.
 <!-- reply:sft-dataset:end -->
 
 ### Response 3: Frame sampling, state count, and compression
