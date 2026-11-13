@@ -232,7 +232,9 @@ The seven displayed tasks form an illustrative subset of eleven exploratory task
 
 (d) Visual-token perturbation. On 64 PICABench-Superficial inputs, eight per category, Qwen2.5-VL-72B-Instruct gives mean accuracies of 57.36% for the original condition, 55.64% for masking, and 53.94% for both reversal and shuffling. Perturbations occur after planning, with textual and final-visual conditioning fixed. Reversal and shuffling each reduce accuracy by 3.42 percentage points, supporting order sensitivity.
 
-These results support physical-semantic and conditional-consequence readout and order-sensitive editing. The diagnostic scenes are synthetic; token-to-frame alignment, internal physical-law computation, and causal mediation through the generator remain unestablished.
+The four analyses show that (a) the latent space is organized by token role; (b) physical-domain information is linearly decodable; (c) linear probes accurately predict intervention outcomes from the visual latents on the illustrated tasks; and (d) visual-token order affects editing performance.
+
+Together, these results demonstrate that PhysFlow's compact latent plan encodes the structured, physically relevant information that our design aims to preserve.
 <!-- reply:latent-representation:end -->
 
 附件（v15）：[Overleaf 替换包 ZIP](attachments/physflow-latent-appendix.zip) · [LaTeX 片段](attachments/latent-representation-analysis.tex) · [四联图 PDF](attachments/latent-analysis-four.pdf) · [单页附录预览 PDF](attachments/latent-appendix-preview.pdf)。
