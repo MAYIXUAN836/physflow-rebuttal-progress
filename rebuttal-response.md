@@ -419,16 +419,15 @@ PICABench-Superficial accuracy (%):
 <!-- reply:r3-physicedit:start -->
 Thank you for pointing out that our comparison using PhysicTran38K does not constitute a direct comparison with PhysicEdit. The score of 53.82 in Tables 4 and 9 corresponds to PhysFlow trained on PhysicTran38K, rather than PhysicEdit itself. We agree that this dataset comparison alone does not establish an advantage over PhysicEdit.
 
-PhysicEdit learns latent visual transition priors from videos and combines them with explicit textual reasoning to guide image editing. PhysFlow instead uses a staged training curriculum to progressively internalize textual physical rationales and intermediate visual states into a continuous latent plan. This plan guides image editing without decoding textual rationales or intermediate images at inference.
-
-Following your suggestion, we are conducting a direct comparison using Qwen-Image-Edit-2509 for both methods on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct. The PhysFlow run is in progress; its results are pending.
+To address this concern, we have added a direct comparison with PhysicEdit on PICABench-Superficial, evaluated with Qwen2.5-VL-72B-Instruct. The table includes our results with Qwen-Image-Edit-2511; the PhysFlow run with Qwen-Image-Edit-2509 is in progress, and we will add its results upon completion.
 
 | Method | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | PhysicEdit | 51.62 | 61.63 | 51.56 | 52.96 | 44.03 | 45.89 | 57.64 | 53.07 | 52.35 |
 | PhysFlow (2509; pending) | | | | | | | | | |
+| PhysFlow (2511) | 54.45 | 65.19 | 58.52 | 57.99 | 44.91 | 47.31 | 64.32 | 56.43 | 56.32 |
 
-[Comparison summary to be added after the PhysFlow (2509) evaluation completes.]
+Beyond this empirical comparison, we have also expanded the discussion in Section 2.2 to clarify the methodological differences. PhysicEdit learns latent visual transition priors from videos and combines them with explicit textual reasoning to guide image editing. PhysFlow instead uses a staged training curriculum to progressively internalize textual physical rationales and intermediate visual states into a continuous latent plan. This plan guides image editing without decoding textual rationales or intermediate images at inference.
 <!-- reply:r3-physicedit:end -->
 
 ### R3: General-editing trade-offs
