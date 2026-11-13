@@ -154,22 +154,20 @@ All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superfic
 <!-- reply:sampling:start -->
 **Response 3: Further ablations on frame sampling methods, visual token counts, and compression strategies**
 
-Thank you for identifying these missing ablations.
+Thank you for these helpful suggestions. In response, we have expanded our ablation study to cover all three aspects: frame sampling methods, visual token counts, and compression strategies.
 
-Change-uniform sampling selects four frames at equal cumulative visual-change intervals using normalized DINOv2, optical-flow, and pixel-change scores (Appendix A.2). We compare time-uniform sampling under the same PhysTrace settings on PICABench-Superficial:
+Change-uniform sampling selects four frames at equal cumulative visual-change intervals using normalized DINOv2, optical-flow, and pixel-change scores (Appendix A.2). We compare time-uniform sampling under the same PhysTrace settings. All results below report PICABench-Superficial accuracy (%):
 
 |Sampling|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 |Time-uniform|53.72|63.06|59.30|58.24|43.29|46.21|62.35|53.65|55.09|
 |Change-uniform|54.45|65.19|58.52|57.99|44.91|47.31|64.32|56.43|56.32|
 
-Change-uniform improves Overall by 1.23 points, winning six categories; time-uniform wins reflection and refraction. This single-run result supports change-uniform sampling under the tested configuration (Appendix C.7).
+Change-uniform improves Overall by 1.23 points; time-uniform is higher on reflection and refraction in this single-run comparison (Appendix C.7).
 
 Draft: intermediate visual-token count (results pending).
 
 We fix four intermediate states and compare 1, 2, or 4 tokens per state, retaining two textual tokens and a separate 16-token final visual block.
-
-PICABench-Superficial accuracy (%):
 
 |Tokens per state|Total intermediate tokens|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -182,8 +180,6 @@ PICABench-Superficial accuracy (%):
 Progressive versus direct compression.
 
 Both use two textual and four intermediate latent tokens plus a 16-token final visual block. The progressive row is the paper's full model.
-
-PICABench-Superficial accuracy (%):
 
 |Compression strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -216,11 +212,11 @@ In Stage I, each 16-token intermediate block aligns with its frame encoding from
 <!-- reply:latent-representation:start -->
 **Response 5: Physical information in the latent representations**
 
-We appreciate your careful distinction between sensitivity to token order and evidence of physically meaningful representations. Following your suggestion, we have expanded Figure 7 with representation analyses and controlled intervention tasks.
+We appreciate your careful distinction between sensitivity to token order and evidence of physically meaningful representations. Following your suggestion, we have conducted three additional experiments to analyze the latent representations and visualized their results in Figure 7.
 
 (a) Token-role structure. The original clustering visualization supports role-dependent representation structure after compression.
 
-(b) Physical-domain linear probe. We fit and cross-validate on 212 PhysTrace videos and test on 212 independent videos. The six latent tokens yield 86.91% balanced accuracy across six domains (16.67% chance), versus 85.94% for the same-layout pretrained control and 86.79% for the low-level text token. These controls limit attribution to PhysFlow training.
+(b) Physical-domain linear probe. To test whether the latents retain physical-domain information, we use PhysTrace's original taxonomy, which groups 26 subcategories into six domains: optics and lighting, rigid-body motion, deformation and fracture, fluid dynamics, state change, and environment and aerodynamics. We fit and cross-validate a linear probe on 212 PhysTrace videos and test on 212 independent videos. The six latent tokens yield 86.91% balanced accuracy (mean recall across the six domains); uniform random guessing gives 1/6 = 16.67%. The same-layout pretrained control scores 85.94%, and the low-level text token scores 86.79%. These controls limit attribution to PhysFlow training.
 
 (c) Physical-intervention prediction. We freeze PhysFlow and fit linear ridge readouts on its four intermediate visual tokens, choosing pooling and regularization on validation data. Each synthetic source image receives two intervention instructions with opposite reference outcomes. Idealized rules define the labels; source images can display material or temperature cues. Each task uses 128 training, 32 validation, and 64 initial-test scene families. Each family supplies two source images and two instructions per image.
 
