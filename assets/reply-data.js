@@ -170,16 +170,16 @@ window.PHYSFLOW_REPLIES = {
               "text": "Although PhysFlow consistently improves upon its backbone, the absolute gains remain relatively modest. For example, RISEBench accuracy increases from 8.06% to 9.44% (Table 2), corresponding to approximately five additional successful examples out of roughly 360, as inferred from the reported category-level results.\n\nThe paper does not report repeated-run variance or confidence intervals for its main benchmark comparisons. Therefore, the robustness of these improvements across training seeds and evaluation samples remains unclear."
             }
           ],
-          "analysis": "主表是单次结果，尚不能回答跨训练随机性的稳定性。4 号改变推理 seed，12 号才是重复训练，两者不能替代。均值、标准差及配对置信区间须等实际产物齐全后填写。 论文对应：§4.3；Appendix C.9。已说明单次结果及统计局限；主 benchmark 多 seed 与置信区间仍待结果。 已预留重复训练的均值 ± 标准差表和配对差值／95% CI 表。训练 seeds、生成 seeds 与样本不确定性分别交代，实际 seed、完成轮数、统计方法和数值均待回填。",
+          "analysis": "训练 seeds 43/44/45/46 仍在运行；作者要求本轮诚恳说明算力有限及训练耗时，待训练和评测完成后在后续回复补充。推理 seeds 42/215/3407 已按作者确认的三组分数回填：Base 8.06/9.17/8.89，PhysFlow 9.44/11.39/9.17；mean ± sample SD 为 8.71 ± 0.58、10.00 ± 1.21，三组均提高，平均提升 1.29 个百分点。这组汇总由作者确认，不能套用另一组 Qwen72 逐样本结果的配对置信区间。",
           "source": {
             "block": "statistics"
           },
-          "status": "seed 与统计表已预留 · 待回填",
+          "status": "推理 seed 结果已回填 · 训练仍在进行",
           "pending": true,
           "syncKey": "block:statistics",
-          "syncMarkdown": "**Response 5: Statistical uncertainty and repeated runs**\n\nThank you for highlighting the importance of stability across random seeds. Following your suggestion, we assess stability through repeated runs with different training and inference seeds, reporting mean accuracy ± standard deviation.\n\nTraining seeds: 43, 44, 45, and 46, with inference seed fixed at 42.\n\n|Method|PICABench-Superficial mean ± SD (%)|RISEBench mean ± SD (%)|\n|---|---:|---:|\n|PhysFlow|Pending|Pending|\n\nInference seeds: 42, 215, and 3407, with model checkpoints fixed.\n\n|Method|RISEBench mean ± SD (%)|\n|---|---:|\n|Qwen-Image-Edit-2511|Pending|\n|PhysFlow|Pending|",
-          "markdown": "**Response 5: Statistical uncertainty and repeated runs**\n\nThank you for highlighting the importance of stability across random seeds. Following your suggestion, we assess stability through repeated runs with different training and inference seeds, reporting mean accuracy ± standard deviation.\n\nTraining seeds: 43, 44, 45, and 46, with inference seed fixed at 42.\n\n|Method|PICABench-Superficial mean ± SD (%)|RISEBench mean ± SD (%)|\n|---|---:|---:|\n|PhysFlow|Pending|Pending|\n\nInference seeds: 42, 215, and 3407, with model checkpoints fixed.\n\n|Method|RISEBench mean ± SD (%)|\n|---|---:|\n|Qwen-Image-Edit-2511|Pending|\n|PhysFlow|Pending|",
-          "revision": "9adf0ae4b2e83e6a"
+          "syncMarkdown": "**Response 5: Statistical uncertainty and repeated runs**\n\nThank you for highlighting seed stability.\n\nWe sincerely apologize that limited compute and lengthy training prevent us from providing repeated-training results in this response period. Training is ongoing; we will add the results in a follow-up response once training and evaluation are complete.\n\nInference seeds: 42, 215, and 3407, with model checkpoints fixed.\n\n|Method|RISEBench mean ± SD (%)|\n|---|---:|\n|Qwen-Image-Edit-2511|8.71 ± 0.58|\n|PhysFlow|10.00 ± 1.21|\n\nPhysFlow outperforms the backbone on all three inference seeds, with a mean RISEBench gain of 1.29 percentage points.",
+          "markdown": "**Response 5: Statistical uncertainty and repeated runs**\n\nThank you for highlighting seed stability.\n\nWe sincerely apologize that limited compute and lengthy training prevent us from providing repeated-training results in this response period. Training is ongoing; we will add the results in a follow-up response once training and evaluation are complete.\n\nInference seeds: 42, 215, and 3407, with model checkpoints fixed.\n\n|Method|RISEBench mean ± SD (%)|\n|---|---:|\n|Qwen-Image-Edit-2511|8.71 ± 0.58|\n|PhysFlow|10.00 ± 1.21|\n\nPhysFlow outperforms the backbone on all three inference seeds, with a mean RISEBench gain of 1.29 percentage points.",
+          "revision": "cc88dc374ca605fd"
         },
         {
           "id": "physical-evaluation",
