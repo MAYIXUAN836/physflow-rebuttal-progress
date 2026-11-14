@@ -10,7 +10,7 @@
 
 ## 修改总览：给所有审稿人和 AC
 
-> 本地标蓝修订稿已完成编译与排版检查：正文 10 页，总计 22 页；尚未上传 Overleaf / OpenReview。下方为开场回复草稿，论文上传后再作为正式修改总览提交。正文、附录与图表编号已核对。未完成的新实验不列为已完成。
+> 2026-11-13：已按当前本地 LaTeX 的实际正文与附录核对总览，正文 6 项、附录 5 项。仅列已写入源码的修改；token 数量与重复运行实验未列为已完成。本次核对本地稿，不据旧目录日期或旧上传记录判断当前线上稿状态。
 
 <!-- reply:overview:start -->
 Dear Reviewers and ACs,
@@ -22,21 +22,19 @@ We summarize the main revisions below.
 **In the main paper:**
 
 1. Expanded the discussion of PhysicEdit, EndoCoT, and Monet to clarify their relationship with our method.
-2. Added experiments comparing PhysFlow with a direct fine-tuning baseline using the same PhysTrace source-target image pairs.
-3. Added controlled experiments to better separate the benefits of dataset adaptation from those of structured latent reasoning.
-4. Added experiments comparing PhysFlow with PhysicEdit on PICABench and evaluating computational costs.
-5. Clarified the sources and roles of PICA-100K training data and the 900 PICABench evaluation examples to address concerns about potential overlap between training and evaluation data.
+2. Added controlled comparisons to disentangle the benefits of PhysTrace and the PhysFlow framework, including image-pair fine-tuning on the same data.
+3. Added a comparison with PhysicEdit using the same Qwen-Image-Edit-2509 backbone.
+4. Added ablations on terminal-only supervision, progressive versus direct compression, and frame sampling.
+5. Expanded analyses of latent roles, physical-domain information, intervention outcomes, and token-order sensitivity.
+6. Added parameter-count and memory measurements alongside inference-latency comparisons.
 
 **In the appendix:**
 
-1. Added experiments with terminal-only supervision.
-2. Added experiments comparing time-uniform and change-uniform frame sampling.
-3. Added ablations comparing the choice of four intermediate visual states with alternative token counts.
-4. Added ablations comparing the proposed progressive compression sequence with direct compression strategies.
-5. Expanded the latent-representation analysis with physical domain linear probes, controlled intervention tasks, and token-order perturbations, together with their controls and limitations.
-6. Explained the ImgEdit-Bench results, including category-level declines and broadly maintained aggregate performance.
-7. Addressed concerns about reliance on multimodal-model judgments by explaining how both model-based evaluations and our human study support improved physical plausibility.
-8. Clarified the uncertainty of single-run results.
+1. Clarified the sources and roles of PICA100K training data and PICABench evaluation examples.
+2. Added details of the training controls and training budgets for the dataset and framework comparisons.
+3. Added latent-analysis protocols, control results, and confidence intervals, and clarified the scope of these findings.
+4. Added PhysicEdit results on ImgEdit-Bench and expanded the discussion of general editing performance, including the declines in Hybrid and Extract.
+5. Clarified the interpretation of the qualitative RISEBench examples.
 
 We provide detailed responses to each reviewer's comments below. Thank you very much again for your time and helpful suggestions.
 
