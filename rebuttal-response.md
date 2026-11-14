@@ -64,7 +64,7 @@ Our specific focus, however, is to progressively internalize the text-to-visual 
 
 3. Our training curriculum progressively internalizes textual and visual reasoning. PhysicEdit trains transition queries against video-derived visual features while keeping its reasoning MLLM frozen. PhysFlow first trains the planner with explicit textual rationales and intermediate visual states. We then progressively replace high-level physical rationales, low-level transition descriptions, and successive intermediate visual blocks with latent tokens. Finally, we freeze the planner and adapt the image generator to the learned continuous latent sequence. By jointly internalizing textual physical reasoning and visual evolution, this curriculum equips PhysFlow with a unified latent reasoning process that guides image editing without decoding textual rationales or intermediate images at inference.
 
-To provide empirical support for our latent reasoning design, we have expanded the representation analyses in Figure 7. Visualizations reveal role-dependent structure, while probing studies recover physical-domain information and reveal outcome-predictive information on several controlled intervention tasks. Token-order perturbations also show that editing performance is sensitive to the ordering of intermediate visual latents. Together, these analyses help explain the physical content and functional role of our compressed plan; the appendix provides detailed results and controls.
+To provide empirical support for our latent reasoning design, we have expanded the representation analyses in Figure 7. Visualizations reveal role-dependent structure, while probing studies recover physical-domain information and reveal outcome-predictive information on several controlled intervention tasks. Token-order perturbations also show that editing performance is sensitive to the ordering of intermediate visual latents. Together, these analyses help explain the physical content and functional role of our compressed plan. The appendix provides detailed results and controls.
 
 Following your helpful suggestion, we have also added an experimental comparison with PhysicEdit on PICABench-Superficial. We use Qwen2.5-VL-72B-Instruct for evaluation. With the same 2509 backbone, PhysFlow scores 54.12% versus 52.35% for PhysicEdit.
 
@@ -147,7 +147,7 @@ All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superfic
 
 Thank you for these helpful suggestions. We added three ablations (PICABench-Superficial accuracy, %).
 
-(1) Frame sampling: Time-uniform samples can concentrate changes between few frames. Change-uniform captures richer dynamics (Figure 5(d); Appendix A.2). This comparison was missing; following your suggestion, we compare both under the same PhysTrace settings.
+(1) Frame sampling: Time-uniform samples can concentrate changes between few frames. Change-uniform captures richer dynamics (Figure 5(d), Appendix A.2). This comparison was missing. Following your suggestion, we compare both under the same PhysTrace settings.
 
 |Sampling|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -164,7 +164,7 @@ Change-uniform gains 1.27 points overall, supporting our sampling strategy (Appe
 |2|8|52.10|64.28|57.61|56.16|42.61|46.08|62.94|53.92|54.73|
 |4|16|52.65|64.41|56.93|56.16|41.83|**47.54**|63.40|52.84|54.85|
 
-The 1-token row uses the main-paper reference; this comparison does not isolate token count. One token per state gives the highest observed overall accuracy (56.32%) with the fewest tokens.
+The 1-token row uses the main-paper reference. This comparison does not isolate token count. One token per state gives the highest observed overall accuracy (56.32%) with the fewest tokens.
 
 (3) Compression strategy: After explicit warm-up, we replace text and visual blocks progressively or at once, keeping the same final latent layout.
 
@@ -173,7 +173,7 @@ The 1-token row uses the main-paper reference; this comparison does not isolate 
 |Direct compression|52.84|63.83|55.68|56.31|42.54|46.85|62.40|53.96|54.52|
 |Progressive compression (paper)|**54.45**|**65.19**|**58.52**|**57.99**|**44.91**|**47.31**|**64.32**|**56.43**|**56.32**|
 
-Progressive compression gains 1.80 points in these single-run results.
+Progressive compression improves overall accuracy by 1.80 points.
 <!-- reply:sampling:end -->
 
 ### Response 4: Physical information in the latent representations
@@ -191,9 +191,9 @@ We appreciate your distinction between token-order sensitivity and evidence of p
 
 (a) Token-role structure. The original clustering visualization supports role-dependent representation structure after compression.
 
-(b) Physical-domain linear probe. We probe six physical domains in PhysTrace's taxonomy of 26 subcategories: optics and lighting, rigid-body motion, deformation and fracture, fluid dynamics, state change, and environment and aerodynamics. We fit and cross-validate a linear probe on 212 PhysTrace videos and test on 212 independent videos. The six latent tokens yield 86.91% balanced accuracy (mean recall across the six domains); uniform random guessing gives 1/6 = 16.67%. The same-layout pretrained control scores 85.94%, and the low-level text token scores 86.79%. These controls limit attribution to PhysFlow training.
+(b) Physical-domain linear probe. We probe six physical domains in PhysTrace's taxonomy of 26 subcategories: optics and lighting, rigid-body motion, deformation and fracture, fluid dynamics, state change, and environment and aerodynamics. We fit and cross-validate a linear probe on 212 PhysTrace videos and test on 212 independent videos. The six latent tokens yield 86.91% balanced accuracy (mean recall across the six domains). Uniform random guessing gives 1/6 = 16.67%. The same-layout pretrained control scores 85.94%, and the low-level text token scores 86.79%. These controls limit attribution to PhysFlow training.
 
-(c) Physical-intervention prediction. We test visual latents on two instructions for the same source image. Removing a ball's supporting block should make it fall; removing the other block should leave it at rest. Reference outcomes follow idealized physical rules in synthetic scenes.
+(c) Physical-intervention prediction. We test visual latents on two instructions for the same source image. Removing a ball's supporting block should make it fall. Removing the other block should leave it at rest. Reference outcomes follow idealized physical rules in synthetic scenes.
 
 We freeze PhysFlow and train a linear probe on its four intermediate visual tokens to predict intervention outcomes, selecting settings on validation data. Pair accuracy requires both outcomes to be predicted correctly. Figure 7(c) shows seven tasks:
 
@@ -207,7 +207,7 @@ Across the seven illustrated tasks, 91.41%–100% pair accuracy demonstrates tha
 
 (d) Visual-token perturbation. On 64 PICABench-Superficial inputs, eight per category, Qwen2.5-VL-72B-Instruct gives mean accuracies of 57.36% for the original condition, 55.64% for masking, and 53.94% for both reversal and shuffling. Perturbations occur after planning, with textual and final-visual conditioning fixed. Reversal and shuffling each reduce accuracy by 3.42 percentage points, supporting order sensitivity.
 
-The four analyses show that (a) the latent space is organized by token role; (b) physical-domain information is linearly decodable; (c) linear probes accurately predict intervention outcomes from the visual latents on the illustrated tasks; and (d) visual-token order affects editing performance. Together, these results demonstrate that PhysFlow's compact latent plan encodes the structured, physically relevant information that our design aims to preserve.
+The four analyses show that (a) the latent space is organized by token role, (b) physical-domain information is linearly decodable, (c) linear probes accurately predict intervention outcomes from the visual latents on the illustrated tasks, and (d) visual-token order affects editing performance. Together, these results demonstrate that PhysFlow's compact latent plan encodes the structured, physically relevant information that our design aims to preserve.
 <!-- reply:latent-representation:end -->
 
 附件（v15）：[Overleaf 替换包 ZIP](attachments/physflow-latent-appendix.zip) · [LaTeX 片段](attachments/latent-representation-analysis.tex) · [四联图 PDF](attachments/latent-analysis-four.pdf) · [单页附录预览 PDF](attachments/latent-appendix-preview.pdf)。
@@ -221,7 +221,7 @@ The four analyses show that (a) the latent space is organized by token role; (b)
 
 Thank you for highlighting seed stability.
 
-We sincerely apologize that limited compute and lengthy training prevent us from providing repeated-training results in this response period. Training is ongoing; we will add the results in a follow-up response once training and evaluation are complete.
+We sincerely apologize that limited compute and lengthy training prevent us from providing repeated-training results in this response period. Training is ongoing. We will add the results in a follow-up response once training and evaluation are complete.
 
 Inference seeds: 42, 215, and 3407, with model checkpoints fixed.
 
@@ -254,7 +254,7 @@ Thank you very much for emphasizing objective physical correctness. We present t
 <!-- reply:difficult-cases:start -->
 **Response 7: Difficult cases and failure analysis (Figures 3 and 6)**
 
-PICABench examples require optical consistency across regions and deformation at contact; RISEBench examples require changes to object surfaces over time. Several baselines follow the local edit but leave mismatched reflections, residual lighting, little deformation, or limited surface changes. PhysFlow depicts the corresponding optical, mechanical, and temporal changes more consistently in these examples, providing qualitative support for physical consistency.
+PICABench examples require optical consistency across regions and deformation at contact. RISEBench examples require changes to object surfaces over time. Several baselines follow the local edit but leave mismatched reflections, residual lighting, little deformation, or limited surface changes. PhysFlow depicts the corresponding optical, mechanical, and temporal changes more consistently in these examples, providing qualitative support for physical consistency.
 <!-- reply:difficult-cases:end -->
 
 ### Response 8: Originality and positioning relative to closely related approaches
@@ -268,7 +268,7 @@ Thank you very much for carefully examining the originality of our work. We ackn
 
 (1) We learn the connection between physical explanations and visual evolution within the latent sequence. PhysicEdit retains explicit textual reasoning and trains transition queries with a frozen reasoning MLLM. In PhysFlow, textual latents guide subsequent visual latents through causal dependencies. During planner training, downstream visual losses and the image-generation loss through the frozen generator train the earlier reasoning states (Sections 3.3 and 3.4). Physical reasoning therefore guides visual evolution and is itself shaped by the transformation it must produce.
 
-(2) Our curriculum changes both the representation and its supervision during compression. EndoCoT supervises recurrent thought states with intermediate image-generation losses and terminal textual grounding, then shifts optimization to the terminal step; Monet distills auxiliary visual information into latent embeddings within text-latent interleaved reasoning for textual answers. PhysFlow progressively replaces textual rationales and then ordered visual blocks with latent tokens. Each visual replacement removes that block's direct alignment loss, while downstream visual and editing supervision continues to train the compressed sequence (Section 3.4). The resulting compact plan carries both forms of process reasoning into image generation without decoding textual rationales or intermediate images.
+(2) Our curriculum changes both the representation and its supervision during compression. EndoCoT supervises recurrent thought states with intermediate image-generation losses and terminal textual grounding, then shifts optimization to the terminal step. Monet distills auxiliary visual information into latent embeddings within text-latent interleaved reasoning for textual answers. PhysFlow progressively replaces textual rationales and then ordered visual blocks with latent tokens. Each visual replacement removes that block's direct alignment loss, while downstream visual and editing supervision continues to train the compressed sequence (Section 3.4). The resulting compact plan carries both forms of process reasoning into image generation without decoding textual rationales or intermediate images.
 
 (3) PhysTrace supplies the process supervision required for joint internalization. Its 11,448 synthetic trajectories pair hierarchical physical rationales, ordered intermediate visual states, and editing targets (Section 3.2). These aligned signals extend supervision beyond source-target pairs: they explain the physical principles, trace how the scene changes, and specify the intended outcome. PhysTrace thus trains the planner on how a physical edit unfolds, as well as what it should produce.
 
@@ -296,7 +296,7 @@ PICA-100K provides training data, while PICABench provides a separately curated 
 
 Thank you for suggesting parameter-count and peak-memory comparisons in addition to latency. We have added these measurements to Table 5 to give a fuller account of inference costs.
 
-We count the parameters resident during inference, including reasoning modules, and report peak allocated GPU memory. Parameter counts and peak allocated memory describe the current implementations; the latency column reports separate timing measurements.
+We count the parameters resident during inference, including reasoning modules, and report peak allocated GPU memory. Parameter counts and peak allocated memory describe the current implementations. The latency column reports separate timing measurements.
 
 |Method|Params (B)|Memory (GiB)|Latency (s)|
 |---|---:|---:|---:|
@@ -307,7 +307,7 @@ We count the parameters resident during inference, including reasoning modules, 
 |ChronoEdit|22.83|54.81|228.68|
 |PhysFlow (Ours)|28.87|58.11|49.39|
 
-PhysFlow retains nearly the same parameter count and peak memory as Qwen-Image-Edit (28.87B vs. 28.85B; 58.11 vs. 58.06 GiB), with only 11.4% latency overhead. Its parameter count is comparable to PhysicEdit's and higher than those of Step1X-Edit and ChronoEdit, yet its latency is lower than all three. At 49.39 seconds per edit, it is also faster than Qwen-Image-Edit with explicit reasoning (60.12 seconds). These results demonstrate the inference efficiency of our compact latent planning design.
+PhysFlow retains nearly the same parameter count and peak memory as Qwen-Image-Edit (28.87B vs. 28.85B, 58.11 vs. 58.06 GiB), with only 11.4% latency overhead. Its parameter count is comparable to PhysicEdit's and higher than those of Step1X-Edit and ChronoEdit, yet its latency is lower than all three. At 49.39 seconds per edit, it is also faster than Qwen-Image-Edit with explicit reasoning (60.12 seconds). These results demonstrate the inference efficiency of our compact latent planning design.
 
 Thank you again for the time and care you have devoted to our work. Your detailed feedback has helped us strengthen the experiments and explain the method and its evidence more clearly.
 <!-- reply:cost:end -->
@@ -325,7 +325,7 @@ We sincerely thank you for the time and effort you devoted to reviewing our manu
 
 **Response 1: Central contribution relative to EndoCoT and Monet**
 
-Thank you for asking us to clarify the contribution. PhysFlow internalizes the connection between physical explanations and visual evolution into a latent plan for image editing. Textual rationales explain the physical rules and transition steps; intermediate visual states supervise how those steps change the scene. Our curriculum progressively compresses both into a continuous plan that conditions image generation (Sections 3.3 and 3.4).
+Thank you for asking us to clarify the contribution. PhysFlow internalizes the connection between physical explanations and visual evolution into a latent plan for image editing. Textual rationales explain the physical rules and transition steps. Intermediate visual states supervise how those steps change the scene. Our curriculum progressively compresses both into a continuous plan that conditions image generation (Sections 3.3 and 3.4).
 
 Relative to EndoCoT, our distinction lies in how explicit process supervision becomes a latent plan. EndoCoT trains recurrent thought states with intermediate image-generation losses and terminal textual grounding, then shifts optimization to the terminal step. EndoCoT, Section 4.2. PhysFlow first learns explicit textual rationales and visual trajectories, then progressively replaces their textual and visual blocks with latent tokens. Text-derived states precede and condition subsequent visual states, while downstream visual and editing losses train the compressed sequence. This curriculum teaches the planner to carry physical explanations forward into visual evolution as explicit reasoning disappears.
 
