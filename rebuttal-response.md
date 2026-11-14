@@ -140,38 +140,40 @@ All four configurations use Qwen-Image-Edit-2511. We evaluate PICABench-Superfic
 
 ### Response 3: Further ablations on frame sampling methods, visual token counts, and compression strategies
 
-> time-uniform 采用作者提供的重跑结果：作者确认与 change-uniform 使用相同数据集设置，Overall 55.05 vs. 56.32，差 1.27 个百分点；完整类别数据见下表。固定四个中间状态，比较每状态 1、2、4 个视觉 token；token 消融结果先留空；直接压缩已核验为 54.52，完整分项已填入，与论文渐进压缩模型 56.32 对比。
+> time-uniform 采用作者提供的重跑结果：作者确认与 change-uniform 使用相同数据集设置，Overall 55.05 vs. 56.32，差 1.27 个百分点；完整类别数据见下表。固定四个中间状态，比较每状态 1、2、4 个视觉 token；token 消融已按作者结果回填：1-token 采用主表参考行 56.32，2/4-token 为 54.73/54.85；这是不同配置间比较，不单独隔离 token 数量影响；直接压缩已核验为 54.52，完整分项已填入，与论文渐进压缩模型 56.32 对比。
 
 <!-- reply:sampling:start -->
 **Response 3: Further ablations on frame sampling methods, visual token counts, and compression strategies**
 
-Thank you for these helpful suggestions. We have added ablations on frame sampling, visual token counts, and compression strategies.
+Thank you for these helpful suggestions. We added three ablations (PICABench-Superficial accuracy, %).
 
-(1) Frame sampling: Visual inspection showed that time-uniform samples can leave changes concentrated between a few frames. We use change-uniform sampling to capture richer dynamics in PhysTrace (Figure 5(d); Appendix A.2). Our original manuscript lacked this quantitative comparison. Following your suggestion, we have now added it under the same PhysTrace settings. PICABench-Superficial accuracy (%):
+(1) Frame sampling: Time-uniform samples can concentrate changes between few frames. Change-uniform captures richer dynamics (Figure 5(d); Appendix A.2). This comparison was missing; following your suggestion, we compare both under the same PhysTrace settings.
 
 |Sampling|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 |Time-uniform|53.72|63.06|**59.30**|57.64|43.29|46.21|62.35|53.65|55.05|
 |Change-uniform|**54.45**|**65.19**|58.52|**57.99**|**44.91**|**47.31**|**64.32**|**56.43**|**56.32**|
 
-Change-uniform improves overall accuracy by 1.27 points, demonstrating the effectiveness of our sampling strategy (Appendix C.7).
+Change-uniform gains 1.27 points overall, supporting our sampling strategy (Appendix C.7).
 
-(2) Alternative token counts (results pending): We test 1, 2, or 4 tokens for each of the four intermediate visual states, keeping the textual and final visual blocks fixed.
+(2) Visual token counts: We vary tokens per state (1/2/4), keeping four states, two textual tokens, and 16 final visual tokens.
 
 |Tokens per state|Total intermediate tokens|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|1|4||||||||||
-|2|8||||||||||
-|4|16||||||||||
+|1|4|**54.45**|**65.19**|**58.52**|**57.99**|**44.91**|47.31|**64.32**|**56.43**|**56.32**|
+|2|8|52.10|64.28|57.61|56.16|42.61|46.08|62.94|53.92|54.73|
+|4|16|52.65|64.41|56.93|56.16|41.83|**47.54**|63.40|52.84|54.85|
 
-(3) Progressive versus direct compression: After explicit warm-up, we replace textual rationales and intermediate visual blocks with latent tokens either progressively or all at once, using the same final latent layout.
+The 1-token row uses the main-paper reference; this comparison does not isolate token count. One token per state gives the highest observed overall accuracy (56.32%) with the fewest tokens.
+
+(3) Compression strategy: After explicit warm-up, we replace text and visual blocks progressively or at once, keeping the same final latent layout.
 
 |Compression strategy|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 |Direct compression|52.84|63.83|55.68|56.31|42.54|46.85|62.40|53.96|54.52|
 |Progressive compression (paper)|**54.45**|**65.19**|**58.52**|**57.99**|**44.91**|**47.31**|**64.32**|**56.43**|**56.32**|
 
-The reported progressive model scores 1.80 points higher; these are single-run results.
+Progressive compression gains 1.80 points in these single-run results.
 <!-- reply:sampling:end -->
 
 ### Response 4: Physical information in the latent representations
