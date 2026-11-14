@@ -10,7 +10,7 @@
 
 ## 修改总览：给所有审稿人和 AC
 
-> 2026-11-13：已按当前本地 LaTeX 的实际正文与附录核对总览，正文 8 项、附录 7 项。新增 token 数量条目依据作者提供的附录内容和结果；重复训练仍在进行，未列为已完成。本次核对本地稿，不据旧目录日期或旧上传记录判断当前线上稿状态。
+> 2026-11-14：已按作者提供的最新版 PDF（11）核对总览，正文 7 项、附录 8 项。数据集与框架比较已移至附录 C.4、Table 8（第 18 页），对应总览条目随之移至附录；其余条目保留。
 
 <!-- reply:overview:start -->
 Dear Reviewers and ACs,
@@ -22,23 +22,23 @@ We summarize the main revisions below.
 **In the main paper:**
 
 1. Expanded the discussion of PhysicEdit, EndoCoT, and Monet to clarify their relationship with our method.
-2. Added controlled comparisons to disentangle the benefits of PhysTrace and the PhysFlow framework, including image-pair fine-tuning on the same data.
-3. Added PhysicEdit results on PICABench-Superficial, including a comparison using the same Qwen-Image-Edit-2509 backbone.
-4. Added a control retaining the same recurrent latent tokens, final visual block, and trainable modules, using only terminal visual supervision and the generation loss.
-5. Added an ablation comparing the proposed progressive compression sequence with direct compression.
-6. Added a quantitative comparison between change-uniform frame sampling and ordinary temporal-uniform sampling.
-7. Expanded analyses of latent roles, physical-domain information, intervention outcomes, and token-order sensitivity.
-8. Added parameter-count and memory measurements alongside inference-latency comparisons.
+2. Added PhysicEdit results on PICABench-Superficial, including a comparison using the same Qwen-Image-Edit-2509 backbone.
+3. Added a control retaining the same recurrent latent tokens, final visual block, and trainable modules, using only terminal visual supervision and the generation loss.
+4. Added an ablation comparing the proposed progressive compression sequence with direct compression.
+5. Added a quantitative comparison between change-uniform frame sampling and ordinary temporal-uniform sampling.
+6. Expanded analyses of latent roles, physical-domain information, intervention outcomes, and token-order sensitivity.
+7. Added parameter-count and memory measurements alongside inference-latency comparisons.
 
 **In the appendix:**
 
 1. Clarified the sources and roles of PICA100K training data and PICABench evaluation examples.
-2. Added details of the training controls and training budgets for the dataset and framework comparisons.
-3. Added detailed experimental settings and procedures for the latent-representation analyses.
-4. Added PhysicEdit results on ImgEdit-Bench.
-5. Expanded the discussion of general editing performance, including the declines in Hybrid and Extract.
-6. Clarified the interpretation of the qualitative RISEBench examples.
-7. Added an ablation comparing 1, 2, and 4 visual tokens per intermediate state.
+2. Added controlled comparisons to disentangle the benefits of PhysTrace and the PhysFlow framework, including image-pair fine-tuning on the same data.
+3. Added details of the training controls and training budgets for the dataset and framework comparisons.
+4. Added detailed experimental settings and procedures for the latent-representation analyses.
+5. Added PhysicEdit results on ImgEdit-Bench.
+6. Expanded the discussion of general editing performance, including the declines in Hybrid and Extract.
+7. Clarified the interpretation of the qualitative RISEBench examples.
+8. Added an ablation comparing 1, 2, and 4 visual tokens per intermediate state.
 
 We provide detailed responses to each reviewer's comments below. Thank you very much again for your time and helpful suggestions.
 
