@@ -10,7 +10,7 @@
 
 ## 修改总览：给所有审稿人和 AC
 
-> 2026-11-13：已按当前本地 LaTeX 的实际正文与附录核对总览，正文 8 项、附录 6 项。仅列已写入源码的修改；token 数量与重复运行实验未列为已完成。本次核对本地稿，不据旧目录日期或旧上传记录判断当前线上稿状态。
+> 2026-11-13：已按当前本地 LaTeX 的实际正文与附录核对总览，正文 8 项、附录 7 项。新增 token 数量条目依据作者提供的附录内容和结果；重复训练仍在进行，未列为已完成。本次核对本地稿，不据旧目录日期或旧上传记录判断当前线上稿状态。
 
 <!-- reply:overview:start -->
 Dear Reviewers and ACs,
@@ -38,6 +38,7 @@ We summarize the main revisions below.
 4. Added PhysicEdit results on ImgEdit-Bench.
 5. Expanded the discussion of general editing performance, including the declines in Hybrid and Extract.
 6. Clarified the interpretation of the qualitative RISEBench examples.
+7. Added an ablation comparing 1, 2, and 4 visual tokens per intermediate state.
 
 We provide detailed responses to each reviewer's comments below. Thank you very much again for your time and helpful suggestions.
 
