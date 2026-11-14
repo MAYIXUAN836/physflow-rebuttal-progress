@@ -24,9 +24,9 @@ We summarize the main revisions below.
 1. Expanded the discussion of PhysicEdit, EndoCoT, and Monet to clarify their relationship with our method.
 2. Added controlled comparisons to disentangle the benefits of PhysTrace and the PhysFlow framework, including image-pair fine-tuning on the same data.
 3. Added PhysicEdit results on PICABench-Superficial, including a comparison using the same Qwen-Image-Edit-2509 backbone.
-4. Added a terminal-only supervision experiment using the same latent structure and trainable modules.
-5. Added an ablation comparing progressive compression with direct compression after explicit reasoning warm-up.
-6. Added an ablation comparing time-uniform and change-uniform frame sampling under the same dataset settings.
+4. Added a control retaining the same recurrent latent tokens, final visual block, and trainable modules, using only terminal visual supervision and the generation loss.
+5. Added an ablation comparing the proposed progressive compression sequence with direct compression.
+6. Added a quantitative comparison between change-uniform frame sampling and ordinary temporal-uniform sampling.
 7. Expanded analyses of latent roles, physical-domain information, intervention outcomes, and token-order sensitivity.
 8. Added parameter-count and memory measurements alongside inference-latency comparisons.
 
