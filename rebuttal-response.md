@@ -34,7 +34,7 @@ We summarize the main revisions below.
 
 1. Clarified the sources and roles of PICA100K training data and PICABench evaluation examples.
 2. Added details of the training controls and training budgets for the dataset and framework comparisons.
-3. Added latent-analysis protocols, control results, and confidence intervals, and clarified the scope of these findings.
+3. Added detailed experimental settings and procedures for the latent-representation analyses.
 4. Added PhysicEdit results on ImgEdit-Bench.
 5. Expanded the discussion of general editing performance, including the declines in Hybrid and Extract.
 6. Clarified the interpretation of the qualitative RISEBench examples.
