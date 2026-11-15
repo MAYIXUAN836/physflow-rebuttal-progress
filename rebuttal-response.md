@@ -87,7 +87,7 @@ We also include an ImgEdit-Bench comparison to assess general image editing (Tab
 |Method|Add|Adjust|Extract|Replace|Remove|BackG|Style|Hybrid|Action|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 |PhysicEdit|4.31|4.17|2.34|4.45|4.44|4.03|4.74|3.36|**4.85**|4.05|
-|PhysFlow (2509)|**4.45**|4.25|3.54|**4.69**|4.48|4.21|4.77|**3.38**|**4.85**|4.31|
+|PhysFlow (2509)|**4.45**|4.25|3.54|**4.69**|4.48|4.21|4.77|**3.38**|4.82|4.31|
 |PhysFlow (2511)|4.26|**4.33**|**3.91**|4.66|**4.66**|**4.25**|**4.85**|3.26|**4.85**|**4.39**|
 
 PhysFlow scores 4.31 with the 2509 backbone and 4.39 with the 2511 backbone, compared with 4.05 for PhysicEdit.
