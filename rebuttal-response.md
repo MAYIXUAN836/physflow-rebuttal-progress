@@ -84,12 +84,13 @@ PhysFlow (2509) exceeds PhysicEdit by 1.77 points overall, with higher scores in
 
 We also include an ImgEdit-Bench comparison to assess general image editing (Table 6).
 
-| Method | Add | Adjust | Extract | Replace | Remove | BackG | Style | Hybrid | Action | Overall |
+|Method|Add|Adjust|Extract|Replace|Remove|BackG|Style|Hybrid|Action|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| PhysicEdit | **4.31** | 4.17 | 2.34 | 4.45 | 4.44 | 4.03 | 4.74 | **3.36** | **4.85** | 4.05 |
-| PhysFlow (Ours) | 4.26 | **4.33** | **3.91** | **4.66** | **4.66** | **4.25** | **4.85** | 3.26 | **4.85** | **4.39** |
+|PhysicEdit|4.31|4.17|2.34|4.45|4.44|4.03|4.74|3.36|**4.85**|4.05|
+|PhysFlow (2509)|**4.45**|4.25|3.54|**4.69**|4.48|4.21|4.77|**3.38**|**4.85**|4.31|
+|PhysFlow (2511)|4.26|**4.33**|**3.91**|4.66|**4.66**|**4.25**|**4.85**|3.26|**4.85**|**4.39**|
 
-PhysFlow achieves an overall score of 4.39, compared with 4.05 for PhysicEdit. It scores higher in six of nine categories, ties in Action, and scores lower in Add and Hybrid.
+PhysFlow scores 4.31 with the 2509 backbone and 4.39 with the 2511 backbone, compared with 4.05 for PhysicEdit.
 
 We sincerely appreciate your suggestion, which helped us present the relationship to PhysicEdit and the evidence for our latent representation more clearly.
 <!-- reply:r1:end -->
