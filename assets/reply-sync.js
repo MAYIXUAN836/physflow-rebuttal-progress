@@ -92,6 +92,12 @@
         throw failure;
       });
       if (!response.ok) {
+        if (bridge) {
+          const detail = await response.json().catch(() => ({}));
+          const failure = new Error(detail.error || '保存失败，修改已保留，请稍后重试。');
+          failure.status = response.status;
+          throw failure;
+        }
         const failure = new Error(response.status === 401 ? '授权已失效，请重新连接' :
           response.status === 403 ? 'GitHub 拒绝请求或请求过多；请检查 Contents 写入权限，稍后重试' :
           response.status === 404 ? '暂时无法读取共享稿，修改已保留' : '同步暂时失败，修改已保留');
@@ -128,14 +134,15 @@
           for (const [key, doc] of docs) if (doc.text !== doc.base && !doc.conflict) sent[key] = doc.text;
           if (!Object.keys(sent).length) { error = ''; return; }
           const next = { schemaVersion: 1, updatedAt: new Date().toISOString(), replies: { ...store.replies, ...sent } };
+          let result;
           try {
-            await request('PUT', { branch, sha: remote.sha, message: 'Save shared rebuttal edits', content: encode(JSON.stringify(next, null, 2) + '\n') });
+            result = await request('PUT', { branch, sha: remote.sha, message: 'Save shared rebuttal edits', content: encode(JSON.stringify(next, null, 2) + '\n') });
           } catch (failure) {
             if ([409, 422].includes(failure.status) && attempt < 2) continue;
             throw failure;
           }
           for (const [key, text] of Object.entries(sent)) docs.get(key).base = text;
-          lastWrite = Date.now(); error = ''; return;
+          lastWrite = Date.now(); error = result.warning || ''; return;
         }
       } catch (failure) { error = failure.message; lastWrite = Date.now() + 20000; }
       finally { busy = false; notify(); schedule(); }
