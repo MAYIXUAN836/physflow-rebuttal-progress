@@ -34,6 +34,23 @@
   converter.use(turndownPluginGfm.gfm);
   const drafts = groups.map(group => group.items.map(item => item.markdown));
   const edited = groups.map(group => group.items.map(() => false));
+  const visible = new Map();
+  const sync = data.sharedEditing ? window.PhysFlowSync(groups, refreshShared, {
+    autoSave: false, draftKey: 'physflow-1116-shared-drafts-v1'
+  }) : null;
+  function refreshShared() {
+    groups.forEach((group, index) => group.items.forEach((item, block) => {
+      drafts[index][block] = sync.view(item);
+      visible.get(item.syncKey)?.();
+    }));
+    const state = sync.summary();
+    document.querySelector('#master-status').textContent = state.error || (!state.ready ? '正在载入线上主稿…' :
+      state.busy ? '正在同步…' : state.conflicts ? '存在编辑冲突，请核对双方内容' :
+      state.pending ? `${state.pending} 个回复块待保存` : '与线上主稿一致');
+    document.querySelector('#save-master').disabled = !state.ready || state.busy || !state.pending || Boolean(state.conflicts);
+    document.querySelector('#refresh-master').disabled = !state.ready || state.busy;
+    document.querySelector('#master-disconnect').hidden = !state.connected;
+  }
   function backup(group, block) {
     try {
       const saved = localStorage.getItem(key(group, block));
@@ -66,6 +83,7 @@
     document.querySelectorAll('nav button').forEach((button, i) => button.setAttribute('aria-selected', String(i === index)));
     const blocks = document.querySelector('#blocks');
     blocks.replaceChildren();
+    visible.clear();
     group.items.forEach((item, block) => {
       const section = document.querySelector('#block-template').content.firstElementChild.cloneNode(true);
       const field = name => section.querySelector(`[data-role="${name}"]`);
@@ -91,7 +109,25 @@
         field('count').style.color = editor.value.length > 5000 ? '#c62828' : '';
         fitBlock(section);
       }
+      if (sync) {
+        const update = () => {
+          const state = sync.state(item);
+          const value = sync.view(item);
+          if (editor.value !== value) { editor.value = value; render(); }
+          editor.readOnly = !state.ready;
+          status.textContent = state.error || (!state.ready ? '正在载入线上主稿…' :
+            state.conflict ? '编辑冲突 · 当前编辑和线上版本均已保留' :
+            state.pending ? '修改已备份 · 预览后点击“保存到主稿”' : '与线上主稿一致');
+          field('conflict').hidden = !state.conflict;
+          field('remote').textContent = state.conflict?.theirs || '';
+        };
+        visible.set(item.syncKey, update);
+        field('keep-mine').onclick = () => sync.accept(item, true);
+        field('keep-remote').onclick = () => sync.accept(item, false);
+        update();
+      }
       editor.addEventListener('input', () => {
+        const previous = drafts[index][block];
         drafts[index][block] = editor.value;
         edited[index][block] = true;
         try {
@@ -99,14 +135,17 @@
           restore.hidden = false;
           status.textContent = '已保存到当前浏览器 · ' + new Date().toLocaleTimeString();
         } catch { status.textContent = '浏览器保存失败，请使用“导出 Markdown”保存修改'; }
+        if (sync) sync.edit(item, previous, editor.value);
         render();
       });
       restore.onclick = () => {
         const saved = backup(group, block);
         if (saved === null) return;
+        const previous = drafts[index][block];
         editor.value = drafts[index][block] = saved;
         edited[index][block] = true;
         status.textContent = '已恢复本地备份 · 刷新页面将重新加载主稿';
+        if (sync) sync.edit(item, previous, saved);
         render();
       };
       field('download').onclick = () => {
@@ -127,4 +166,40 @@
     document.querySelector('nav').append(button);
   });
   select(0);
+  if (sync) {
+    document.querySelector('#save-master').onclick = async () => {
+      if (!sync.summary().connected) {
+        document.querySelector('#master-auth').open = true;
+        document.querySelector('#master-auth-status').textContent = '请先连接编辑授权，再点击“保存到主稿”。';
+        document.querySelector('#master-token').focus();
+        return;
+      }
+      await sync.save();
+    };
+    document.querySelector('#refresh-master').onclick = sync.refresh;
+    document.querySelector('#master-disconnect').onclick = sync.disconnect;
+    document.querySelector('#master-auth-form').onsubmit = async event => {
+      event.preventDefault();
+      const input = document.querySelector('#master-token');
+      const status = document.querySelector('#master-auth-status');
+      const button = event.currentTarget.querySelector('[type=submit]');
+      button.disabled = true; status.textContent = '正在连接…';
+      try {
+        await sync.connect(input.value);
+        status.textContent = '已连接，请点击“保存到主稿”。';
+        document.querySelector('#master-auth').open = false;
+      } catch (error) { status.textContent = error.message; }
+      finally { input.value = ''; button.disabled = false; }
+    };
+    document.querySelector('a[href="rebuttal-1116.md"]').onclick = event => {
+      event.preventDefault();
+      const text = '# PhysFlow Rebuttal · 1116\n\n' + groups.map((group, index) =>
+        `## ${index ? 'Reviewer ' + group.code : 'General Response'}\n\n` + group.items.map((item, block) =>
+          `### Block ${block + 1}\n\n${sync.view(item)}`).join('\n\n')).join('\n\n') + '\n';
+      const url = URL.createObjectURL(new Blob([text], { type: 'text/markdown;charset=utf-8' }));
+      const link = document.createElement('a'); link.href = url; link.download = 'rebuttal-1116.md';
+      link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+    };
+    sync.start([]);
+  }
 })();

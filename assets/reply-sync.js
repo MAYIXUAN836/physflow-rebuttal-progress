@@ -1,13 +1,13 @@
 (() => {
   const endpoint = 'https://api.github.com/repos/MAYIXUAN836/physflow-rebuttal-progress/contents/reply-store.json';
   const branch = 'rebuttal-drafts';
-  const draftKey = 'physflow-shared-drafts-v1';
   const tokenKey = 'physflow-github-session-v1';
   const { mergeText } = window.PhysFlowMerge;
   const decode = value => new TextDecoder().decode(Uint8Array.from(atob(value.replace(/\s/g, '')), c => c.charCodeAt(0)));
   const encode = value => btoa(Array.from(new TextEncoder().encode(value), byte => String.fromCharCode(byte)).join(''));
 
-  window.PhysFlowSync = function (groups, onChange) {
+  window.PhysFlowSync = function (groups, onChange, options = {}) {
+    const draftKey = options.draftKey || 'physflow-shared-drafts-v1';
     const docs = new Map();
     let saved = {}, token = '', busy = false, ready = false, error = '', lastWrite = 0, timer;
     try { saved = JSON.parse(localStorage.getItem(draftKey)) || {}; } catch {}
@@ -107,6 +107,7 @@
     }
     function schedule() {
       clearTimeout(timer);
+      if (options.autoSave === false) return;
       if (ready && token && [...docs.values()].some(d => d.text !== d.base && !d.conflict)) {
         timer = setTimeout(save, Math.max(1500, 10000 - (Date.now() - lastWrite)));
       }
