@@ -36,8 +36,9 @@
   const edited = groups.map(group => group.items.map(() => false));
   const visible = new Map();
   const sync = data.sharedEditing ? window.PhysFlowSync(groups, refreshShared, {
-    autoSave: false, draftKey: 'physflow-1116-shared-drafts-v1',
-    writeEndpoint: data.saveEndpoint
+    autoSave: false, draftKey: data.readOnly ? 'physflow-1116-viewer-v1' : 'physflow-1116-shared-drafts-v1',
+    writeEndpoint: data.saveEndpoint, readEndpoint: data.saveEndpoint,
+    requestTimeoutMs: data.saveEndpoint ? 60000 : 15000
   }) : null;
   function refreshShared() {
     groups.forEach((group, index) => group.items.forEach((item, block) => {
@@ -48,6 +49,7 @@
     document.querySelector('#master-status').textContent = state.error || (!state.ready ? '正在载入线上主稿…' :
       state.busy ? '正在同步…' : state.conflicts ? '存在编辑冲突，请核对双方内容' :
       state.pending ? `${state.pending} 个回复块待保存` : '与线上主稿一致');
+    document.querySelector('#save-master').hidden = Boolean(data.readOnly);
     document.querySelector('#save-master').disabled = !state.ready || state.busy || !state.pending || Boolean(state.conflicts);
     document.querySelector('#refresh-master').disabled = !state.ready || state.busy;
   }
@@ -96,7 +98,8 @@
       preview.title = `Block ${block + 1} 回复预览`;
       editor.value = drafts[index][block];
       status.textContent = edited[index][block] ? '当前为本地修改 · 不回写共享主稿' : '已加载最新发布主稿 · 本地备份未覆盖主稿';
-      restore.hidden = backup(group, block) === null;
+      restore.hidden = Boolean(data.readOnly) || backup(group, block) === null;
+      if (data.readOnly) section.querySelector('footer span:last-child').textContent = '共享主稿 · 作者保存后可刷新查看';
       preview.addEventListener('load', () => {
         fitBlock(section);
         preview.contentDocument.querySelectorAll('img').forEach(img => {
@@ -114,7 +117,7 @@
           const state = sync.state(item);
           const value = sync.view(item);
           if (editor.value !== value) { editor.value = value; render(); }
-          editor.readOnly = !state.ready;
+          editor.readOnly = Boolean(data.readOnly) || !state.ready;
           status.textContent = state.error || (!state.ready ? '正在载入线上主稿…' :
             state.conflict ? '编辑冲突 · 当前编辑和线上版本均已保留' :
             state.pending ? '修改已备份 · 预览后点击“保存到主稿”' : '与线上主稿一致');

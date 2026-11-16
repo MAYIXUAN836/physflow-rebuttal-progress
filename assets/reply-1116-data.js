@@ -1,7 +1,7 @@
 window.PHYSFLOW_REPLIES = {
   "prebuiltBlocks": true,
   "sharedEditing": true,
-  "saveEndpoint": "https://physflow-rebuttal-1116-save.fit-isle-6640.chatgpt.site/api/replies",
+  "readOnly": true,
   "storageNamespace": "physflow-1116-markdown-v1:",
   "overview": {
     "code": "General",

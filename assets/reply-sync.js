@@ -86,9 +86,9 @@
       if (body) headers['Content-Type'] = 'application/json';
       const response = await fetch((bridge || endpoint) + '?ref=' + branch, {
         method, headers, body: body ? JSON.stringify(body) : undefined,
-        cache: 'no-store', signal: AbortSignal.timeout(15000)
+        cache: 'no-store', signal: AbortSignal.timeout(options.requestTimeoutMs || 15000)
       }).catch(failure => {
-        if (bridge) throw new Error('线上保存服务暂时无法连接，修改已保留，请稍后重试。');
+        if (bridge) throw new Error('保存服务暂时无法连接，修改已保留，请稍后重试。');
         throw failure;
       });
       if (!response.ok) {
