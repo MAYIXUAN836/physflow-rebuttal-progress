@@ -216,7 +216,7 @@ The four analyses show that (a) the latent space is organized by token role, (b)
 
 ### Response 5: Statistical uncertainty and repeated runs
 
-> 训练种子 43/44/45/46 仍在运行，推理 seed 固定为 42；本轮移除训练 Pending 表格，诚恳说明算力及训练时间限制，完成训练与评测后跟进。推理 seeds 42/215/3407 采用作者于 2026-11-13 确认的 RISEBench 结果：Base 8.06/9.17/8.89，PhysFlow 9.44/11.39/9.17。按三次运行的样本标准差汇总为 8.71 ± 0.58 和 10.00 ± 1.21，平均提升 1.29 个百分点；不沿用另一组逐样本评分的 bootstrap 区间。
+> 训练种子 43/44/45/46 仍在运行，推理 seed 固定为 42；本轮移除训练 Pending 表格，诚恳说明算力及训练时间限制，完成训练与评测后跟进。推理 seeds 42/215/3407 采用作者于 2026-11-15 更正的 RISEBench 结果：Base 8.06/9.17/8.89，PhysFlow 9.44/11.11/9.44。按三次运行的样本标准差汇总为 8.71 ± 0.58 和 10.00 ± 0.96，平均提升 1.29 个百分点；不沿用另一组逐样本评分的 bootstrap 区间。
 
 <!-- reply:statistics:start -->
 **Response 5: Statistical uncertainty and repeated runs**
@@ -230,7 +230,7 @@ Inference seeds: 42, 215, and 3407, with model checkpoints fixed.
 |Method|RISEBench mean ± SD (%)|
 |---|---:|
 |Qwen-Image-Edit-2511|8.71 ± 0.58|
-|PhysFlow|10.00 ± 1.21|
+|PhysFlow|10.00 ± 0.96|
 
 PhysFlow outperforms the backbone on all three inference seeds, with a mean RISEBench gain of 1.29 percentage points.
 <!-- reply:statistics:end -->
