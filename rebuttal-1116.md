@@ -78,7 +78,7 @@ Moreover, our PhysFlow achieves an overall score of 4.31 on ImgEdit-Bench, compa
 | PhysicEdit | 51.62 | 61.63 | 51.56 | 52.96 | **44.03** | 45.89 | 57.64 | 53.07 | 52.35 |
 | PhysFlow (2509) | **52.01** | **62.82** | **57.02** | **53.14** | 43.32 | **46.81** | **61.42** | **53.16** | **54.12** |
 
----
+&nbsp;
 
 | Method | Add | Adjust | Extract | Replace | Remove | BackG | Style | Hybrid | Action | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -352,7 +352,7 @@ Moreover, our PhysFlow achieves an overall score of 4.31 on ImgEdit-Bench, compa
 | PhysicEdit | 51.62 | 61.63 | 51.56 | 52.96 | **44.03** | 45.89 | 57.64 | 53.07 | 52.35 |
 | PhysFlow (2509) | **52.01** | **62.82** | **57.02** | **53.14** | 43.32 | **46.81** | **61.42** | **53.16** | **54.12** |
 
----
+&nbsp;
 
 | Method | Add | Adjust | Extract | Replace | Remove | BackG | Style | Hybrid | Action | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
