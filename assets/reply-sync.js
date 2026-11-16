@@ -31,12 +31,12 @@
     }
     function state(item) {
       const doc = docs.get(item.syncKey);
-      return { ...doc, pending: doc.text !== doc.base, ready, connected: Boolean(token), busy, error };
+      return { ...doc, pending: doc.text !== doc.base, ready, connected: Boolean(token || options.writeEndpoint), busy, error };
     }
     function summary() {
       const values = [...docs.values()];
       return { pending: values.filter(d => d.text !== d.base).length,
-        conflicts: values.filter(d => d.conflict).length, ready, connected: Boolean(token), busy, error };
+        conflicts: values.filter(d => d.conflict).length, ready, connected: Boolean(token || options.writeEndpoint), busy, error };
     }
     function edit(item, previous, next) {
       editMany([{ item, previous, next }]);
@@ -80,12 +80,16 @@
       }
     }
     async function request(method = 'GET', body) {
+      const bridge = method === 'PUT' ? options.writeEndpoint : options.readEndpoint;
       const headers = { Accept: 'application/vnd.github+json' };
-      if (token) headers.Authorization = 'Bearer ' + token;
+      if (token && !bridge) headers.Authorization = 'Bearer ' + token;
       if (body) headers['Content-Type'] = 'application/json';
-      const response = await fetch(endpoint + '?ref=' + branch, {
+      const response = await fetch((bridge || endpoint) + '?ref=' + branch, {
         method, headers, body: body ? JSON.stringify(body) : undefined,
         cache: 'no-store', signal: AbortSignal.timeout(15000)
+      }).catch(failure => {
+        if (bridge) throw new Error('线上保存服务暂时无法连接，修改已保留，请稍后重试。');
+        throw failure;
       });
       if (!response.ok) {
         const failure = new Error(response.status === 401 ? '授权已失效，请重新连接' :
@@ -113,7 +117,7 @@
       }
     }
     async function save() {
-      if (busy || !token || !ready) return;
+      if (busy || !(token || options.writeEndpoint) || !ready) return;
       busy = true; notify();
       try {
         for (let attempt = 0; attempt < 3; attempt++) {

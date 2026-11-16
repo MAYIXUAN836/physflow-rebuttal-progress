@@ -78,6 +78,8 @@ Moreover, our PhysFlow achieves an overall score of 4.31 on ImgEdit-Bench, compa
 | PhysicEdit | 51.62 | 61.63 | 51.56 | 52.96 | **44.03** | 45.89 | 57.64 | 53.07 | 52.35 |
 | PhysFlow (2509) | **52.01** | **62.82** | **57.02** | **53.14** | 43.32 | **46.81** | **61.42** | **53.16** | **54.12** |
 
+---
+
 | Method | Add | Adjust | Extract | Replace | Remove | BackG | Style | Hybrid | Action | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | PhysicEdit | 4.31 | 4.17 | 2.34 | 4.45 | 4.44 | 4.03 | 4.74 | 3.36 | **4.85** | 4.05 |
@@ -219,11 +221,7 @@ We agree that evaluating explicit, measurable physical constraints is a valuable
 
 **8. Originality and positioning relative to closely related approaches.**
 
-Thank you for highlighting the connection to prior latent reasoning research. Existing methods explore language reasoning internalization, visual supervision, and latent planning. PhysFlow extends these ideas by jointly internalizing physical explanations and visual evolution into a continuous plan for image editing. The key differences lie in two aspects.
 
-**(a) Visual Reasoning Guided by Physical Explanations.** Coconut, CODI, and SIM-CoT internalize textual reasoning without directly supervising the corresponding visual changes. EndoCoT uses intermediate image-generation supervision, but its terminal textual alignment does not explicitly establish visual-state prediction conditioned on preceding explanations. In contrast, PhysFlow learns to predict subsequent visual states from physical explanations, allowing explanations to guide visual evolution while receiving supervision from downstream visual prediction losses.
-
-**(b) Joint Internalization of Textual and Visual Reasoning.** LVR and Monet combine visual latent representations with explicit textual reasoning. PhysicEdit likewise retains explicit textual reasoning and learns visual transition representations with its reasoning MLLM frozen. These methods still require text generation at inference. In contrast, PhysFlow progressively compresses textual explanations and ordered intermediate visual blocks while training the reasoning backbone. As each block loses direct supervision, downstream visual prediction and editing losses continue to train its compressed state. This jointly internalizes both forms of reasoning into a continuous plan without decoding textual explanations or intermediate images.
 
 We acknowledge that the ideas of progressive CoT internalization, continuous latent reasoning, and visual feature prediction have been explored in prior work (Section 2.3).
 However, effectively adapting these techniques to physics-aware image editing and achieving substantial performance improvements is non-trivial.
@@ -254,8 +252,6 @@ PICA-100K provides the training data, while PICABench consists of a separately c
 As described in Section 3.2 and Appendix A, we construct PhysTrace using image-instruction pairs from PICA-100K, rather than PICABench, ensuring that no PICABench evaluation examples are directly included in our training data.
 
 ---
-
-### Block 4
 
 **10. Parameter-count and peak-memory comparison.**
 
@@ -355,6 +351,8 @@ Moreover, our PhysFlow achieves an overall score of 4.31 on ImgEdit-Bench, compa
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | PhysicEdit | 51.62 | 61.63 | 51.56 | 52.96 | **44.03** | 45.89 | 57.64 | 53.07 | 52.35 |
 | PhysFlow (2509) | **52.01** | **62.82** | **57.02** | **53.14** | 43.32 | **46.81** | **61.42** | **53.16** | **54.12** |
+
+---
 
 | Method | Add | Adjust | Extract | Replace | Remove | BackG | Style | Hybrid | Action | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|

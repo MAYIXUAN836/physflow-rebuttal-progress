@@ -28,7 +28,7 @@
     return { ...group, items: blocks };
   });
   const md = window.markdownit({ html: false });
-  const style = 'body{font:16px/1.8 Georgia,serif;color:#252b32;margin:24px;overflow-wrap:anywhere}p{margin:0 0 16px}table{border-collapse:collapse;font:13px/1.5 system-ui;width:100%;table-layout:fixed;margin:0 0 24px}th,td{border:1px solid #ddd;padding:7px 4px;text-align:left;overflow-wrap:anywhere}th{background:#f5f6f7}img{max-width:100%}pre{white-space:pre-wrap}';
+  const style = 'body{font:16px/1.8 Georgia,serif;color:#252b32;margin:24px;overflow-wrap:anywhere}p{margin:0 0 16px}table{border-collapse:collapse;font:13px/1.5 system-ui;width:100%;table-layout:fixed}th,td{border:1px solid #ddd;padding:7px 4px;text-align:left;overflow-wrap:anywhere}th{background:#f5f6f7}img{max-width:100%}pre{white-space:pre-wrap}';
   const key = (group, block) => (data.storageNamespace || 'physflow-simple-markdown-v1:') + group.code + (group.items.length > 1 ? ':' + group.items[block].id : '');
   const converter = new TurndownService({ headingStyle: 'atx', codeBlockStyle: 'fenced' });
   converter.use(turndownPluginGfm.gfm);
@@ -36,7 +36,8 @@
   const edited = groups.map(group => group.items.map(() => false));
   const visible = new Map();
   const sync = data.sharedEditing ? window.PhysFlowSync(groups, refreshShared, {
-    autoSave: false, draftKey: 'physflow-1116-shared-drafts-v1'
+    autoSave: false, draftKey: 'physflow-1116-shared-drafts-v1',
+    writeEndpoint: data.saveEndpoint, readEndpoint: data.saveEndpoint
   }) : null;
   function refreshShared() {
     groups.forEach((group, index) => group.items.forEach((item, block) => {
@@ -49,7 +50,6 @@
       state.pending ? `${state.pending} 个回复块待保存` : '与线上主稿一致');
     document.querySelector('#save-master').disabled = !state.ready || state.busy || !state.pending || Boolean(state.conflicts);
     document.querySelector('#refresh-master').disabled = !state.ready || state.busy;
-    document.querySelector('#master-disconnect').hidden = !state.connected;
   }
   function backup(group, block) {
     try {
@@ -168,29 +168,9 @@
   select(0);
   if (sync) {
     document.querySelector('#save-master').onclick = async () => {
-      if (!sync.summary().connected) {
-        document.querySelector('#master-auth').open = true;
-        document.querySelector('#master-auth-status').textContent = '请先连接编辑授权，再点击“保存到主稿”。';
-        document.querySelector('#master-token').focus();
-        return;
-      }
       await sync.save();
     };
     document.querySelector('#refresh-master').onclick = sync.refresh;
-    document.querySelector('#master-disconnect').onclick = sync.disconnect;
-    document.querySelector('#master-auth-form').onsubmit = async event => {
-      event.preventDefault();
-      const input = document.querySelector('#master-token');
-      const status = document.querySelector('#master-auth-status');
-      const button = event.currentTarget.querySelector('[type=submit]');
-      button.disabled = true; status.textContent = '正在连接…';
-      try {
-        await sync.connect(input.value);
-        status.textContent = '已连接，请点击“保存到主稿”。';
-        document.querySelector('#master-auth').open = false;
-      } catch (error) { status.textContent = error.message; }
-      finally { input.value = ''; button.disabled = false; }
-    };
     document.querySelector('a[href="rebuttal-1116.md"]').onclick = event => {
       event.preventDefault();
       const text = '# PhysFlow Rebuttal · 1116\n\n' + groups.map((group, index) =>
