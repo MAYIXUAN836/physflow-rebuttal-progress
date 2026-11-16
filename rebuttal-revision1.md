@@ -104,7 +104,7 @@ As shown, the new baseline outperforms the original backbone by 0,86%.
 Under the same source-target image pair training setting, our curated PhysTrace achieves higher overall performance than PICA100K (i.e., Qwen-Image-Edit-2511 + PICA100K (w/o Reasoning)), highlighting its superior data quality and contribution to training efficiency.
 Furthermore, our latent reasoning framework further improves the overall score from 55.13% to 56.32% over this non-reasoning baseline, demonstrating the effectiveness of our proposed approach.
 
-|Configuration|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall (
+|Configuration|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall (%)|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 |Qwen-Image-Edit-2511|53.29|62.98|56.78|57.66|44.16|45.99|59.37|55.34|54.26|
 |+ PhysTrace (w/o Reasoning)|**55.07**|65.16|57.96|56.67|42.71|45.30|63.23|53.81|55.12|
@@ -317,7 +317,7 @@ As shown, the new baseline outperforms the original backbone by 0,86%.
 Under the same source-target image pair training setting, our curated PhysTrace achieves higher overall performance than PICA100K (i.e., Qwen-Image-Edit-2511 + PICA100K (w/o Reasoning)), highlighting its superior data quality and contribution to training efficiency.
 Furthermore, our latent reasoning framework further improves the overall score from 55.13% to 56.32% over this non-reasoning baseline, demonstrating the effectiveness of our proposed approach.
 
-|Configuration|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall (
+|Configuration|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall (%)|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 |Qwen-Image-Edit-2511|53.29|62.98|56.78|57.66|44.16|45.99|59.37|55.34|54.26|
 |+ PhysTrace (w/o Reasoning)|**55.07**|65.16|57.96|56.67|42.71|45.30|63.23|53.81|55.12|
