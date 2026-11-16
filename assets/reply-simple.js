@@ -37,7 +37,7 @@
   const visible = new Map();
   const sync = data.sharedEditing ? window.PhysFlowSync(groups, refreshShared, {
     autoSave: false, draftKey: 'physflow-1116-shared-drafts-v1',
-    writeEndpoint: data.saveEndpoint, readEndpoint: data.saveEndpoint
+    writeEndpoint: data.saveEndpoint
   }) : null;
   function refreshShared() {
     groups.forEach((group, index) => group.items.forEach((item, block) => {
