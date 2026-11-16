@@ -1,6 +1,7 @@
 (() => {
   const data = window.PHYSFLOW_REPLIES;
   const groups = [data.overview, ...data.reviewers].map(group => {
+    if (data.prebuiltBlocks) return group;
     if (group.code === '62MG' && group.submissionBlocks) {
       return { ...group, items: group.submissionBlocks.map(block => ({
         id: block.items.join('+'),
@@ -28,7 +29,7 @@
   });
   const md = window.markdownit({ html: false });
   const style = 'body{font:16px/1.8 Georgia,serif;color:#252b32;margin:24px;overflow-wrap:anywhere}p{margin:0 0 16px}table{border-collapse:collapse;font:13px/1.5 system-ui;width:100%;table-layout:fixed}th,td{border:1px solid #ddd;padding:7px 4px;text-align:left;overflow-wrap:anywhere}th{background:#f5f6f7}img{max-width:100%}pre{white-space:pre-wrap}';
-  const key = (group, block) => 'physflow-simple-markdown-v1:' + group.code + (group.items.length > 1 ? ':' + group.items[block].id : '');
+  const key = (group, block) => (data.storageNamespace || 'physflow-simple-markdown-v1:') + group.code + (group.items.length > 1 ? ':' + group.items[block].id : '');
   const converter = new TurndownService({ headingStyle: 'atx', codeBlockStyle: 'fenced' });
   converter.use(turndownPluginGfm.gfm);
   const drafts = groups.map(group => group.items.map(item => item.markdown));
@@ -37,7 +38,7 @@
     try {
       const saved = localStorage.getItem(key(group, block));
       if (saved !== null) return saved;
-      const old = group.items.length > 1 ? null : localStorage.getItem('physflow-simple-html-v1:' + group.code);
+      const old = data.storageNamespace || group.items.length > 1 ? null : localStorage.getItem('physflow-simple-html-v1:' + group.code);
       return old === null ? null : converter.turndown(old);
     } catch { return null; }
   }
