@@ -363,7 +363,9 @@
       comments.append(element('div', 'comment-label', '审稿人原文 · ' + comment.label), element('p', '', comment.text));
     }
     const analysis = element('div', 'response-analysis');
-    analysis.append(element('strong', '', '我们的分析'), element('p', '', item.analysis));
+    const analysisText = element('p', '', item.analysis);
+    analysisText.style.whiteSpace = 'pre-line';
+    analysis.append(element('strong', '', '我们的分析'), analysisText);
     if (item.comments.length) card.append(comments);
     card.append(analysis);
     const columns = element('div', 'editor-columns');
