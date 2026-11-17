@@ -43,7 +43,7 @@ The Authors
 
 ### Block 1
 
-We sincerely thank you for the time and care you devoted to reviewing our manuscript and for your thoughtful, constructive feedback. We appreciate your recognition of the complementary roles of textual explanations and visual trajectories, our comprehensive experiments, and our attention to inference efficiency. Your suggestion to include a discussion and comparison with PhysicEdit has helped us clarify our contributions and strengthen the experimental evaluation.
+We sincerely thank you for your time, careful review, and constructive feedback. We appreciate your recognition of our motivation, experiments, and inference efficiency. Your suggestion to discuss and compare with PhysicEdit has helped us clarify our contributions and strengthen our evaluation.
 
 **Comparison with PhysicEdit**
 
