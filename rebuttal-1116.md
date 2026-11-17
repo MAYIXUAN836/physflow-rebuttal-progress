@@ -51,23 +51,22 @@ As suggested, we have included a discussion of PhysicEdit in Section 2.2, “Lat
 
 Although both our proposed PhysFlow and PhysicEdit leverage textual explanations and visual trajectories to enhance the physical understanding of image editing models, they differ fundamentally in their underlying mechanisms, as detailed below.
 
-1. **Unified Multimodal Latent Space.**
-PhysicEdit generates textual reasoning traces in the explicit semantic space of the MLLM, while separately modeling visual representations in the latent space.
-In contrast, our PhysFlow jointly performs textual and visual reasoning within a unified latent space.
+1. **Our textual reasoning representation is different.**
+PhysicEdit generates textual reasoning traces in the ***explicit semantic space*** of the MLLM, while separately modeling visual representations in the latent space.
+In contrast, our PhysFlow jointly performs textual and visual reasoning within a ***unified latent space***. This formulation allows latent textual reasoning to guide visual-state prediction ***without generating explicit reasoning text at inference***.
 
-2. **Causal Reasoning over Visual States.**
-PhysicEdit predicts the visual representations of all sampled intermediate states in parallel.
-In contrast, our PhysFlow autoregressively predicts the latent representations of successive visual states, with each prediction conditioned on preceding latent textual explanations and visual states.
+2. **Our visual reasoning explicitly models temporal dependencies.**
+PhysicEdit ***computes transition-query representations in parallel***, whereas PhysFlow ***autoregressively predicts successive visual-state representations*** conditioned on preceding latent textual explanations and visual states.
 This causal formulation explicitly captures the temporal dependencies underlying physical transitions.
 
-3. **Progressive Training Strategy.**
-PhysicEdit trains its transition queries under joint supervision from feature alignment with projected DINOv2 and VAE features and a diffusion loss.
-In contrast, our PhysFlow adopts a progressive training curriculum.
-It first supervises the prediction of all textual explanations and intermediate visual states using ground-truth text tokens and visual features extracted by the MLLM's visual encoder, respectively.
+3. **Learning unified latent reasoning requires a non-trivial training strategy.**
+PhysicEdit trains its transition queries through ***feature alignment with projected DINOv2 and VAE features*** extracted from intermediate video frames.
+In contrast, our PhysFlow adopts a ***progressive training curriculum***.
+It first supervises the prediction of all textual explanations and intermediate and final visual states using ground-truth text tokens and visual features extracted by the MLLM's visual encoder, respectively.
 It then progressively replaces the reasoning blocks for textual explanations and intermediate visual transitions with model-generated predictions, one at a time.
-Each replaced block receives supervision through the original prediction loss applied to subsequent unreplaced positions, jointly with the diffusion loss. 
+Each replaced block receives indirect supervision through the original prediction loss applied to subsequent unreplaced positions, jointly with the diffusion loss. 
 This stage encourages the model to learn causal dependencies across successive multimodal reasoning steps.
-Finally, the learned latent representations are further adapted to image editing using only the diffusion loss.
+Finally, the image generator is adapted to the learned latent representations using the diffusion loss.
 
 We have added a quantitative comparison with PhysicEdit on PICABench-Superficial and ImgEdit-Bench in Table 1 and 5, respectively.
 Using the same Qwen-Image-Edit-2509 backbone, our PhysFlow achieves an overall score of 54.12% on PICABench-Superficial, outperforming PhysicEdit (52.35%) by 1.77, with higher scores in seven out of eight categories.
@@ -75,14 +74,14 @@ Moreover, our PhysFlow achieves an overall score of 4.31 on ImgEdit-Bench, compa
 
 | Method | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| PhysicEdit | 51.62 | 61.63 | 51.56 | 52.96 | **44.03** | 45.89 | 57.64 | 53.07 | 52.35 |
-| PhysFlow (2509) | **52.01** | **62.82** | **57.02** | **53.14** | 43.32 | **46.81** | **61.42** | **53.16** | **54.12** |
+| PhysicEdit（2509） | 51.62 | 61.63 | 51.56 | 52.96 | **44.03** | 45.89 | 57.64 | 53.07 | 52.35 |
+| PhysFlow （2509） | **52.01** | **62.82** | **57.02** | **53.14** | 43.32 | **46.81** | **61.42** | **53.16** | **54.12** |
 
 &nbsp;
 
 | Method | Add | Adjust | Extract | Replace | Remove | BackG | Style | Hybrid | Action | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| PhysicEdit | 4.31 | 4.17 | 2.34 | 4.45 | 4.44 | 4.03 | 4.74 | 3.36 | **4.85** | 4.05 |
+| PhysicEdit (2509) | 4.31 | 4.17 | 2.34 | 4.45 | 4.44 | 4.03 | 4.74 | 3.36 | **4.85** | 4.05 |
 | PhysFlow (2509) | **4.45** | **4.25** | **3.54** | **4.69** | **4.48** | **4.21** | **4.77** | **3.38** | 4.82 | **4.31** |
 
 We have also added a comparison of inference latency between our PhysFlow and PhysicEdit in Table 4.
@@ -106,7 +105,7 @@ Following your suggestion, we train a non-reasoning image editor on PhysTrace wi
 We refer to this baseline as Qwen-Image-Edit-2511 + PhysTrace (w/o Reasoning) and report its results in Table 8.
 
 As shown, the new baseline outperforms the original backbone by 0.86%.
-Furthermore, our latent reasoning framework further improves the overall score from 55.13% to 56.32% over this non-reasoning baseline, demonstrating the effectiveness of our proposed approach.
+Furthermore, our latent reasoning framework further improves the overall score from 55.12% to 56.32% over this non-reasoning baseline, demonstrating the effectiveness of our proposed approach.
 Particularly, under the same source-target image pair setting, training on our curated PhysTrace achieves higher overall performance than training on PICA100K (i.e., Qwen-Image-Edit-2511 + PICA100K (w/o Reasoning)), highlighting the benefits of its superior data quality for training efficiency.
 
 |Configuration|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall (%)|
@@ -157,30 +156,28 @@ This improvement suggests that progressively compressing reasoning blocks allows
 |Direct compression|52.84|63.83|55.68|56.31|42.54|46.85|62.40|53.96|54.52|
 |Progressive compression (paper)|**54.45**|**65.19**|**58.52**|**57.99**|**44.91**|**47.31**|**64.32**|**56.43**|**56.32**|
 
----
-
 ### Block 2
 
 **5. Additional representation analysis and controlled interventions for better interpretability.**
 
 We thank the reviewer for highlighting the importance of analyzing the learned latent representations for better interpretability.
-As suggested, we conducted two additional analyses: (a) Token-role visualization, and (b) Physical intervention analysis.
+As suggested, we conducted two additional analyses in Appendix C.8 of the revised manuscript: (a) Token-role visualization, and (b) Physical intervention analysis.
 
 **(a) Token-role visualization.**
-We visualize latent tokens from PhysTrace test cases across four reasoning roles: high-level textual reasoning, low-level textual reasoning, intermediate visual states, and the final visual state (Figure 5(a)).
+We visualize latent tokens from PhysTrace test cases across four reasoning roles: high-level textual reasoning, low-level textual reasoning, intermediate visual states, and the final visual state (Figure 7(a)).
 For each input, we average hidden states within each role and normalize the resulting vectors to fit a shared PCA basis.
 We then normalize individual token vectors and project them onto the first two principal components using the same PCA basis.
-As shown in Figure 5(a), the compressed tokens form a well-structured latent space, with distinct clusters corresponding to different reasoning roles.
+As shown in Figure 7(a), the compressed tokens form a well-structured latent space, with distinct clusters corresponding to different reasoning roles.
 
 **(b) Physical intervention analysis.**
-We investigate whether intermediate visual latents encode the physical consequences of different interventions, with results reported in Table X.
+We investigate whether intermediate visual latents encode the physical consequences of different interventions, with results reported in Figure 7(b).
 We construct synthetic scenes across seven tasks (support, torque, buoyancy, outflow, absorption, phase change, and shape recovery), each with two instructions yielding opposite outcomes under idealized physical rules.
 For each input, we extract four intermediate visual tokens from frozen PhysFlow and train a task-specific linear ridge probe on their averaged features to predict binary outcomes.
 For each task, we use 128/32/64 disjoint scene families for training/validation/testing.
 A pair is considered correct only if both intervention outcomes are predicted correctly.
-As shown in Table X, the overall pair accuracy across the seven tasks reaches XX%, indicating that the learned visual latents encode discriminative information about the physical consequences of different interventions.
+As shown in Figure 7(b), the overall pair accuracy across the seven tasks reaches 97.88%, indicating that the learned visual latents encode discriminative information about the physical consequences of different interventions.
 
-We have added the experimental settings and controls to Appendix E, and reported the results in Section 4.4 and Figure 7.
+We have added the detailed experimental settings and controls to Appendix C.8.
 
 ---
 
@@ -190,17 +187,17 @@ As suggested, we separately report the mean ± standard deviation (SD) across tr
 
 We repeat PhysFlow training with three different seeds while fixing the inference seed at 42. PhysFlow achieves 56.22 ± 0.37% on PICABench-Superficial and 10.07 ± 1.21% on RISEBench, with mean gains of 1.96 and 2.01 percentage points over the original backbone, respectively.
 
-| Method | PICABench-Superficial mean ± SD (%) | RISEBench mean ± SD (%) |
-|---|---:|---:|
-| PhysFlow | 56.22 ± 0.37 | 10.07 ± 1.21 |
+| Method | PICABench-Superficial Mean (%) | SD (%) | RISEBench Mean (%) | SD (%) |
+|---|---:|---:|---:|---:|
+| PhysFlow | 56.22 | 0.37 | 10.09 | 1.21 |
 
 We also evaluate fixed checkpoints using three different seeds.
 PhysFlow outperforms the original backbone on both PICABench-Superficial and RISEBench, with a mean improvement of 1.92 and 1.29 percentage points, respectively.
 
-| Method | PICABench-Superficial mean ± SD (%) | RISEBench mean ± SD (%) |
-|---|---:|---:|
-| Qwen-Image-Edit-2511 | 54.41 ± 0.34 | 8.71 ± 0.58 |
-| PhysFlow | 56.33 ± 0.40 | 10.00 ± 0.96 |
+| Method | PICABench-Superficial Mean (%) | SD (%) | RISEBench Mean (%) | SD (%) |
+|---|---:|---:|---:|---:|
+| Qwen-Image-Edit-2511 | 54.41 | 0.34 | 8.71 | 0.58 |
+| PhysFlow | 56.33 | 0.40 | 10.00 | 0.96 |
 
 ---
 
@@ -313,8 +310,6 @@ In contrast, our PhysFlow aims to transfer physical knowledge from MLLMs into ph
 
 We have added a discussion of these two related works in Section 2.3.
 
----
-
 ### Block 2
 
 **2. Comparison with PhysicEdit.**
@@ -365,8 +360,6 @@ We have also added a comparison of inference latency between our PhysFlow and Ph
 |---|---:|
 | PhysicEdit | 52.19 |
 | PhysFlow (Ours) | 49.39 |
-
----
 
 ### Block 3
 
