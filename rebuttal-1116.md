@@ -120,7 +120,7 @@ Particularly, under the same source-target image pair setting, training on our c
 **2. Comparison between change-uniform and time-uniform sampling.**
 
 As suggested, we have compared our proposed change-uniform frame sampling strategy with conventional temporal-uniform sampling on PICABench-Superficial.
-The results are reported in Table 3(c).
+The results are reported in Table 3(d).
 As shown, our change-uniform strategy improves the overall score by 1.27 points over temporal-uniform sampling.
 This improvement can be attributed to its ability to capture richer transition dynamics, whereas temporal-uniform sampling may concentrate substantial visual changes between only a few consecutive sampled frames.
 
@@ -133,7 +133,7 @@ This improvement can be attributed to its ability to capture richer transition d
 
 **3. Ablation study on progressive compression with different token counts.**
 
-As suggested, we evaluate our proposed progressive compression mechanism using different numbers of tokens per reasoning block (1, 2, and 4). The results are reported in Table 9 of Appendix C.6.
+As suggested, we evaluate our proposed progressive compression mechanism using different numbers of tokens per reasoning block (1, 2, and 4). The results are reported in Table 9 of Appendix C.7.
 As shown, using a single token per reasoning block achieves the highest overall accuracy (56.32%), and is adopted as the default setting in our paper.
 
 |Tokens per state|Total intermediate tokens|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
@@ -147,7 +147,7 @@ As shown, using a single token per reasoning block achieves the highest overall 
 **4. Comparison between progressive and direct compression.**
 
 As suggested, we additionally compare our proposed progressive compression mechanism with a direct compression strategy that replaces all textual and visual reasoning blocks with latent tokens in a single step.
-The results are added to Table 3(b).
+The results are added to Table 3(c).
 As shown, our progressive compression improves the overall accuracy by 1.80 points over direct compression.
 This improvement suggests that progressively compressing reasoning blocks allows the model to gradually distill multimodal reasoning information into compact latent representations, while preserving the causal dependencies across successive reasoning steps. In contrast, directly compressing all reasoning blocks at once may lead to greater information loss and more challenging optimization.
 
