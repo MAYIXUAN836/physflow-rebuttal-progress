@@ -254,7 +254,7 @@ As described in Section 3.2 and Appendix A, we construct PhysTrace using image-i
 
 As suggested, we have added these measurements to Table 4 to provide a more comprehensive assessment of inference costs.
 
-As shown, PhysFlow maintains nearly the same parameter count and peak memory usage as Qwen-Image-Edit (28.87B vs. 28.85B parameters and 58.11 vs. 58.06 GiB), with only an 11.4% increase in inference latency.
+As shown, PhysFlow maintains nearly the same parameter count and peak memory usage as Qwen-Image-Edit (28.87B vs. 28.85B parameters and 58.11 vs. 58.06 GiB).
 Despite having a parameter count comparable to PhysicEdit and larger than those of Step1X-Edit and ChronoEdit, PhysFlow achieves lower inference latency than all three methods.
 Moreover, PhysFlow requires only 49.39 seconds per edit, compared with 60.12 seconds for Qwen-Image-Edit with explicit reasoning.
 These results highlight the inference efficiency of our compact latent planning design.
