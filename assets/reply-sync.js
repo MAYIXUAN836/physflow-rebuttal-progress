@@ -16,6 +16,7 @@
       if (docs.has(item.syncKey)) continue;
       const draft = saved[item.syncKey];
       docs.set(item.syncKey, draft && typeof draft.base === 'string' && typeof draft.text === 'string'
+        && (draft.text !== draft.base || draft.conflict)
         ? draft : { base: item.syncMarkdown, text: item.syncMarkdown, conflict: null });
     }
 
