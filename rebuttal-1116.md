@@ -16,7 +16,7 @@ We summarize the main revisions below.
 
 2. Added PhysicEdit and Qwen-Image-Edit-2509 results on PICABench-Superficial.
 
-3. Added abalation studies: full textual and visual process supervision versus terminal-only visual supervision, progressive compression versus direct compression, and change-uniform frame sampling versus time-uniform sampling.
+3. Added ablation studies comparing full textual and visual process supervision with terminal-only visual supervision, progressive compression with direct compression, and change-uniform sampling with time-uniform sampling.
 
 4. Added parameter-count and memory measurements alongside inference-latency comparisons.
 
@@ -69,13 +69,13 @@ This stage encourages the model to learn causal dependencies across successive m
 Finally, the image generator is adapted to the learned latent representations using the diffusion loss.
 
 We have added a quantitative comparison with PhysicEdit on PICABench-Superficial and ImgEdit-Bench in Table 1 and 5, respectively.
-Using the same Qwen-Image-Edit-2509 backbone, our PhysFlow achieves an overall score of 54.12% on PICABench-Superficial, outperforming PhysicEdit (52.35%) by 1.77, with higher scores in seven out of eight categories.
+Using the same Qwen-Image-Edit-2509 backbone, our PhysFlow achieves an overall score of 54.12% on PICABench-Superficial, outperforming PhysicEdit (52.35%) by 1.77%, with higher scores in seven out of eight categories.
 Moreover, our PhysFlow achieves an overall score of 4.31 on ImgEdit-Bench, compared with 4.05 for PhysicEdit, indicating stronger generalization to general image editing tasks.
 
 | Method | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| PhysicEdit（2509） | 51.62 | 61.63 | 51.56 | 52.96 | **44.03** | 45.89 | 57.64 | 53.07 | 52.35 |
-| PhysFlow （2509） | **52.01** | **62.82** | **57.02** | **53.14** | 43.32 | **46.81** | **61.42** | **53.16** | **54.12** |
+| PhysicEdit (2509) | 51.62 | 61.63 | 51.56 | 52.96 | **44.03** | 45.89 | 57.64 | 53.07 | 52.35 |
+| PhysFlow (2509) | **52.01** | **62.82** | **57.02** | **53.14** | 43.32 | **46.81** | **61.42** | **53.16** | **54.12** |
 
 &nbsp;
 
