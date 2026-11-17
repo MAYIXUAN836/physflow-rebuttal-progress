@@ -189,7 +189,7 @@ We repeat PhysFlow training with three different seeds while fixing the inferenc
 
 | Method | PICABench-Superficial Mean (%) | SD (%) | RISEBench Mean (%) | SD (%) |
 |---|---:|---:|---:|---:|
-| PhysFlow | 56.22 | 0.37 | 10.09 | 1.21 |
+| PhysFlow | 56.22 | 0.37 | 10.07 | 1.21 |
 
 We also evaluate fixed checkpoints using three different seeds.
 PhysFlow outperforms the original backbone on both PICABench-Superficial and RISEBench, with a mean improvement of 1.92 and 1.29 percentage points, respectively.
