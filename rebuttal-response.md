@@ -53,6 +53,8 @@ The Authors
 > 状态：方法级结果及 cost 已接入，首轮完整回复草稿已形成；尚未提交。对应 checklist：physicedit-score、physicedit-discussion。
 
 <!-- reply:r1:start -->
+We sincerely thank you for the time and care you devoted to reviewing our manuscript and for your thoughtful, constructive feedback. We appreciate your recognition of the complementary roles of textual explanations and visual trajectories, our comprehensive experiments, and our attention to inference efficiency. Your suggestion to include a discussion and comparison with PhysicEdit has helped us clarify our contributions and strengthen the experimental evaluation.
+
 Thank you very much for pointing out the missing discussion of PhysicEdit. We apologize for this omission and have added the discussion to Section 2.2, “Visual Transition Modeling for Image Editing,” in Related Work.
 
 At inference, PhysicEdit combines an explicit textual reasoning trace with latent visual representations produced by learned transition queries. We find this design particularly compelling because it connects explicit physical constraints with video-derived transition priors without requiring intermediate-video generation. We share the motivation behind this design: textual explanations and visual trajectories provide complementary forms of intermediate reasoning, with text explaining physical principles and causal relationships, and visual trajectories describing how the scene changes.
