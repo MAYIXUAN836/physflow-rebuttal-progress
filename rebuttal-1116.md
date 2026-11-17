@@ -225,7 +225,7 @@ The key contributions of our PhysFlow are summarized as follows.
 **(a) Our framework internalizes both textual and visual reasoning into a unified latent space.**
 Existing latent reasoning methods, such as Coconut, CODI, and SIM-CoT, internalize textual reasoning without explicitly modeling the corresponding visual states.
 Methods such as LVR, Monet, and PhysicEdit combine explicit textual reasoning with visual latent representations for textual answer generation (LVR and Monet) or image editing (PhysicEdit).
-In contrast, our PhysFlow internalizes both textual explanations and visual-state transitions into a unified multimodal latent space, enabling joint textual and visual reasoning without generating explicit reasoning text at inference.
+In contrast, our PhysFlow internalizes both textual explanations and visual-state transitions into a unified multimodal latent space, enabling joint textual and visual reasoning without generating explicit reasoning text or rendering intermediate visual states at inference.
 
 
 
