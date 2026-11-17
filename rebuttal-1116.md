@@ -201,28 +201,23 @@ PhysFlow outperforms the original backbone on both PICABench-Superficial and RIS
 | Qwen-Image-Edit-2511 | 54.41 | 0.34 | 8.71 | 0.58 |
 | PhysFlow | 56.33 | 0.40 | 10.00 | 0.96 |
 
-### Block 3
+---
 
 **7. Evaluation Using an MLLM as a Judge for Physical Consistency.**
 
-MLLM-as-a-judge evaluation is widely adopted in image generation and editing benchmarks.
-Our evaluation of physical consistency goes beyond general assessments of editing quality.
-Specifically, PICABench employs fine-grained, sample-specific physical criteria defined by human-annotated questions and reference answers, such as whether removing an object also removes its shadow.
-PICAEval uses an MLLM to answer these questions based on the edited images and evaluates the agreement with the reference answers (PICABench, Section 3.3 and Appendix A.3).
+PICABench evaluates sample-specific physical criteria through human-annotated questions and reference answers, such as whether object removal also removes its shadow. PICAEval uses an MLLM to answer these questions and scores agreement with the references (PICABench, Section 3.3 and Appendix A.3).
 
-Moreover, our human study provides complementary evidence. We ask 17 participants to compare PhysFlow with five competing methods on 100 image-instruction pairs randomly sampled from PICABench and RISEBench. The human preferences for PhysFlow in terms of physical plausibility are consistent with the overall benchmark results.
-
-We agree that evaluating explicit, measurable physical constraints is a valuable direction for more rigorous assessment of physical consistency, which we leave for future work on evaluation methodology.
+Our human study complements this evaluation: 17 participants compare PhysFlow with five methods on 100 randomly sampled PICABench and RISEBench pairs. Their physical-plausibility preferences agree with the benchmark trends. We acknowledge the value of measurable physical constraints and leave their evaluation to future work.
 
 **Challenging Physical Interactions and Failure Analysis**
 
-Thank you for this suggestion. We further inspected PICABench outputs to examine failure modes and capability boundaries. Other methods sometimes struggle with basic relations involving object pose, support, and liquid motion, producing incorrect edits or unsupported objects. PhysFlow better captures these main changes in the inspected comparisons, while coordinating multiple interacting physical processes remains challenging.
+Thank you for this suggestion. We inspected PICABench outputs to analyze failure modes and capability boundaries. Other methods sometimes mishandle object pose, support, and liquid motion. PhysFlow better captures these main changes in the inspected comparisons, while coordinating multiple interacting processes remains challenging.
 
-For example, tipping a coffee cup onto a fabric cushion requires the cup to fall, coffee to spill and spread, and the fabric to absorb the liquid. Step1X introduces an extra cup and a pouring hand, changing the requested action; ChronoEdit depicts the cup suspended above the cushion. PhysFlow shows the cup resting on its side with a puddle connected to its opening, more coherently capturing tipping, contact, and spillage. However, the puddle retains a sharp boundary, with little evidence of absorption into the surrounding fabric.
+For example, tipping coffee onto a fabric cushion involves cup motion, spillage, and absorption. Step1X adds a second cup and a pouring hand; ChronoEdit leaves the cup suspended above the cushion. PhysFlow shows the cup resting on its side with spilled coffee connected to its opening, more coherently capturing tipping, contact, and spillage. However, the puddle retains a sharp boundary, with little evidence of absorption into the fabric.
 
-This comparison provides qualitative support for improved physical consistency through more coherent editing actions and their physical consequences. Capturing all subsequent interactions remains challenging. Future work will explore how to model these interdependent processes more consistently.
+This comparison provides qualitative support for improved physical consistency through more coherent actions and their physical consequences. Fully capturing subsequent interactions remains challenging. Future work will explore how to model these interdependent processes more consistently.
 
-### Block 4
+### Block 3
 
 **8. Originality and positioning relative to closely related approaches.**
 
