@@ -16,7 +16,7 @@ We summarize the main revisions below.
 
 2. Added PhysicEdit and Qwen-Image-Edit-2509 results on PICABench-Superficial.
 
-3. Added comparisons: full textual and visual process supervision versus terminal-only visual supervision, progressive compression versus direct compression, and change-uniform frame sampling versus temporal-uniform sampling.
+3. Added abalation studies: full textual and visual process supervision versus terminal-only visual supervision, progressive compression versus direct compression, and change-uniform frame sampling versus time-uniform sampling.
 
 4. Added parameter-count and memory measurements alongside inference-latency comparisons.
 
