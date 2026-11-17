@@ -103,7 +103,7 @@ We sincerely appreciate your recognition of our motivation, framework, and empir
 ---
 **1. Isolating the effect of additional supervision in training dataset PhysTrace.**
 
-Following your suggestion, we train a non-reasoning image editor on PhysTrace without reasoning annotations, using the same generator backbone (Qwen-Image-Edit-2511) and a comparable optimization budget to our PhysFlow.
+Following your suggestion, we train a non-reasoning image editor on the same PhysTrace source–target pairs without reasoning annotations, using the same generator backbone (Qwen-Image-Edit-2511). Both methods use rank-512 generator LoRA and 537 generator updates, matching the generator adaptation configuration and budget. PhysFlow additionally trains its planner for 1,253 updates.
 We refer to this baseline as Qwen-Image-Edit-2511 + PhysTrace (w/o Reasoning) and report its results in Table 8.
 
 As shown, the new baseline outperforms the original backbone by 0.86 percentage points.
@@ -368,7 +368,7 @@ We have also added a comparison of inference latency between our PhysFlow and Ph
 
 **3. Non-reasoning baseline trained on the same PhysTrace source–target image pairs.**
 
-Following your suggestion, we train a non-reasoning image editor on PhysTrace without reasoning annotations, using the same generator backbone (Qwen-Image-Edit-2511) and a comparable optimization budget to our PhysFlow.
+Following your suggestion, we train a non-reasoning image editor on the same PhysTrace source–target pairs without reasoning annotations, using the same generator backbone (Qwen-Image-Edit-2511). Both methods use rank-512 generator LoRA and 537 generator updates, matching the generator adaptation configuration and budget. PhysFlow additionally trains its planner for 1,253 updates.
 We refer to this baseline as Qwen-Image-Edit-2511 + PhysTrace (w/o Reasoning) and report its results in Table 8.
 
 As shown, the new baseline outperforms the original backbone by 0.86 percentage points.
