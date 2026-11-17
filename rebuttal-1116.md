@@ -386,9 +386,7 @@ Furthermore, our latent reasoning framework further improves the overall score f
 
 **4. Progressive compression curriculum with terminal supervision alone.**
 
-As suggested, we train our PhysFlow with textual reasoning trajectories while providing visual supervision only for the terminal state.
-The results are reported in Table 3(b).
-As shown, PhysFlow improves overall accuracy by 0.75 percentage points over terminal-only supervision, demonstrating the benefits of modeling dense, causal visual transitions for improved physical consistency.
+As suggested, we retain the same six recurrent latent tokens, 16-token final visual block, and trainable modules, and train the planner using only terminal visual supervision and the generation loss. With the same architecture and update budget, PhysFlow achieves 56.32% accuracy versus 55.57% for this baseline (Table 3(b)), a gain of 0.75 percentage points. These results support the benefits of textual reasoning supervision and dense intermediate visual supervision for improving physical consistency in image editing.
 
 | Training strategy | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
