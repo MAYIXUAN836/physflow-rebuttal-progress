@@ -117,16 +117,6 @@ Particularly, under the same source-target image pair setting, training on our c
 |+ PICA100K (w/o Reasoning)|**55.52**|60.30|57.69|53.04|41.46|45.91|59.13|52.12|53.38|
 |PhysFlow|54.45|**65.19**|**58.52**|**57.99**|**44.91**|**47.31**|**64.32**|**56.43**|**56.32**|
 
-&nbsp;
-
-| Configuration | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall (%) |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Qwen-Image-Edit-2511 | 53.29 | 62.98 | 56.78 | 57.66 | 44.16 | 45.99 | 59.37 | 55.34 | 54.26 |
-| + PhysTrace (w/o Reasoning) | 55.07 | 65.16 | 57.96 | 56.67 | 42.71 | 45.30 | 63.23 | 53.81 | 55.12 |
-| + PICA100K (w/o Reasoning) | **55.52** | 60.30 | 57.69 | 53.04 | 41.46 | 45.91 | 59.13 | 52.12 | 53.38 |
-| PhysFlow + PhysicTran38K | 54.14 | 62.16 | 54.55 | 57.60 | 44.03 | 45.19 | 61.26 | 52.20 | 53.82 |
-| PhysFlow + PhysTrace (Ours) | 54.45 | **65.19** | **58.52** | **57.99** | **44.91** | **47.31** | **64.32** | **56.43** | **56.32** |
-
 ---
 
 **2. Comparison between change-uniform and time-uniform sampling.**
