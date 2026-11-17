@@ -71,7 +71,7 @@ This stage encourages the model to learn causal dependencies across successive m
 Finally, the image generator is adapted to the learned latent representations using the diffusion loss.
 
 We have added a quantitative comparison with PhysicEdit on PICABench-Superficial and ImgEdit-Bench in Table 1 and 5, respectively.
-Using the same Qwen-Image-Edit-2509 backbone, our PhysFlow achieves an overall score of 54.12% on PICABench-Superficial, outperforming PhysicEdit (52.35%) by 1.77%, with higher scores in seven out of eight categories.
+Using the same Qwen-Image-Edit-2509 backbone, our PhysFlow achieves an overall score of 54.12% on PICABench-Superficial, outperforming PhysicEdit (52.35%) by 1.77 percentage points, with higher scores in seven out of eight categories.
 Moreover, our PhysFlow achieves an overall score of 4.31 on ImgEdit-Bench, compared with 4.05 for PhysicEdit, indicating stronger generalization to general image editing tasks.
 
 | Method | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
@@ -342,7 +342,7 @@ This stage encourages the model to learn causal dependencies across successive m
 Finally, the image generator is adapted to the learned latent representations using the diffusion loss.
 
 We have added a quantitative comparison with PhysicEdit on PICABench-Superficial and ImgEdit-Bench in Table 1 and 5, respectively.
-Using the same Qwen-Image-Edit-2509 backbone, our PhysFlow achieves an overall score of 54.12% on PICABench-Superficial, outperforming PhysicEdit (52.35%) by 1.77%, with higher scores in seven out of eight categories.
+Using the same Qwen-Image-Edit-2509 backbone, our PhysFlow achieves an overall score of 54.12% on PICABench-Superficial, outperforming PhysicEdit (52.35%) by 1.77 percentage points, with higher scores in seven out of eight categories.
 Moreover, our PhysFlow achieves an overall score of 4.31 on ImgEdit-Bench, compared with 4.05 for PhysicEdit, indicating stronger generalization to general image editing tasks.
 
 | Method | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
