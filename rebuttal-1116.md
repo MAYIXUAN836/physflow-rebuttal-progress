@@ -136,11 +136,11 @@ This improvement can be attributed to its ability to capture richer transition d
 As suggested, we evaluate our proposed progressive compression mechanism using different numbers of tokens per intermediate visual state (1, 2, and 4). The results are reported in Table 9 of Appendix C.7.
 As shown, using a single token per intermediate visual state achieves the highest overall accuracy (56.32%), and is adopted as the default setting in our paper.
 
-|Tokens per state|Total intermediate tokens|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|1|4|**54.45**|**65.19**|**58.52**|**57.99**|**44.91**|47.31|**64.32**|**56.43**|**56.32**|
-|2|8|52.10|64.28|57.61|56.16|42.61|46.08|62.94|53.92|54.73|
-|4|16|52.65|64.41|56.93|56.16|41.83|**47.54**|63.40|52.84|54.85|
+|Tokens per state|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+|1|**54.45**|**65.19**|**58.52**|**57.99**|**44.91**|47.31|**64.32**|**56.43**|**56.32**|
+|2|52.10|64.28|57.61|56.16|42.61|46.08|62.94|53.92|54.73|
+|4|52.65|64.41|56.93|56.16|41.83|**47.54**|63.40|52.84|54.85|
 
 ---
 
