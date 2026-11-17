@@ -47,8 +47,6 @@ We sincerely thank you for your time, careful review, and constructive feedback.
 
 **Comparison with PhysicEdit**
 
-Thank you very much for pointing out the missing discussion of PhysicEdit.
-
 As suggested, we have included a discussion of PhysicEdit in Section 2.3, “Latent Reasoning”, and Summary in Related Work.
 
 Although both our proposed PhysFlow and PhysicEdit leverage textual explanations and visual trajectories to enhance the physical understanding of image editing models, they differ fundamentally in their underlying mechanisms, as detailed below.
