@@ -133,8 +133,8 @@ This improvement can be attributed to its ability to capture richer transition d
 
 **3. Ablation study on progressive compression with different token counts.**
 
-As suggested, we evaluate our proposed progressive compression mechanism using different numbers of tokens per reasoning block (1, 2, and 4). The results are reported in Table 9 of Appendix C.7.
-As shown, using a single token per reasoning block achieves the highest overall accuracy (56.32%), and is adopted as the default setting in our paper.
+As suggested, we evaluate our proposed progressive compression mechanism using different numbers of tokens per intermediate visual state (1, 2, and 4). The results are reported in Table 9 of Appendix C.7.
+As shown, using a single token per intermediate visual state achieves the highest overall accuracy (56.32%), and is adopted as the default setting in our paper.
 
 |Tokens per state|Total intermediate tokens|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -206,7 +206,7 @@ PhysFlow outperforms the original backbone on both PICABench-Superficial and RIS
 MLLM-as-a-judge evaluation is widely adopted in image generation and editing benchmarks.
 Our evaluation of physical consistency goes beyond general assessments of editing quality.
 Specifically, PICABench employs fine-grained, sample-specific physical criteria defined by human-annotated questions and reference answers, such as whether removing an object also removes its shadow.
-PICAEval uses a MLLM to answer these questions based on the edited images and evaluates the agreement with the reference answers (PICABench, Section 3.3 and Appendix A.3).
+PICAEval uses an MLLM to answer these questions based on the edited images and evaluates the agreement with the reference answers (PICABench, Section 3.3 and Appendix A.3).
 
 Moreover, our human study provides complementary evidence. We ask 17 participants to compare PhysFlow with five competing methods on 100 image-instruction pairs randomly sampled from PICABench and RISEBench. The human preferences for PhysFlow in terms of physical plausibility are consistent with the overall benchmark results.
 
