@@ -262,7 +262,7 @@ As suggested, we inspected PICABench outputs to analyze failure modes and capabi
 
 For example, tipping coffee onto a fabric cushion involves cup motion, spillage, and absorption. Step1X adds a second cup and a pouring hand. ChronoEdit leaves the cup suspended above the cushion. PhysFlow shows the cup resting on its side with spilled coffee connected to its opening, more coherently capturing tipping, contact, and spillage. However, the puddle retains a sharp boundary, with little evidence of absorption into the fabric.
 
-This comparison provides qualitative support for improved physical consistency through more coherent actions and their physical consequences. Fully capturing subsequent interactions remains challenging. Future work will explore how to model coupled physical processes more consistently.
+Building on PhysFlow's improved handling of primary changes, the next challenge is to capture how these changes propagate through coupled physical processes. Future work will focus on modeling these dependencies to maintain consistency across subsequent interactions.
 <!-- reply:difficult-cases:end -->
 
 ### Response 8: Originality and positioning relative to closely related approaches

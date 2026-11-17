@@ -98,7 +98,7 @@ We have also added a comparison of inference latency between our PhysFlow and Ph
 ### Block 1
 
 Thank you very much for your careful reading and detailed, constructive feedback.
-We sincerely appreciate your recognition of our motivation, framework, and empirical improvements. We address your questions and concerns in the following ten responses.
+We sincerely appreciate your recognition of our motivation, framework, and empirical improvements. We address your questions and concerns in the following eleven responses.
 
 ---
 **1. Isolating the effect of additional supervision in training dataset PhysTrace.**
@@ -209,17 +209,19 @@ PICABench evaluates sample-specific physical criteria through human-annotated qu
 
 Our human study complements this evaluation: 17 participants compare PhysFlow with five methods on 100 randomly sampled PICABench and RISEBench pairs. Their physical-plausibility preferences agree with the benchmark trends. We acknowledge the value of measurable physical constraints and leave their evaluation to future work.
 
-**Failure Analysis**
+---
+
+**8. Failure Analysis.**
 
 As suggested, we inspected PICABench outputs to analyze failure modes and capability boundaries. Other methods sometimes struggle with basic physical relationships involving object pose, support, and liquid motion. PhysFlow better captures these main changes in the inspected comparisons, while coordinating coupled physical processes remains challenging.
 
 For example, tipping coffee onto a fabric cushion involves cup motion, spillage, and absorption. Step1X adds a second cup and a pouring hand. ChronoEdit leaves the cup suspended above the cushion. PhysFlow shows the cup resting on its side with spilled coffee connected to its opening, more coherently capturing tipping, contact, and spillage. However, the puddle retains a sharp boundary, with little evidence of absorption into the fabric.
 
-This comparison provides qualitative support for improved physical consistency through more coherent actions and their physical consequences. Fully capturing subsequent interactions remains challenging. Future work will explore how to model coupled physical processes more consistently.
+Building on PhysFlow's improved handling of primary changes, the next challenge is to capture how these changes propagate through coupled physical processes. Future work will focus on modeling these dependencies to maintain consistency across subsequent interactions.
 
 ### Block 3
 
-**8. Originality and positioning relative to closely related approaches.**
+**9. Originality and positioning relative to closely related approaches.**
 
 
 
@@ -247,7 +249,7 @@ Our experiments show that PhysFlow trained on our PhysTrace achieves larger perf
 
 ---
 
-**9. Data overlap checks between PhysTrace and PICABench.**
+**10. Data overlap checks between PhysTrace and PICABench.**
 
 We thank the reviewer for raising the question of training and evaluation data separation.
 As described in Sections 3.2 and 3.4 of the PICABench paper, PICABench uses natural images collected from licensed and public sources, whereas PICA-100K uses synthetically generated source images. 
@@ -255,7 +257,7 @@ As described in Section 3.2 and Appendix A, we construct PhysTrace using image-i
 
 ---
 
-**10. Parameter-count and peak-memory comparison.**
+**11. Parameter-count and peak-memory comparison.**
 
 As suggested, we have added these measurements to Table 4 to provide a more comprehensive assessment of inference costs.
 
