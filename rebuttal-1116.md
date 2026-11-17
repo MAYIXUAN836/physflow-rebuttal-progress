@@ -211,7 +211,7 @@ Our human study complements this evaluation: 17 participants compare PhysFlow wi
 
 **Failure Analysis**
 
-As suggested, we inspected PICABench outputs to analyze failure modes and capability boundaries. Other methods sometimes mishandle object pose, support, and liquid motion. PhysFlow better captures these main changes in the inspected comparisons, while coordinating coupled physical processes remains challenging.
+As suggested, we inspected PICABench outputs to analyze failure modes and capability boundaries. Other methods sometimes struggle with basic physical relationships involving object pose, support, and liquid motion. PhysFlow better captures these main changes in the inspected comparisons, while coordinating coupled physical processes remains challenging.
 
 For example, tipping coffee onto a fabric cushion involves cup motion, spillage, and absorption. Step1X adds a second cup and a pouring hand. ChronoEdit leaves the cup suspended above the cushion. PhysFlow shows the cup resting on its side with spilled coffee connected to its opening, more coherently capturing tipping, contact, and spillage. However, the puddle retains a sharp boundary, with little evidence of absorption into the fabric.
 
