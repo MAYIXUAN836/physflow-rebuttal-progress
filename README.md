@@ -4,4 +4,4 @@
 
 Shared progress, reviewer questions, and response drafts. Shared reply edits are stored on the rebuttal-drafts branch; the page reads and merges them directly. Completion states are maintained by the author.
 
-Last published: 2026-11-16 23:22 PST.
+Last published: 2026-11-16 23:24 PST.

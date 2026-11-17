@@ -292,7 +292,7 @@ Specifically, these latent tokens receive indirect supervision from text predict
 This provides richer supervision for learning compact and informative latent representations.
 
 **(b) Our diffusion supervision targets only the final edited image.**
-During its initial training stage, EndoCoT learns latent tokens through diffusion losses computed on the corresponding intermediate and final images, with the alignment loss applied only at the final reasoning state.
+During its initial training stage, EndoCoT learns latent tokens through diffusion losses computed on both the corresponding intermediate and final images, with the alignment loss applied at the final reasoning state.
 In contrast, PhysFlow supervises intermediate states in feature space and applies the diffusion loss only to the final edited image, reducing the diffusion computation required for intermediate-state supervision.
 
 **1.2 Comparison with Monet.**
