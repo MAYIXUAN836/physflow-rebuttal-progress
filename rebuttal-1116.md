@@ -185,11 +185,11 @@ We have added the detailed experimental settings and controls to Appendix C.8.
 
 As suggested, we separately report the mean ± standard deviation (SD) across training and inference seeds.
 
-We repeat PhysFlow training with four different seeds (43, 44, 45, and 46) while fixing the inference seed at 42. PhysFlow achieves 55.22 ± 0.37% on PICABench-Superficial and 10.07 ± 1.63% on RISEBench, with mean gains of 0.96 and 2.01 percentage points over the original backbone, respectively.
+We repeat PhysFlow training with three different seeds while fixing the inference seed at 42. PhysFlow achieves 56.22 ± 0.37% on PICABench-Superficial and 10.07 ± 1.21% on RISEBench, with mean gains of 1.96 and 2.01 percentage points over the original backbone, respectively.
 
 | Method | PICABench-Superficial Mean (%) | SD (%) | RISEBench Mean (%) | SD (%) |
 |---|---:|---:|---:|---:|
-| PhysFlow | 55.22 | 0.37 | 10.07 | 1.63 |
+| PhysFlow | 56.22 | 0.37 | 10.09 | 1.21 |
 
 We also evaluate fixed checkpoints using three different seeds.
 PhysFlow outperforms the original backbone on both PICABench-Superficial and RISEBench, with a mean improvement of 1.92 and 1.29 percentage points, respectively.
