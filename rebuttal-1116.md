@@ -314,7 +314,7 @@ We have added a discussion of these two related works in Section 2.3.
 
 Thank you very much for pointing out the missing discussion of PhysicEdit.
 
-As suggested, we have included a discussion of PhysicEdit in Section 2.2, “Visual Transition Modeling for Image Editing”, and Summary in Related Work.
+As suggested, we have included a discussion of PhysicEdit in Section 2.2, “Latent Reasoning”, and Summary in Related Work.
 
 Although both our proposed PhysFlow and PhysicEdit leverage textual explanations and visual trajectories to enhance the physical understanding of image editing models, they differ fundamentally in their underlying mechanisms, as detailed below.
 
@@ -336,19 +336,19 @@ This stage encourages the model to learn causal dependencies across successive m
 Finally, the image generator is adapted to the learned latent representations using the diffusion loss.
 
 We have added a quantitative comparison with PhysicEdit on PICABench-Superficial and ImgEdit-Bench in Table 1 and 5, respectively.
-Using the same Qwen-Image-Edit-2509 backbone, our PhysFlow achieves an overall score of 54.12% on PICABench-Superficial, outperforming PhysicEdit (52.35%) by 1.77, with higher scores in seven out of eight categories.
+Using the same Qwen-Image-Edit-2509 backbone, our PhysFlow achieves an overall score of 54.12% on PICABench-Superficial, outperforming PhysicEdit (52.35%) by 1.77%, with higher scores in seven out of eight categories.
 Moreover, our PhysFlow achieves an overall score of 4.31 on ImgEdit-Bench, compared with 4.05 for PhysicEdit, indicating stronger generalization to general image editing tasks.
 
 | Method | LP | LSE | RFL | RFR | DFM | CSL | GST | LST | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| PhysicEdit | 51.62 | 61.63 | 51.56 | 52.96 | **44.03** | 45.89 | 57.64 | 53.07 | 52.35 |
+| PhysicEdit (2509) | 51.62 | 61.63 | 51.56 | 52.96 | **44.03** | 45.89 | 57.64 | 53.07 | 52.35 |
 | PhysFlow (2509) | **52.01** | **62.82** | **57.02** | **53.14** | 43.32 | **46.81** | **61.42** | **53.16** | **54.12** |
 
 &nbsp;
 
 | Method | Add | Adjust | Extract | Replace | Remove | BackG | Style | Hybrid | Action | Overall |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| PhysicEdit | 4.31 | 4.17 | 2.34 | 4.45 | 4.44 | 4.03 | 4.74 | 3.36 | **4.85** | 4.05 |
+| PhysicEdit (2509) | 4.31 | 4.17 | 2.34 | 4.45 | 4.44 | 4.03 | 4.74 | 3.36 | **4.85** | 4.05 |
 | PhysFlow (2509) | **4.45** | **4.25** | **3.54** | **4.69** | **4.48** | **4.21** | **4.77** | **3.38** | 4.82 | **4.31** |
 
 We have also added a comparison of inference latency between our PhysFlow and PhysicEdit in Table 4.
