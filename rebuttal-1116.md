@@ -312,7 +312,7 @@ Instead, the compressed latent tokens receive indirect supervision from text pre
 Monet primarily focuses on enhancing the visual reasoning capabilities of MLLMs by reasoning over visual evidence directly within the latent visual space (reasoning-to-reasoning).
 In contrast, our PhysFlow aims to transfer physical knowledge from MLLMs into physics-aware image editing by explicitly modeling causal visual state transitions in the latent reasoning process (reasoning-to-editing).
 
-We have added a discussion of these two related works in Section 2.3.
+We have included both EndoCoT and Monet in Section 2.3 of Related Work.
 
 ### Block 2
 
