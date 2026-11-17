@@ -251,12 +251,12 @@ Thank you very much for emphasizing objective physical correctness. We present t
 (2) Our human study provides complementary evidence. We ask 17 participants to compare PhysFlow with five competing methods on 100 image-instruction pairs randomly sampled from PICABench and RISEBench. Their preference for PhysFlow's physical plausibility agrees with the overall benchmark trend.
 <!-- reply:physical-evaluation:end -->
 
-### Response 7: Challenging Physical Interactions and Failure Analysis
+### Response 7: Failure Analysis
 
 > 状态：基于 PICABench 已有生成结果的比较性失败分析；咖啡案例 000098，对比 Step1X 和 ChronoEdit。仅用于回复，不新增论文或附录内容。证据见 output/pica-failure-review-20261117/。
 
 <!-- reply:difficult-cases:start -->
-**Response 7: Challenging Physical Interactions and Failure Analysis**
+**Response 7: Failure Analysis**
 
 Thank you for this suggestion. We inspected PICABench outputs to analyze failure modes and capability boundaries. Other methods sometimes mishandle object pose, support, and liquid motion. PhysFlow better captures these main changes in the inspected comparisons, while coordinating coupled physical processes remains challenging.
 

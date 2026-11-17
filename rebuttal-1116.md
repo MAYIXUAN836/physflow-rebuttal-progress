@@ -209,7 +209,7 @@ PICABench evaluates sample-specific physical criteria through human-annotated qu
 
 Our human study complements this evaluation: 17 participants compare PhysFlow with five methods on 100 randomly sampled PICABench and RISEBench pairs. Their physical-plausibility preferences agree with the benchmark trends. We acknowledge the value of measurable physical constraints and leave their evaluation to future work.
 
-**Challenging Physical Interactions and Failure Analysis**
+**Failure Analysis**
 
 Thank you for this suggestion. We inspected PICABench outputs to analyze failure modes and capability boundaries. Other methods sometimes mishandle object pose, support, and liquid motion. PhysFlow better captures these main changes in the inspected comparisons, while coordinating coupled physical processes remains challenging.
 
