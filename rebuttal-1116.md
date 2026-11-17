@@ -24,7 +24,7 @@ We summarize the main revisions below.
 
 1. Clarified the sources and roles of PICA100K training data and PICABench evaluation examples.
 
-2. Added comparisons to evaluate the contributions of the PhysTrace dataset and the PhysFlow framework, including image-pair fine-tuning on the same PhysTrace data.
+2. Added comparisons to evaluate the contributions of the PhysTrace dataset and the PhysFlow framework, including fine-tuning on the same PhysTrace data with source–target image pairs.
 
 3. Added PhysicEdit and Qwen-Image-Edit-2509 results on ImgEdit-Bench.
 
