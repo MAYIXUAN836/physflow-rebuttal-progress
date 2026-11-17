@@ -258,11 +258,11 @@ Thank you very much for emphasizing objective physical correctness. We present t
 <!-- reply:difficult-cases:start -->
 **Response 7: Challenging Physical Interactions and Failure Analysis**
 
-Thank you for this suggestion. We inspected PICABench outputs to analyze failure modes and capability boundaries. Other methods sometimes mishandle object pose, support, and liquid motion. PhysFlow better captures these main changes in the inspected comparisons, while coordinating multiple interacting processes remains challenging.
+Thank you for this suggestion. We inspected PICABench outputs to analyze failure modes and capability boundaries. Other methods sometimes mishandle object pose, support, and liquid motion. PhysFlow better captures these main changes in the inspected comparisons, while coordinating coupled physical processes remains challenging.
 
-For example, tipping coffee onto a fabric cushion involves cup motion, spillage, and absorption. Step1X adds a second cup and a pouring hand; ChronoEdit leaves the cup suspended above the cushion. PhysFlow shows the cup resting on its side with spilled coffee connected to its opening, more coherently capturing tipping, contact, and spillage. However, the puddle retains a sharp boundary, with little evidence of absorption into the fabric.
+For example, tipping coffee onto a fabric cushion involves cup motion, spillage, and absorption. Step1X adds a second cup and a pouring hand. ChronoEdit leaves the cup suspended above the cushion. PhysFlow shows the cup resting on its side with spilled coffee connected to its opening, more coherently capturing tipping, contact, and spillage. However, the puddle retains a sharp boundary, with little evidence of absorption into the fabric.
 
-This comparison provides qualitative support for improved physical consistency through more coherent actions and their physical consequences. Fully capturing subsequent interactions remains challenging. Future work will explore how to model these interdependent processes more consistently.
+This comparison provides qualitative support for improved physical consistency through more coherent actions and their physical consequences. Fully capturing subsequent interactions remains challenging. Future work will explore how to model coupled physical processes more consistently.
 <!-- reply:difficult-cases:end -->
 
 ### Response 8: Originality and positioning relative to closely related approaches
