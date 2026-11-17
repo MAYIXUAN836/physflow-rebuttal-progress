@@ -213,11 +213,9 @@ Our human study complements this evaluation: 17 participants compare PhysFlow wi
 
 **8. Failure Analysis.**
 
-As suggested, we inspected PICABench outputs to analyze failure modes and capability boundaries. Other methods sometimes struggle with basic physical relationships involving object pose, support, and liquid motion. PhysFlow better captures these main changes in the inspected comparisons, while coordinating coupled physical processes remains challenging.
+As suggested, we inspected PICABench outputs to analyze failure modes and capability boundaries. Other methods sometimes struggle with basic physical relationships involving object pose, support, and liquid motion. PhysFlow better captures these main changes in the inspected comparisons. A further challenge is to coordinate coupled physical processes, where one change triggers additional effects that must remain consistent with each other.
 
-For example, tipping coffee onto a fabric cushion involves cup motion, spillage, and absorption. Step1X adds a second cup and a pouring hand. ChronoEdit leaves the cup suspended above the cushion. PhysFlow shows the cup resting on its side with spilled coffee connected to its opening, more coherently capturing tipping, contact, and spillage. However, the puddle retains a sharp boundary, with little evidence of absorption into the fabric.
-
-Building on PhysFlow's improved handling of primary changes, the next challenge is to capture how these changes propagate through coupled physical processes. Future work will focus on modeling these dependencies to maintain consistency across subsequent interactions.
+For example, tipping a coffee cup onto a fabric cushion requires the cup to fall onto its side, coffee to spill and spread, and the fabric to absorb the liquid. Step1X introduces a second cup and a pouring hand, changing the requested action. ChronoEdit depicts the cup suspended above the cushion. In contrast, PhysFlow shows the cup resting on its side, with a continuous coffee spill connecting its opening to the puddle on the cushion. This result more coherently captures the cup's motion, contact with the cushion, and liquid spillage. However, the puddle retains a sharp boundary, with little evidence of coffee soaking into the surrounding fabric.
 
 ### Block 3
 
