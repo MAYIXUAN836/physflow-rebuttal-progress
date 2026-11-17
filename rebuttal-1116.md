@@ -104,14 +104,14 @@ We sincerely appreciate your recognition of our motivation, framework, and empir
 Following your suggestion, we train a non-reasoning image editor on PhysTrace without reasoning annotations, using the same generator backbone (Qwen-Image-Edit-2511) and a comparable optimization budget to our PhysFlow.
 We refer to this baseline as Qwen-Image-Edit-2511 + PhysTrace (w/o Reasoning) and report its results in Table 8.
 
-As shown, the new baseline outperforms the original backbone by 0.86%.
+As shown, the new baseline outperforms the original backbone by 0.86 percentage points.
 Furthermore, our latent reasoning framework further improves the overall score from 55.12% to 56.32% over this non-reasoning baseline, demonstrating the effectiveness of our proposed approach.
 Particularly, under the same source-target image pair setting, training on our curated PhysTrace achieves higher overall performance than training on PICA100K (i.e., Qwen-Image-Edit-2511 + PICA100K (w/o Reasoning)), highlighting the benefits of its superior data quality for training efficiency.
 
 |Configuration|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall (%)|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 |Qwen-Image-Edit-2511|53.29|62.98|56.78|57.66|44.16|45.99|59.37|55.34|54.26|
-|+ PhysTrace (w/o Reasoning)|**55.07**|65.16|57.96|56.67|42.71|45.30|63.23|53.81|55.12|
+|+ PhysTrace (w/o Reasoning)|55.07|65.16|57.96|56.67|42.71|45.30|63.23|53.81|55.12|
 |+ PICA100K (w/o Reasoning)|**55.52**|60.30|57.69|53.04|41.46|45.91|59.13|52.12|53.38|
 |PhysFlow|54.45|**65.19**|**58.52**|**57.99**|**44.91**|**47.31**|**64.32**|**56.43**|**56.32**|
 
@@ -185,11 +185,11 @@ We have added the detailed experimental settings and controls to Appendix C.8.
 
 As suggested, we separately report the mean ± standard deviation (SD) across training and inference seeds.
 
-We repeat PhysFlow training with three different seeds while fixing the inference seed at 42. PhysFlow achieves 56.22 ± 0.37% on PICABench-Superficial and 10.07 ± 1.21% on RISEBench, with mean gains of 1.96 and 2.01 percentage points over the original backbone, respectively.
+We repeat PhysFlow training with four different seeds (43, 44, 45, and 46) while fixing the inference seed at 42. PhysFlow achieves 55.22 ± 0.37% on PICABench-Superficial and 10.07 ± 1.63% on RISEBench, with mean gains of 0.96 and 2.01 percentage points over the original backbone, respectively.
 
 | Method | PICABench-Superficial Mean (%) | SD (%) | RISEBench Mean (%) | SD (%) |
 |---|---:|---:|---:|---:|
-| PhysFlow | 56.22 | 0.37 | 10.09 | 1.21 |
+| PhysFlow | 55.22 | 0.37 | 10.07 | 1.63 |
 
 We also evaluate fixed checkpoints using three different seeds.
 PhysFlow outperforms the original backbone on both PICABench-Superficial and RISEBench, with a mean improvement of 1.92 and 1.29 percentage points, respectively.
@@ -252,7 +252,7 @@ As described in Section 3.2 and Appendix A, we construct PhysTrace using image-i
 
 **10. Parameter-count and peak-memory comparison.**
 
-As suggested, we have added these measurements to Table 5 to provide a more comprehensive assessment of inference costs.
+As suggested, we have added these measurements to Table 4 to provide a more comprehensive assessment of inference costs.
 
 As shown, PhysFlow maintains nearly the same parameter count and peak memory usage as Qwen-Image-Edit (28.87B vs. 28.85B parameters and 58.11 vs. 58.06 GiB), with only an 11.4% increase in inference latency.
 Despite having a parameter count comparable to PhysicEdit and larger than those of Step1X-Edit and ChronoEdit, PhysFlow achieves lower inference latency than all three methods.
@@ -368,14 +368,14 @@ We have also added a comparison of inference latency between our PhysFlow and Ph
 Following your suggestion, we train a non-reasoning image editor on PhysTrace without reasoning annotations, using the same generator backbone (Qwen-Image-Edit-2511) and a comparable optimization budget to our PhysFlow.
 We refer to this baseline as Qwen-Image-Edit-2511 + PhysTrace (w/o Reasoning) and report its results in Table 8.
 
-As shown, the new baseline outperforms the original backbone by 0,86%.
+As shown, the new baseline outperforms the original backbone by 0.86 percentage points.
 Under the same source-target image pair training setting, our curated PhysTrace achieves higher overall performance than PICA100K (i.e., Qwen-Image-Edit-2511 + PICA100K (w/o Reasoning)), highlighting its superior data quality and contribution to training efficiency.
-Furthermore, our latent reasoning framework further improves the overall score from 55.13% to 56.32% over this non-reasoning baseline, demonstrating the effectiveness of our proposed approach.
+Furthermore, our latent reasoning framework further improves the overall score from 55.12% to 56.32% over this non-reasoning baseline, demonstrating the effectiveness of our proposed approach.
 
 |Configuration|LP|LSE|RFL|RFR|DFM|CSL|GST|LST|Overall (%)|
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 |Qwen-Image-Edit-2511|53.29|62.98|56.78|57.66|44.16|45.99|59.37|55.34|54.26|
-|+ PhysTrace (w/o Reasoning)|**55.07**|65.16|57.96|56.67|42.71|45.30|63.23|53.81|55.12|
+|+ PhysTrace (w/o Reasoning)|55.07|65.16|57.96|56.67|42.71|45.30|63.23|53.81|55.12|
 |+ PICA100K (w/o Reasoning)|**55.52**|60.30|57.69|53.04|41.46|45.91|59.13|52.12|53.38|
 |PhysFlow|54.45|**65.19**|**58.52**|**57.99**|**44.91**|**47.31**|**64.32**|**56.43**|**56.32**|
 
