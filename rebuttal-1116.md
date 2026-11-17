@@ -117,7 +117,7 @@ Particularly, under the same source-target image pair setting, training on our c
 
 ---
 
-**2. Comparison between change-uniform and temporal-uniform sampling.**
+**2. Comparison between change-uniform and time-uniform sampling.**
 
 As suggested, we have compared our proposed change-uniform frame sampling strategy with conventional temporal-uniform sampling on PICABench-Superficial.
 The results are reported in Table 3(c).
