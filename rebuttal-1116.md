@@ -175,7 +175,7 @@ As shown in Figure 7(a), the compressed tokens form a well-structured latent spa
 We investigate whether intermediate visual latents encode the physical consequences of different interventions, with results reported in Figure 7(b).
 We construct synthetic scenes across seven tasks (support, torque, buoyancy, outflow, absorption, phase change, and shape recovery), each with two instructions yielding opposite outcomes under idealized physical rules.
 For each input, we extract four intermediate visual tokens from frozen PhysFlow and train a task-specific linear ridge probe on their averaged features to predict binary outcomes.
-For each task, we use 128/32/64 disjoint scene families for training/validation/testing.
+For each task, we use 256 training pairs, 64 validation pairs, and 128 test pairs.
 A pair is considered correct only if both intervention outcomes are predicted correctly.
 As shown in Figure 7(b), the overall pair accuracy across the seven tasks reaches 97.88%, indicating that the learned visual latents encode discriminative information about the physical consequences of different interventions.
 
