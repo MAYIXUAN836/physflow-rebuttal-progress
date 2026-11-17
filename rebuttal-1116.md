@@ -318,23 +318,22 @@ As suggested, we have included a discussion of PhysicEdit in Section 2.2, “Vis
 
 Although both our proposed PhysFlow and PhysicEdit leverage textual explanations and visual trajectories to enhance the physical understanding of image editing models, they differ fundamentally in their underlying mechanisms, as detailed below.
 
-1. **Unified Multimodal Latent Space.**
-PhysicEdit generates textual reasoning traces in the explicit semantic space of the MLLM, while separately modeling visual representations in the latent space.
-In contrast, our PhysFlow jointly performs textual and visual reasoning within a unified latent space.
+1. **Our textual reasoning representation is different.**
+PhysicEdit generates textual reasoning traces in the ***explicit semantic space*** of the MLLM, while separately modeling visual representations in the latent space.
+In contrast, our PhysFlow jointly performs textual and visual reasoning within a ***unified latent space***. This formulation allows latent textual reasoning to guide visual-state prediction ***without generating explicit reasoning text at inference***.
 
-2. **Causal Reasoning over Visual States.**
-PhysicEdit predicts the visual representations of all sampled frames in parallel.
-In contrast, our PhysFlow autoregressively predicts the latent representations of successive visual states, with each prediction conditioned on preceding latent textual explanations and visual states.
+2. **Our visual reasoning explicitly models temporal dependencies.**
+PhysicEdit ***jointly computes a set of transition-query representations***, whereas PhysFlow ***autoregressively predicts successive visual-state representations*** conditioned on preceding latent textual explanations and visual states.
 This causal formulation explicitly captures the temporal dependencies underlying physical transitions.
 
-3. **Progressive Training Strategy.**
-PhysicEdit trains its transition queries under joint supervision from feature alignment with projected DINOv2 and VAE features and a diffusion loss.
-In contrast, our PhysFlow adopts a progressive training curriculum.
-It first supervises the prediction of all textual explanations and intermediate visual states using ground-truth text tokens and visual features extracted by the MLLM's visual encoder, respectively.
+3. **Learning unified latent reasoning requires a non-trivial training strategy.**
+PhysicEdit trains its transition queries through ***feature alignment with projected DINOv2 and VAE features*** extracted from intermediate video frames.
+In contrast, our PhysFlow adopts a ***progressive training curriculum***.
+It first supervises the prediction of all textual explanations and intermediate and final visual states using ground-truth text tokens and visual features extracted by the MLLM's visual encoder, respectively.
 It then progressively replaces the reasoning blocks for textual explanations and intermediate visual transitions with model-generated predictions, one at a time.
-Each replaced block receives supervision through the original prediction loss applied to subsequent unreplaced positions, jointly with the diffusion loss. 
+Each replaced block receives indirect supervision through the original prediction loss applied to subsequent unreplaced positions, jointly with the diffusion loss. 
 This stage encourages the model to learn causal dependencies across successive multimodal reasoning steps.
-Finally, the learned latent representations are further adapted to image editing using only the diffusion loss.
+Finally, the image generator is adapted to the learned latent representations using the diffusion loss.
 
 We have added a quantitative comparison with PhysicEdit on PICABench-Superficial and ImgEdit-Bench in Table 1 and 5, respectively.
 Using the same Qwen-Image-Edit-2509 backbone, our PhysFlow achieves an overall score of 54.12% on PICABench-Superficial, outperforming PhysicEdit (52.35%) by 1.77, with higher scores in seven out of eight categories.
