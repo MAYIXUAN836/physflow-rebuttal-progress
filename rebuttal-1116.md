@@ -201,7 +201,7 @@ PhysFlow outperforms the original backbone on both PICABench-Superficial and RIS
 | Qwen-Image-Edit-2511 | 54.41 | 0.34 | 8.71 | 0.58 |
 | PhysFlow | 56.33 | 0.40 | 10.00 | 0.96 |
 
----
+### Block 3
 
 **7. Evaluation Using an MLLM as a Judge for Physical Consistency.**
 
@@ -214,7 +214,15 @@ Moreover, our human study provides complementary evidence. We ask 17 participant
 
 We agree that evaluating explicit, measurable physical constraints is a valuable direction for more rigorous assessment of physical consistency, which we leave for future work on evaluation methodology.
 
-### Block 3
+**Challenging Physical Interactions and Failure Analysis**
+
+Thank you for this suggestion. We further inspected PICABench outputs to examine failure modes and capability boundaries. Other methods sometimes struggle with basic relations involving object pose, support, and liquid motion, producing incorrect edits or unsupported objects. PhysFlow better captures these main changes in the inspected comparisons, while coordinating multiple interacting physical processes remains challenging.
+
+For example, tipping a coffee cup onto a fabric cushion requires the cup to fall, coffee to spill and spread, and the fabric to absorb the liquid. Step1X introduces an extra cup and a pouring hand, changing the requested action; ChronoEdit depicts the cup suspended above the cushion. PhysFlow shows the cup resting on its side with a puddle connected to its opening, more coherently capturing tipping, contact, and spillage. However, the puddle retains a sharp boundary, with little evidence of absorption into the surrounding fabric.
+
+This comparison provides qualitative support for improved physical consistency through more coherent editing actions and their physical consequences. Capturing all subsequent interactions remains challenging. Future work will explore how to model these interdependent processes more consistently.
+
+### Block 4
 
 **8. Originality and positioning relative to closely related approaches.**
 

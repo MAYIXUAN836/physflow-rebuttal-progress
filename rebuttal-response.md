@@ -251,14 +251,18 @@ Thank you very much for emphasizing objective physical correctness. We present t
 (2) Our human study provides complementary evidence. We ask 17 participants to compare PhysFlow with five competing methods on 100 image-instruction pairs randomly sampled from PICABench and RISEBench. Their preference for PhysFlow's physical plausibility agrees with the overall benchmark trend.
 <!-- reply:physical-evaluation:end -->
 
-### Response 7: Difficult cases and failure analysis (Figures 3 and 6)
+### Response 7: Challenging Physical Interactions and Failure Analysis
 
-> 状态：依据正文 Figure 3（PICABench）和附录 Figure 6（RISEBench），归纳跨区域光学一致性、接触形变和随时间发生的表面变化；比较图示案例中的物理后果，结论限于定性证据。
+> 状态：基于 PICABench 已有生成结果的比较性失败分析；咖啡案例 000098，对比 Step1X 和 ChronoEdit。仅用于回复，不新增论文或附录内容。证据见 output/pica-failure-review-20261117/。
 
 <!-- reply:difficult-cases:start -->
-**Response 7: Difficult cases and failure analysis (Figures 3 and 6)**
+**Response 7: Challenging Physical Interactions and Failure Analysis**
 
-PICABench examples require optical consistency across regions and deformation at contact. RISEBench examples require changes to object surfaces over time. Several baselines follow the local edit but leave mismatched reflections, residual lighting, little deformation, or limited surface changes. PhysFlow depicts the corresponding optical, mechanical, and temporal changes more consistently in these examples, providing qualitative support for physical consistency.
+Thank you for this suggestion. We further inspected PICABench outputs to examine failure modes and capability boundaries. Other methods sometimes struggle with basic relations involving object pose, support, and liquid motion, producing incorrect edits or unsupported objects. PhysFlow better captures these main changes in the inspected comparisons, while coordinating multiple interacting physical processes remains challenging.
+
+For example, tipping a coffee cup onto a fabric cushion requires the cup to fall, coffee to spill and spread, and the fabric to absorb the liquid. Step1X introduces an extra cup and a pouring hand, changing the requested action; ChronoEdit depicts the cup suspended above the cushion. PhysFlow shows the cup resting on its side with a puddle connected to its opening, more coherently capturing tipping, contact, and spillage. However, the puddle retains a sharp boundary, with little evidence of absorption into the surrounding fabric.
+
+This comparison provides qualitative support for improved physical consistency through more coherent editing actions and their physical consequences. Capturing all subsequent interactions remains challenging. Future work will explore how to model these interdependent processes more consistently.
 <!-- reply:difficult-cases:end -->
 
 ### Response 8: Originality and positioning relative to closely related approaches
