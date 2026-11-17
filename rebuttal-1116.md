@@ -247,7 +247,8 @@ Our experiments show that PhysFlow trained on our PhysTrace achieves larger perf
 **9. Data overlap checks between PhysTrace and PICABench.**
 
 We thank the reviewer for raising the question of training and evaluation data separation.
-As described in Sections 3.2 and 3.4 of the PICABench paper, PICABench uses natural images collected from licensed and public sources, whereas PICA-100K uses synthetically generated source images. We construct PhysTrace from PICA-100K image–instruction pairs and use PICABench exclusively for evaluation.
+As described in Sections 3.2 and 3.4 of the PICABench paper, PICABench uses natural images collected from licensed and public sources, whereas PICA-100K uses synthetically generated source images. 
+As described in Section 3.2 and Appendix A, we construct PhysTrace using image-instruction pairs from PICA-100K, rather than PICABench, ensuring that no PICABench evaluation examples are directly included in our training data.
 
 ---
 
