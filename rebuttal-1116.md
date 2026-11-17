@@ -271,7 +271,7 @@ These results highlight the inference efficiency of our compact latent planning 
 ### Block 1
 
 We sincerely thank you for the time and effort you devoted to reviewing our manuscript and for your detailed, constructive feedback.
-We appreciate your recognition of our coherent framework, the complementary evaluations supporting our improvements, and the inference efficiency.
+We appreciate your recognition of our coherent framework, the complementary evaluations supporting our improvements, and our inference efficiency.
 
 We have carefully considered each of your concerns and respond point by point below.
 
@@ -298,7 +298,7 @@ Monet solely distills visual evidence into latent embeddings while retaining exp
 In contrast, our PhysFlow jointly encodes textual physical explanations and visual trajectories within a unified multimodal latent space, without generating explicit reasoning text at inference.
 
 **(b) Intermediate Latent Representation Learning.**
-Monet adopts a three-stage training strategy: it first adapts the MLLM to interleaved textual-visual reasoning, then generates latent embedding targets in the second stage to supervise latent predictions in the final stage.
+Monet adopts a three-stage supervised fine-tuning strategy: it first adapts the MLLM to interleaved textual-visual reasoning, then generates latent embedding targets in the second stage to supervise latent predictions in the third stage.
 In contrast, our PhysFlow employs a progressive compression mechanism without requiring a separate stage to generate latent embedding targets.
 Instead, the compressed latent tokens receive indirect supervision from text prediction and visual alignment losses on subsequent uncompressed reasoning blocks, together with the diffusion loss, to learn compact latent representations.
 
