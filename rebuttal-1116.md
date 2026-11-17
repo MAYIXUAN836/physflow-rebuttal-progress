@@ -288,7 +288,7 @@ As suggested, we clarify the key contributions of our PhysFlow relative to EndoC
 **(a) Our latent representations receive richer process supervision.**
 EndoCoT learns latent tokens for intermediate states through the diffusion loss, with the alignment loss applied only at the final state.
 In contrast, our PhysFlow progressively replaces explicit reasoning blocks with compact latent tokens, one block at a time.
-Specifically, these latent tokens receive indirect supervision from text prediction and visual alignment losses on subsequent uncompressed reasoning blocks, together with the diffusion loss computed only on the final edited image. 
+Specifically, these latent tokens receive indirect supervision from text prediction and visual alignment losses on subsequent uncompressed reasoning blocks, together with the diffusion loss computed on the final edited image. 
 This provides richer supervision for learning compact and informative latent representations.
 
 **(b) Our diffusion supervision targets only the final edited image.**
