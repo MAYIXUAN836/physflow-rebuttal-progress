@@ -212,8 +212,6 @@ Moreover, our human study provides complementary evidence. We ask 17 participant
 
 We agree that evaluating explicit, measurable physical constraints is a valuable direction for more rigorous assessment of physical consistency, which we leave for future work on evaluation methodology.
 
----
-
 ### Block 3
 
 **8. Originality and positioning relative to closely related approaches.**
