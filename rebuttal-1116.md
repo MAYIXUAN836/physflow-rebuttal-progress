@@ -285,28 +285,28 @@ As suggested, we clarify the key contributions of our PhysFlow relative to EndoC
 
 **1.1 Comparison with EndoCoT.**
 
-**(a) Intermediate Latent Representation Learning.**
+**(a) Our latent representations receive richer process supervision.**
 EndoCoT learns latent tokens for intermediate states through the diffusion loss, with the alignment loss applied only at the final state.
 In contrast, our PhysFlow progressively replaces explicit reasoning blocks with compact latent tokens, one block at a time.
 Specifically, these latent tokens receive indirect supervision from text prediction and visual alignment losses on subsequent uncompressed reasoning blocks, together with the diffusion loss computed only on the final edited image. 
 This provides richer supervision for learning compact and informative latent representations.
 
-**(b) Intermediate-State Supervision during Training.**
+**(b) Our diffusion supervision targets only the final edited image.**
 During its initial training stage, EndoCoT learns latent tokens through diffusion losses computed on the corresponding intermediate and final images, with the alignment loss applied only at the final reasoning state.
 In contrast, PhysFlow supervises intermediate states in feature space and applies the diffusion loss only to the final edited image, reducing the diffusion computation required for intermediate-state supervision.
 
 **1.2 Comparison with Monet.**
 
-**(a) Unified Multimodal Latent Space.**
+**(a) Our textual and visual reasoning share a unified latent space.**
 Monet solely distills visual evidence into latent embeddings while retaining explicit textual reasoning.
 In contrast, our PhysFlow jointly encodes textual physical explanations and visual trajectories within a unified multimodal latent space, without generating explicit reasoning text at inference.
 
-**(b) Intermediate Latent Representation Learning.**
+**(b) Internalizing multimodal reasoning requires a non-trivial training strategy.**
 Monet adopts a three-stage supervised fine-tuning strategy: it first adapts the MLLM to interleaved textual-visual reasoning, then generates latent embedding targets in the second stage to supervise latent predictions in the third stage.
 In contrast, our PhysFlow employs a progressive compression mechanism without requiring a separate stage to generate latent embedding targets.
 Instead, the compressed latent tokens receive indirect supervision from text prediction and visual alignment losses on subsequent uncompressed reasoning blocks, together with the diffusion loss, to learn compact latent representations.
 
-**(c) Knowledge Transfer.**
+**(c) Our framework transfers reasoning capabilities to image editing task.**
 Monet primarily focuses on enhancing the visual reasoning capabilities of MLLMs by reasoning over visual evidence directly within the latent visual space (reasoning-to-reasoning).
 In contrast, our PhysFlow aims to transfer physical knowledge from MLLMs into physics-aware image editing by explicitly modeling causal visual state transitions in the latent reasoning process (reasoning-to-editing).
 
