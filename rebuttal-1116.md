@@ -306,7 +306,7 @@ Monet adopts a three-stage supervised fine-tuning strategy: it first adapts the 
 In contrast, our PhysFlow employs a progressive compression mechanism without requiring a separate stage to generate latent embedding targets.
 Instead, the compressed latent tokens receive indirect supervision from text prediction and visual alignment losses on subsequent uncompressed reasoning blocks, together with the diffusion loss, to learn compact latent representations.
 
-**(c) Our framework transfers reasoning capabilities to image editing task.**
+**(c) Our framework targets reasoning-to-editing rather than reasoning-to-reasoning.**
 Monet primarily focuses on enhancing the visual reasoning capabilities of MLLMs by reasoning over visual evidence directly within the latent visual space (reasoning-to-reasoning).
 In contrast, our PhysFlow aims to transfer physical knowledge from MLLMs into physics-aware image editing by explicitly modeling causal visual state transitions in the latent reasoning process (reasoning-to-editing).
 
