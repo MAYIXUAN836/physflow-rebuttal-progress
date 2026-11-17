@@ -258,7 +258,7 @@ Thank you very much for emphasizing objective physical correctness. We present t
 <!-- reply:difficult-cases:start -->
 **Response 7: Failure Analysis**
 
-As suggested, we inspected PICABench outputs to analyze failure modes and capability boundaries. Other methods sometimes struggle with basic physical relationships involving object pose, support, and liquid motion. PhysFlow better captures these main changes in the inspected comparisons. A further challenge is to coordinate coupled physical processes, where one change triggers additional effects that must remain consistent with each other.
+As suggested, we inspected PICABench outputs to analyze failure modes and capability boundaries. Other methods sometimes struggle with basic physical relationships involving object pose, support, and liquid motion. PhysFlow better captures these main changes in the inspected comparisons, but coordinating coupled physical processes remains challenging, as each change can trigger further effects that must remain consistent with one another.
 
 For example, tipping a coffee cup onto a fabric cushion requires the cup to fall onto its side, coffee to spill and spread, and the fabric to absorb the liquid. Step1X introduces a second cup and a pouring hand, changing the requested action. ChronoEdit depicts the cup suspended above the cushion. In contrast, PhysFlow shows the cup resting on its side, with a continuous coffee spill connecting its opening to the puddle on the cushion. This result more coherently captures the cup's motion, contact with the cushion, and liquid spillage. However, the puddle retains a sharp boundary, with little evidence of coffee soaking into the surrounding fabric.
 <!-- reply:difficult-cases:end -->
