@@ -56,7 +56,7 @@ PhysicEdit generates textual reasoning traces in the ***explicit semantic space*
 In contrast, our PhysFlow jointly performs textual and visual reasoning within a ***unified latent space***. This formulation allows latent textual reasoning to guide visual-state prediction ***without generating explicit reasoning text at inference***.
 
 2. **Our visual reasoning explicitly models temporal dependencies.**
-PhysicEdit ***computes transition-query representations in parallel***, whereas PhysFlow ***autoregressively predicts successive visual-state representations*** conditioned on preceding latent textual explanations and visual states.
+PhysicEdit ***jointly computes a set of transition-query representations***, whereas PhysFlow ***autoregressively predicts successive visual-state representations*** conditioned on preceding latent textual explanations and visual states.
 This causal formulation explicitly captures the temporal dependencies underlying physical transitions.
 
 3. **Learning unified latent reasoning requires a non-trivial training strategy.**
